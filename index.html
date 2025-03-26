@@ -27,6 +27,16 @@
             --transition: all 0.3s ease;
         }
 
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --dark: #FAFAFA;
+            --light: #121212;
+            --white: #1E1E1E;
+            --dark-gray: #BDBDBD;
+            --medium-gray: #E0E0E0;
+            --light-gray: #424242;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -39,6 +49,7 @@
             color: var(--dark);
             background-color: var(--light);
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -53,6 +64,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: background-color 0.3s ease;
         }
 
         .header-container {
@@ -77,6 +89,7 @@
         nav ul {
             display: flex;
             list-style: none;
+            align-items: center;
         }
 
         nav ul li {
@@ -109,6 +122,21 @@
 
         nav ul li a:hover::after {
             width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 20px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
         }
 
         .hero {
@@ -194,6 +222,7 @@
 
         .about {
             background-color: var(--white);
+            transition: background-color 0.3s ease;
         }
 
         .about-container {
@@ -213,6 +242,11 @@
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .about-img:hover img {
+            transform: scale(1.03);
         }
 
         .about-content h3 {
@@ -227,7 +261,8 @@
         }
 
         .skills {
-            background-color: #f5f7fa;
+            background-color: var(--light);
+            transition: background-color 0.3s ease;
         }
 
         .skills-container {
@@ -241,6 +276,7 @@
             padding: 30px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+            transition: background-color 0.3s ease;
         }
 
         .skill-item h3 {
@@ -271,6 +307,7 @@
         .skills-list li {
             display: flex;
             align-items: center;
+            color: var(--medium-gray);
         }
 
         .skills-list li::before {
@@ -281,6 +318,7 @@
 
         .experience {
             background-color: var(--white);
+            transition: background-color 0.3s ease;
         }
 
         .timeline {
@@ -332,9 +370,10 @@
 
         .timeline-content {
             padding: 20px;
-            background-color: #f5f7fa;
+            background-color: var(--light);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+            transition: background-color 0.3s ease;
         }
 
         .timeline-date {
@@ -349,12 +388,27 @@
             color: var(--dark);
         }
 
+        .timeline-company {
+            color: var(--medium-gray);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
         .timeline-text {
             color: var(--medium-gray);
         }
 
+        .timeline-text ul {
+            margin-left: 20px;
+        }
+
+        .timeline-text li {
+            margin-bottom: 5px;
+        }
+
         .projects {
-            background-color: #f5f7fa;
+            background-color: var(--light);
+            transition: background-color 0.3s ease;
         }
 
         .projects-grid {
@@ -447,6 +501,7 @@
 
         .contact {
             background-color: var(--white);
+            transition: background-color 0.3s ease;
         }
 
         .contact-container {
@@ -507,6 +562,8 @@
             border-radius: var(--border-radius);
             font-family: 'Inter', sans-serif;
             transition: var(--transition);
+            background-color: var(--light);
+            color: var(--dark);
         }
 
         .contact-form input:focus,
@@ -525,11 +582,35 @@
             color: var(--white);
             padding: 30px 0;
             text-align: center;
+            transition: background-color 0.3s ease;
         }
 
         .footer-content p {
             margin-bottom: 20px;
         }
+
+        /* Update the contact section social links */
+.contact-info .social-links a {
+    background-color: rgba(41, 98, 255, 0.1); /* Semi-transparent primary color */
+    color: var(--primary); /* Use primary color for icons */
+    transition: var(--transition);
+}
+
+.contact-info .social-links a:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+/* Dark mode specific adjustments */
+[data-theme="dark"] .contact-info .social-links a {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+[data-theme="dark"] .contact-info .social-links a:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
 
         .social-links {
             display: flex;
@@ -558,6 +639,28 @@
         .copyright {
             color: var(--light-gray);
             font-size: 0.875rem;
+        }
+
+        /* Form success/error messages */
+        .form-message {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .form-message.success {
+            background-color: rgba(56, 142, 60, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+            display: block;
+        }
+
+        .form-message.error {
+            background-color: rgba(211, 47, 47, 0.2);
+            color: var(--error);
+            border: 1px solid var(--error);
+            display: block;
         }
 
         /* Responsive styles */
@@ -657,6 +760,11 @@
                     <li><a href="#experience">Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -687,7 +795,9 @@
                     <p>As a Blockchain specialist, I've developed a comprehensive understanding of distributed ledger technologies, exploring their potential to revolutionize industries beyond cryptocurrency. My research focuses on implementing blockchain solutions that enhance transparency, security, and decentralization.</p>
                     <p>My expertise in AI extends beyond theoretical knowledge. I actively work on developing intelligent systems that can solve complex real-world problems. From machine learning algorithms to natural language processing projects, I'm committed to pushing the boundaries of what's possible with artificial intelligence.</p>
                     <div class="btn-container">
-                        <a href="#" class="btn btn-primary">Download Resume</a>
+                        <a href="Farhaan_Khan_RESUME_February_2025.pdf" download="Farhaan_Khan_Resume.pdf" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
                     </div>
                 </div>
                 <div class="about-img">
@@ -753,20 +863,20 @@
                         <div class="timeline-date">2024</div>
                         <h3 class="timeline-title">Computer Vision Research Intern</h3>
                         <h4 class="timeline-company">Imaginate XR</h4>
-                        <p class="timeline-text">
+                        <div class="timeline-text">
                             <ul>
                                 <li>Conducted research on Neural Radiance Fields (NeRFs) and Gaussian Splatting for advanced 3D reconstruction and rendering.</li>
                                 <li>Implemented and optimized NeRF and Gaussian Splatting techniques, enhancing model rendering accuracy and efficiency.</li>
                                 <li>Performed performance comparisons between methods, leading to significant improvements in rendering time.</li>
                                 <li>Successfully ported the resulting point cloud data to Unity for 3D visualization.</li>
                             </ul>
-                        </p>
+                        </div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">2023 - Present</div>
+                        <div class="timeline-date">2022- Present</div>
                         <h3 class="timeline-title">B.Tech in Computer Science</h3>
                         <h4 class="timeline-company">VIT Vellore</h4>
                         <p class="timeline-text">Specialization in Blockchain Technology. Current CGPA: 9.15</p>
@@ -815,7 +925,6 @@
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/fakubwoy/SEProject" target="_blank"><i class="fas fa-code"></i> Code</a>
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
@@ -833,7 +942,6 @@
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/fakubwoy/ChatBox" target="_blank"><i class="fas fa-code"></i> Code</a>
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
@@ -851,7 +959,7 @@
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/fakubwoy/C-Compiler" target="_blank"><i class="fas fa-code"></i> Code</a>
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            <!-- <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a> -->
                         </div>
                     </div>
                 </div>
@@ -869,7 +977,6 @@
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/fakubwoy/Deepfake_detection" target="_blank"><i class="fas fa-code"></i> Code</a>
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
@@ -887,7 +994,6 @@
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/fakubwoy/ExpTrack" target="_blank"><i class="fas fa-code"></i> Code</a>
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
@@ -905,7 +1011,6 @@
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/fakubwoy/AlgoViz" target="_blank"><i class="fas fa-code"></i> Code</a>
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
@@ -938,14 +1043,15 @@
                         </div>
                     </div>
                     <div class="social-links">
-                        <a href="https://github.com/fakubwoy/"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://x.com/fk8586"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/fakubwoy/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com/fakubwoy/" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://x.com/fk8586" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/fakubwoy/" target="_blank"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
+                    <form id="contactForm">
+                        <div id="formMessage" class="form-message"></div>
                         <div class="form-group">
                             <label for="name">Your Name</label>
                             <input type="text" id="name" name="name" required>
@@ -973,16 +1079,44 @@
         <div class="container footer-content">
             <p>Designed & Built by Farhaan Khan</p>
             <div class="social-links">
-                <a href="https://github.com/fakubwoy/"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://x.com/fk8586"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/fakubwoy/"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/fakubwoy/" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://x.com/fk8586" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/fakubwoy/" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
             <p class="copyright">© 2025 All rights reserved</p>
         </div>
     </footer>
 
     <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+
+        // Set initial theme
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -994,12 +1128,82 @@
             });
         });
 
-        // Form submission
-        const form = document.querySelector('.contact-form form');
-        form.addEventListener('submit', (e) => {
+        // Form submission with email functionality
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            form.reset();
+            
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                // In a real implementation, you would send this data to your server
+                // Here's a mock implementation that simulates a successful submission
+                
+                // Display loading state
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Display success message
+                formMessage.textContent = 'Thank you for your message! I will get back to you soon.';
+                formMessage.classList.remove('error');
+                formMessage.classList.add('success');
+                formMessage.style.display = 'block';
+                
+                // In a real implementation, you would:
+                // 1. Send the form data to your backend
+                // 2. Have your backend send an email to you
+                // 3. Optionally send a confirmation email to the user
+                
+                // Here's how you could implement it with a serverless function:
+                
+                const response = await fetch('/.netlify/functions/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    formMessage.textContent = 'Thank you for your message! I will get back to you soon.';
+                    formMessage.classList.remove('error');
+                    formMessage.classList.add('success');
+                    formMessage.style.display = 'block';
+                    contactForm.reset();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+                
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+                
+            } catch (error) {
+                formMessage.textContent = 'There was an error sending your message. Please try again later or contact me directly at farhaan.khan@example.com';
+                formMessage.classList.remove('success');
+                formMessage.classList.add('error');
+                formMessage.style.display = 'block';
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
         });
 
         // Animate elements when they come into view
