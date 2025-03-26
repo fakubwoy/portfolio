@@ -2,778 +2,1030 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Portfolio - Farhaan Khan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farhaan Khan | Blockchain & AI Specialist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #121212;
-            --bg-secondary: #1E1E1E;
-            --text-primary: #E0E0E0;
-            --text-secondary: #d3d3d3;
-            --accent-color: #BB86FC;
-            --gradient-primary: linear-gradient(135deg, #BB86FC, #3700B3);
-            --gradient-secondary: linear-gradient(135deg, #03DAC6, #018786);
+            --primary: #2962FF;
+            --primary-dark: #0039CB;
+            --primary-light: #768FFF;
+            --secondary: #00C853;
+            --dark: #121212;
+            --dark-gray: #1E1E1E;
+            --medium-gray: #424242;
+            --light-gray: #BDBDBD;
+            --light: #FAFAFA;
+            --white: #FFFFFF;
+            --error: #D32F2F;
+            --warning: #FFA000;
+            --success: #388E3C;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
             overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
         header {
-            background: var(--gradient-primary);
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            animation: fadeInDown 1s ease;
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        header h1 {
-            margin: 0;
-            color: var(--text-primary);
-            font-size: 2.5rem;
-            animation: slideInLeft 1s ease;
-        }
-
-        header p {
-            margin: 10px 0 0;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            animation: slideInRight 1s ease;
-        }
-
-        nav {
+        .header-container {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-            animation: fadeInUp 1s ease;
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        .section {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .section.active {
-            display: block;
-            opacity: 1;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .homepage-content {
-            display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            gap: 30px;
-            margin-top: 30px;
+            padding: 20px 0;
         }
 
-        .about-section, .pokemon-container, .resume-section, .projects-section {
-            background: var(--gradient-secondary);
-            padding: 30px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 800px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .about-section {
-          background: #3b9c76; /* Darker background */
-          color: var(--text-primary);
-          padding: 40px;
-          border-radius: 15px;
-          position: relative;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      
-      .about-section:hover {
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-      }
-      
-        .about-section:hover, .pokemon-container:hover, .resume-section:hover, .projects-section:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
         }
 
-        .about-section {
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
             position: relative;
-            padding: 40px;
+            padding: 5px 0;
         }
 
-        .about-content p:first-of-type {
-            max-width: calc(100% - 180px);
-            margin-right: 180px;
+        nav ul li a:hover {
+            color: var(--primary);
         }
 
-        .about-photo {
+        nav ul li a::after {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 150px;
-            height: 150px;
-            border-radius: 40%;
-            object-fit: cover;
-            border: 2px solid var(--accent-color);
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
         }
 
-        .pokemon-container {
-          color: #121212;
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 100px 0;
             text-align: center;
-            max-width: 400px;
-            transition: background-color 0.5s ease;
         }
 
-        #pokemonImage {
-            max-width: 250px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            animation: float 3s ease-in-out infinite;
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
 
-        #pokemonImage:hover {
-            transform: scale(1.1);
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
         }
 
-        #pokemonName {
-            font-size: x-large;
-            margin: 10px 0;
-        }
-
-        .type-badge {
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-            text-transform: uppercase;
-            font-size: 0.8em;
-            margin: 5px;
+        .btn {
             display: inline-block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        #refreshButton {
-            background: var(--gradient-primary);
+            background-color: var(--white);
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
             border: none;
-            color: var(--text-primary);
-            padding: 10px 20px;
-            border-radius: 25px;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-top: 20px;
         }
 
-        #refreshButton:hover {
+        .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .resume-section, .projects-section {
-            background: var(--gradient-primary);
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-title p {
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about {
+            background-color: var(--white);
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .about-content p {
+            margin-bottom: 15px;
+            color: var(--medium-gray);
+        }
+
+        .skills {
+            background-color: #f5f7fa;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .skill-item {
+            background-color: var(--white);
             padding: 30px;
-            border-radius: 15px;
-            margin-top: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .skill-item h3 {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .skill-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 5px;
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .skills-list li {
+            display: flex;
+            align-items: center;
+        }
+
+        .skills-list li::before {
+            content: '▹';
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .experience {
+            background-color: var(--white);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--primary-light);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            top: 15px;
+            right: -10px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: #f5f7fa;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .timeline-date {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .timeline-text {
+            color: var(--medium-gray);
+        }
+
+        .projects {
+            background-color: #f5f7fa;
         }
 
         .projects-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsive columns */
-          gap: 20px; /* Spacing between cards */
-      }
-
-      .project-card {
-        background: linear-gradient(135deg, rgba(135, 206, 235, 0.15), rgba(135, 206, 235, 0.07)); /* Light sky blue */
-        border-radius: 10px;
-        margin-bottom: 10px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height: 90%; /* Ensure cards take up available height in grid */
-        display: flex; /* Use flexbox for vertical alignment */
-        flex-direction: column; /* Stack content vertically */
-        justify-content: space-between; /* Ensures spacing between elements within the card */
-        padding: 20px;
-        color: #E0E0E0; /* Light text for contrast */
-    }
-    
-    .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .project-card h3 {
-        margin-top: 0; /* Remove default margin from h3 */
-        color: #E0E0E0; /* Light text for contrast */
-    }
-    
-    .project-card p {
-        color: #d3d3d3; /* Slightly lighter text for contrast */
-        flex-grow: 1; /* Allow description to expand and fill available space */
-    }
-    
-    .project-card .project-tech {
-        margin-top: 10px;
-        font-size: 0.9em;
-        color: #d3d3d3; /* Even lighter text for contrast */
-    }
-    
-    .project-card a {
-        color: #BB86FC; /* Accent color for links */
-        text-decoration: none;
-        margin-top: 10px;
-        display: inline-block; /* Make the link behave like a block element */
-        transition: color 0.3s ease; /* Smooth color transition on hover */
-    }
-    
-    .project-card a:hover {
-        color: #CE93D8; /* Slightly lighter purple on hover */
-    }
-    .resume-section {
-      background: var(--gradient-primary);
-      padding: 30px;
-      border-radius: 15px;
-      margin-top: 30px;
-  }
-
-  .resume-section h2 {
-      cursor: pointer; /* Make headings clickable */
-  }
-
-  .resume-content {
-      display: none; /* Initially hidden */
-      margin-top: 20px;
-  }
-
-  .resume-content.active {
-      display: block;
-  }
-
-  .progress {
-      height: 20px;
-      background-color: #e9ecef; /* Light gray */
-      border-radius: 5px;
-      overflow: hidden;
-      margin-bottom: 10px; /* Add some spacing between progress bars */
-  }
-
-  .progress-bar {
-      height: 100%;
-      background-color: #BB86FC; /* Use your accent color for progress bar */
-      width: 0%; /* Initial width */
-      border-radius: 5px;
-      transition: width 0.5s ease-in-out; /* Smooth transition */
-  }
-
-  .skill-level {
-      font-size: smaller;
-      color: var(--text-secondary);
-      margin-left: 10px;
-  }
-  .resume-section {
-    background: linear-gradient(135deg, #4CAF50, #2E8B57); /* New gradient */
-    padding: 30px;
-    border-radius: 15px;
-    margin: 30px auto; /* Center horizontally */
-    max-width: 800px; /* Set a maximum width */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add a box shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.resume-section:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* More pronounced shadow on hover */
-}
-
-.resume-section h2 {
-    cursor: pointer;
-    margin-bottom: 10px; /* Space between headings and content */
-    border-bottom: 1px solid var(--text-secondary); /* Add a separator line */
-    padding-bottom: 5px; /* Add padding below the line */
-}
-
-.resume-content {
-    display: none;
-    margin-top: 10px; /* Space between content and next section */
-}
-
-.resume-content.active {
-    display: block;
-}
-
-/* Style for list items within sections */
-.resume-content ul, .resume-content ol {
-    list-style-type: disc; /* or circle, square */
-    padding-left: 20px; /* Indentation */
-    margin-bottom: 10px; /* Space between list items or paragraphs */
-}
-
-.resume-content li {
-    margin-bottom: 5px; /* Space between list items */
-}
-
-.skill {
-    margin-bottom: 20px; /* Space between skill items */
-}
-.skill p {
-  color: #E0E0E0; /* Improved text contrast */
-
-    margin-bottom: 5px;
-}
-#educationContent ul {
-  list-style: none; /* Remove default bullet points */
-  padding: 0; /* Remove default padding */
-}
-
-#educationContent li {
-  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Add padding */
-  margin-bottom: 15px; /* Space between items */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transitions */
-}
-
-#educationContent li:hover {
-  transform: translateY(-3px); /* Move up slightly on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
-}
-
-#educationContent strong {
-  color: #108d16; /* Use your accent color for the degree/school */
-  margin-right: 10px;
-}
-
-#educationContent p {
-  color: #E0E0E0; /* Improved text contrast */
-  margin: 5px 0; /* Consistent margin for paragraphs */
-}
-#experienceContent ul {
-  list-style: none;
-  padding: 0;
-}
-
-#experienceContent li {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#experienceContent li:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-#experienceContent strong {
-  color: #108d16; /* Accent color for company name */
-  margin-right: 10px;
-}
-
-#experienceContent p {
-  color: #E0E0E0; /* Improved text contrast */
-  margin: 5px 0;
-}
-
-#experienceContent ul ul { /* Style for nested lists (responsibilities) */
-  list-style-type: disc; /* Use bullet points for responsibilities */
-  padding-left: 20px;
-  margin-top: 10px;
-}
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .project-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .project-img {
+            height: 200px;
+            overflow: hidden;
         }
 
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .project-card:hover .project-img img {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .project-description {
+            color: var(--medium-gray);
+            margin-bottom: 15px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .project-links a:hover {
+            color: var(--primary-dark);
+        }
+
+        .project-links a i {
+            margin-right: 5px;
+        }
+
+        .contact {
+            background-color: var(--white);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .contact-info p {
+            color: var(--medium-gray);
+            margin-bottom: 30px;
+        }
+
+        .contact-details {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background-color: #e3f2fd;
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content p {
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: var(--light-gray);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-img {
+                order: -1;
+            }
+
+            .timeline::before {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-dot {
+                left: 21px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 20px;
+            }
+
+            nav ul li {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Farhaan Khan</h1>
-        <p>Blockchain Enthusiast & AI Innovator</p>
-        <nav>
-            <a href="#" data-section="home">Home</a>
-            <a href="#" data-section="resume">Resume</a>
-            <a href="#" data-section="projects">Projects</a>
-        </nav>
+        <div class="container header-container">
+            <a href="#" class="logo">Farhaan<span>Khan</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <div class="container">
-        <section id="home" class="section home active">
-            <div class="homepage-content">
-                <div class="about-section">
-                    <img src="ME.jpg" alt="Your Photo" class="about-photo">
-                    <div class="about-content">
-                        <h2>About Me</h2>
-                        <p>I'm a third-year computer science student at VIT Vellore, passionate about Blockchain, AI, and creating innovative solutions. My academic journey has been marked by a relentless pursuit of technological excellence and a deep-seated curiosity about emerging technologies.</p>
-                        <p>As a Blockchain specialist, I've developed a comprehensive understanding of distributed ledger technologies, exploring their potential to revolutionize industries beyond cryptocurrency. My research focuses on implementing blockchain solutions that enhance transparency, security, and decentralization in various domains.</p>
-                        <p>My expertise in AI extends beyond theoretical knowledge. I actively work on developing intelligent systems that can solve complex real-world problems. From machine learning algorithms to natural language processing projects, I'm committed to pushing the boundaries of what's possible with artificial intelligence.</p>
-                        <p>Beyond technical skills, I'm a firm believer in continuous learning and interdisciplinary approach. I enjoy bridging the gap between different technological domains, understanding how blockchain, AI, and other emerging technologies can create synergistic solutions.</p>
-                        <p>In my free time, I'm an avid Pokémon enthusiast and a dinosaur lover. These interests reflect my passion for understanding complex systems, whether in technology or nature. I believe that curiosity and a playful approach are key to innovation and problem-solving.</p>
+    <section class="hero">
+        <div class="container">
+            <h1>Blockchain Developer & AI Specialist</h1>
+            <p>I'm a computer science student passionate about building innovative solutions using blockchain technology and artificial intelligence.</p>
+            <div>
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-outline">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+                <p>Get to know me better</p>
+            </div>
+            <div class="about-container">
+                <div class="about-content">
+                    <h3>Who am I?</h3>
+                    <p>I'm a third-year computer science student at VIT Vellore, specializing in Blockchain Technology with a strong passion for AI and machine learning.</p>
+                    <p>My academic journey has been marked by a relentless pursuit of technological excellence and a deep-seated curiosity about emerging technologies. I maintain a CGPA of 9.15 while actively working on cutting-edge projects.</p>
+                    <p>As a Blockchain specialist, I've developed a comprehensive understanding of distributed ledger technologies, exploring their potential to revolutionize industries beyond cryptocurrency. My research focuses on implementing blockchain solutions that enhance transparency, security, and decentralization.</p>
+                    <p>My expertise in AI extends beyond theoretical knowledge. I actively work on developing intelligent systems that can solve complex real-world problems. From machine learning algorithms to natural language processing projects, I'm committed to pushing the boundaries of what's possible with artificial intelligence.</p>
+                    <div class="btn-container">
+                        <a href="#" class="btn btn-primary">Download Resume</a>
                     </div>
                 </div>
-
-                <div class="pokemon-container" id="pokemonSection">
-                    <h2>PokéShuffle</h2>
-                    <div id="pokemonName"></div>
-                    <div id="pokemonTypes" class="pokemon-types"></div>
-                    <img id="pokemonImage" alt="Pokemon" src="https://via.placeholder.com/250?text=Loading...">
-                    <p id="pokemonDescription"></p>
-                    <button id="refreshButton">Get New Pokémon</button>
+                <div class="about-img">
+                    <img src="ME.jpg" alt="Farhaan Khan">
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="resume" class="section resume">
-          <div class="resume-section">
-            
-             <h2 id="educationToggle">Education <span>&#9660;</span></h2>
-              <div class="resume-content" id="educationContent">
-                <ul>
-                  <li>
-                      <p><strong>10th:</strong> Colonels Central Academy</p>
-                      <p>CBSE, 93.2%</p>
-                  </li>
-                  <li>
-                      <p><strong>12th:</strong> Amity International School</p>
-                      <p>CBSE, 94.4%</p>
-                  </li>
-                  <li>
-                      <p><strong>Undergraduate:</strong> B.Tech in CSE with specialization in Blockchain Technology, VIT Vellore</p>
-                      <p>CGPA: 9.15</p>
-                  </li>
-              </ul>
-              </div>
-  
-              <h2 id="skillsToggle">Skills <span>&#9660;</span></h2>
-              <div class="resume-content" id="skillsContent">
-                  <div class="skill">
-                      <p>Python <span class="skill-level">(Advanced)</span></p>
-                      <div class="progress">
-                          <div class="progress-bar" style="width: 90%;"></div>
-                      </div>
-                      <div class="skill">
-                        <p>JavaScript <span class="skill-level">(Intermediate)</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%;"></div>
-                        </div>
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Skills</h2>
+                <p>Technologies I work with</p>
+            </div>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <h3>Technical Skills</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%;"></div>
                     </div>
-                    <div class="skill">
-                        <p>React <span class="skill-level">(Intermediate)</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%;"></div>
-                        </div>
+                    <ul class="skills-list">
+                        <li>Python (Advanced)</li>
+                        <li>JavaScript (Intermediate)</li>
+                        <li>React (Intermediate)</li>
+                        <li>C++ (Intermediate)</li>
+                        <li>SQL (Beginner)</li>
+                        <li>Blockchain (Intermediate)</li>
+                        <li>AI/ML (Beginner)</li>
+                        <li>Computer Vision (Beginner)</li>
+                    </ul>
+                </div>
+                <div class="skill-item">
+                    <h3>Professional Skills</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%;"></div>
                     </div>
-                    <div class="skill">
-                        <p>C++ <span class="skill-level">(Intermediate)</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <p>SQL <span class="skill-level">(Beginner)</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 30%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <p>Blockchain <span class="skill-level">(Intermediate)</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <p>AI/ML <span class="skill-level">(Beginner)</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 30%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <p>Computer Vision <span class="skill-level">(Beginner)</span></p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 30%;"></div>
-                        </div>
-                    </div>
-                  </div>
-                  </div>
-  
-  
-                  <h2 id="experienceToggle">Work Experience <span>&#9660;</span></h2>
-                  <div class="resume-content" id="experienceContent">
-                      <ul>
-                          <li>
-                              <p><strong>Imaginate XR</strong></p>
-                              <p>Computer Vision Research Intern</p>
-                              <ul>
-                                  <li>Conducted research on Neural Radiance Fields (NeRFs) and Gaussian Splatting for advanced 3D reconstruction and rendering.</li>
-                                  <li>Implemented and optimized NeRF and Gaussian Splatting techniques, enhancing model rendering accuracy and efficiency.</li>
-                                  <li>Performed performance comparisons between methods, leading to significant improvements in rendering time.</li>
-                                  <li>Successfully ported the resulting point cloud data to Unity for 3D visualization.</li>
-                              </ul>
-                          </li>
-                      </ul>
-                  </div>
-  
-              <p>References available upon request.</p>
-              <a href="Farhaan_Khan_RESUME_February_2025.pdf" download="Farhaan_Khan_RESUME_February_2025.pdf" style="
-                    display: inline-block; /* Make it behave like a block element */
-                    padding: 10px 20px; /* Add some padding */
-                    background-color: #760afb; /* Use your accent color */
-                    color: #E0E0E0; /* Text color */
-                    text-decoration: none; /* Remove underline */
-                    border-radius: 5px; /* Rounded corners */
-                    transition: background-color 0.3s ease; /* Smooth transition */
-                ">Download Resume</a>
-          </div>
-      </section>
+                    <ul class="skills-list">
+                        <li>Problem Solving</li>
+                        <li>Team Collaboration</li>
+                        <li>Research & Development</li>
+                        <li>Technical Writing</li>
+                        <li>Project Management</li>
+                        <li>Public Speaking</li>
+                        <li>Continuous Learning</li>
+                        <li>Mentoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <section id="projects" class="section projects">
-              <div class="projects-grid">  
-                <div class="project-card">
-                  <h3>Production Order & Inventory System (2025 - Ongoing)</h3>
-                  <p>A system for managing production orders, inventory, and purchase orders for electromagnet-related products.</p>
-                  <div class="project-tech">Python, React, Firebase</div>
-                  <a href="https://github.com/fakubwoy/SEProject">GitHub Repo</a>
-              </div>
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Experience</h2>
+                <p>Where I've worked</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024</div>
+                        <h3 class="timeline-title">Computer Vision Research Intern</h3>
+                        <h4 class="timeline-company">Imaginate XR</h4>
+                        <p class="timeline-text">
+                            <ul>
+                                <li>Conducted research on Neural Radiance Fields (NeRFs) and Gaussian Splatting for advanced 3D reconstruction and rendering.</li>
+                                <li>Implemented and optimized NeRF and Gaussian Splatting techniques, enhancing model rendering accuracy and efficiency.</li>
+                                <li>Performed performance comparisons between methods, leading to significant improvements in rendering time.</li>
+                                <li>Successfully ported the resulting point cloud data to Unity for 3D visualization.</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023 - Present</div>
+                        <h3 class="timeline-title">B.Tech in Computer Science</h3>
+                        <h4 class="timeline-company">VIT Vellore</h4>
+                        <p class="timeline-text">Specialization in Blockchain Technology. Current CGPA: 9.15</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2021</div>
+                        <h3 class="timeline-title">12th Grade</h3>
+                        <h4 class="timeline-company">Amity International School</h4>
+                        <p class="timeline-text">CBSE, 94.4%</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2019</div>
+                        <h3 class="timeline-title">10th Grade</h3>
+                        <h4 class="timeline-company">Colonels Central Academy</h4>
+                        <p class="timeline-text">CBSE, 93.2%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Projects</h2>
+                <p>Some of my recent work</p>
+            </div>
+            <div class="projects-grid">
                 <div class="project-card">
-                      <h3>ChatBox (2024)</h3>
-                      <p>A real-time chat application with an AI chatbot, WebSockets, and a React frontend.</p>
-                      <div class="project-tech">React, WebSockets, AI</div>
-                      <a href="https://github.com/fakubwoy/ChatBox">GitHub Repo</a>
-                  </div>
-  
-                  <div class="project-card">
-                      <h3>C-Compiler (2024)</h3>
-                      <p>A compiler visualizer from lexical analysis to x86 ASM code generation, along with chatbot integration to answer compiler related questions.</p>
-                      <div class="project-tech">C++, Assembly</div>
-                      <a href="https://github.com/fakubwoy/C-Compiler">GitHub Repo</a>
-                  </div>
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Production Order System">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Production Order & Inventory System</h3>
+                        <p class="project-description">A system for managing production orders, inventory, and purchase orders for electromagnet-related products.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/fakubwoy/SEProject" target="_blank"><i class="fas fa-code"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="ChatBox">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">ChatBox</h3>
+                        <p class="project-description">A real-time chat application with an AI chatbot, WebSockets, and a React frontend.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">WebSockets</span>
+                            <span class="tech-tag">AI</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/fakubwoy/ChatBox" target="_blank"><i class="fas fa-code"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1617791160536-598cf32026fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" alt="C-Compiler">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">C-Compiler</h3>
+                        <p class="project-description">A compiler visualizer from lexical analysis to x86 ASM code generation, with chatbot integration.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Assembly</span>
+                            <span class="tech-tag">NLP</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/fakubwoy/C-Compiler" target="_blank"><i class="fas fa-code"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1065&q=80" alt="Deepfake Detection">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Deepfake Detection</h3>
+                        <p class="project-description">A solution for detecting and reporting deepfake videos using MTCNN and Inception ResNet.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">MTCNN</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/fakubwoy/Deepfake_detection" target="_blank"><i class="fas fa-code"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="ExpTrack">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">ExpTrack</h3>
+                        <p class="project-description">A personal expense tracker with daily logging on a calendar, expense plotting, and an "owe book".</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/fakubwoy/ExpTrack" target="_blank"><i class="fas fa-code"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="AlgoViz">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">AlgoViz</h3>
+                        <p class="project-description">An algorithm visualizer in React for various sorting and searching algorithms.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">D3.js</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/fakubwoy/AlgoViz" target="_blank"><i class="fas fa-code"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                  <div class="project-card">
-                    <h3>Zitch (2024)</h3>
-                    <p>A machine learning research project for cluster prediction.</p>
-                    <div class="project-tech">Python, Machine Learning</div>
-                    <a href="https://github.com/fakubwoy/Zitch">GitHub Repo</a>
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Feel free to contact me</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's talk about everything!</h3>
+                    <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>farhaan.8586@outlook.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 8586000361</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>VIT Vellore, Tamil Nadu, India</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/fakubwoy/"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://x.com/fk8586"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/fakubwoy/"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
-                
-                <div class="project-card">
-                    <h3>Deepfake Detection (2024)</h3>
-                    <p>A solution for detecting and reporting deepfake videos using MTCNN and Inception ResNet. The model, fine-tuned on the FaceForensics dataset, is accessible via a web interface and Jupyter Notebook.</p>
-                    <div class="project-tech">Python, TensorFlow, MTCNN, Inception ResNet</div>
-                    <a href="https://github.com/fakubwoy/Deepfake_detection">GitHub Repo</a>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
                 </div>
-                
-                <div class="project-card">
-                    <h3>ExpTrack (2024)</h3>
-                    <p>A personal expense tracker with daily logging on a calendar, expense plotting, and an "owe book," built using React.</p>
-                    <div class="project-tech">React, JavaScript</div>
-                    <a href="https://github.com/fakubwoy/ExpTrack">GitHub Repo</a>
-                </div>
-                
-                <div class="project-card">
-                    <h3>AlgoViz (2024)</h3>
-                    <p>An algorithm visualizer in React for various sorting and searching algorithms.</p>
-                    <div class="project-tech">React, JavaScript</div>
-                    <a href="https://github.com/fakubwoy/AlgoViz">GitHub Repo</a>
-                </div>
-                
-  
-                   </div>  </section>
-    </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>Designed & Built by Farhaan Khan</p>
+            <div class="social-links">
+                <a href="https://github.com/fakubwoy/"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://x.com/fk8586"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/fakubwoy/"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="copyright">© 2025 All rights reserved</p>
+        </div>
+    </footer>
 
     <script>
-        // Navigation logic
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', (e) => {
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const sectionId = e.target.getAttribute('data-section');
                 
-                // Hide all sections
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('active');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-
-                // Show selected section
-                document.getElementById(sectionId).classList.add('active');
             });
         });
 
-        // Pokemon logic
-        const pokemonNameEl = document.getElementById('pokemonName');
-        const pokemonImageEl = document.getElementById('pokemonImage');
-        const pokemonTypesEl = document.getElementById('pokemonTypes');
-        const pokemonDescriptionEl = document.getElementById('pokemonDescription');
-        const refreshButton = document.getElementById('refreshButton');
-        const pokemonContainer = document.getElementById('pokemonSection');
-        
-        const TYPE_COLORS = {
-            normal: '#A8A878', fire: '#F08030', water: '#6890F0', 
-            electric: '#F8D030', grass: '#78C850', ice: '#98D8D8', 
-            fighting: '#C03028', poison: '#A040A0', ground: '#E0C068', 
-            flying: '#A890F0', psychic: '#F85888', bug: '#A8B820', 
-            rock: '#B8A038', ghost: '#705898', dragon: '#7038F8', 
-            dark: '#705848', steel: '#B8B8D0', fairy: '#EE99AC'
+        // Form submission
+        const form = document.querySelector('.contact-form form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            form.reset();
+        });
+
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.skill-item, .project-card, .timeline-item');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
         };
 
-        const PASTEL_MULTIPLIER = 0.3;
-
-        function getLightPastelColor(hexColor) {
-            const r = parseInt(hexColor.slice(1, 3), 16);
-            const g = parseInt(hexColor.slice(3, 5), 16);
-            const b = parseInt(hexColor.slice(5, 7), 16);
-
-            const pasteR = Math.round(r + (255 - r) * PASTEL_MULTIPLIER);
-            const pasteG = Math.round(g + (255 - g) * PASTEL_MULTIPLIER);
-            const pasteB = Math.round(b + (255 - b) * PASTEL_MULTIPLIER);
-
-            return `rgb(${pasteR}, ${pasteG}, ${pasteB})`;
-        }
-
-        const pokemonCache = new Map();
-        let currentCry = null;
-        let nextPokemonPromise = null;
-
-        async function fetchPokemonDetails(id) {
-            if (pokemonCache.has(id)) {
-                return pokemonCache.get(id);
-            }
-
-            try {
-                const [pokemonData, speciesData] = await Promise.all([ 
-                    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(r => r.json()),
-                    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then(r => r.json())
-                ]);
-
-                const description = speciesData.flavor_text_entries
-                    .find(entry => entry.language.name === 'en')?.flavor_text
-                    .replace(/\f/g, ' ') || 'No description available.';
-
-                const pokemonDetails = {
-                    name: pokemonData.name,
-                    imageUrl: pokemonData.sprites.other['official-artwork'].front_default,
-                    cryUrl: pokemonData.cries.latest,
-                    types: pokemonData.types.map(t => t.type.name),
-                    description: description
-                };
-
-                pokemonCache.set(id, pokemonDetails);
-                return pokemonDetails;
-            } catch (error) {
-                console.error("Failed to fetch Pokemon", error);
-            }
-        }
-        const toggles = {
-          educationToggle: 'educationContent',
-          skillsToggle: 'skillsContent',
-          experienceToggle: 'experienceContent'
-      };
-
-      for (const toggleId in toggles) {
-          const toggle = document.getElementById(toggleId);
-          const contentId = toggles[toggleId];
-          const content = document.getElementById(contentId);
-
-          toggle.addEventListener('click', () => {
-              content.classList.toggle('active');
-              // Toggle the down/up arrow symbol
-              const span = toggle.querySelector('span');
-              span.textContent = content.classList.contains('active') ? '▲' : '▼';
-          });
-      }
-        async function displayPokemon(pokemonDetails) {
-            pokemonNameEl.textContent = pokemonDetails.name.toUpperCase();
-
-            const primaryType = pokemonDetails.types[0];
-            const typeColor = TYPE_COLORS[primaryType];
-            const backgroundColor = getLightPastelColor(typeColor);
-            pokemonContainer.style.background = `linear-gradient(135deg, ${backgroundColor}, ${typeColor})`;
-
-            pokemonTypesEl.innerHTML = pokemonDetails.types.map(type => 
-                `<span class="type-badge" style="background-color:${TYPE_COLORS[type]}">${type}</span>`
-            ).join('');
-
-            pokemonImageEl.src = pokemonDetails.imageUrl;
-
-            if (currentCry) {
-                currentCry.pause();
-                currentCry = null;
-            }
-            currentCry = new Audio(pokemonDetails.cryUrl);
-
-            pokemonDescriptionEl.textContent = pokemonDetails.description;
-
-            nextPokemonPromise = fetchPokemonDetails(Math.floor(Math.random() * 1000) + 1);
-        }
-
-        async function initPokemon() {
-            const randomId = Math.floor(Math.random() * 1024) + 1;
-            const pokemonDetails = await fetchPokemonDetails(randomId);
-            await displayPokemon(pokemonDetails);
-        }
-
-        pokemonImageEl.addEventListener('click', () => {
-            if (currentCry) {
-                currentCry.play();
-            }
+        // Set initial state for animation
+        document.querySelectorAll('.skill-item, .project-card, .timeline-item').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         });
 
-        refreshButton.addEventListener('click', async () => {
-            let pokemonDetails;
-
-            if (nextPokemonPromise) {
-                pokemonDetails = await nextPokemonPromise;
-                await displayPokemon(pokemonDetails);
-            } else {
-                await initPokemon();
-            }
-        });
-
-        initPokemon();
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
     </script>
 </body>
 </html>
