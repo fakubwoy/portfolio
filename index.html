@@ -8,6 +8,7 @@
 
     <!-- Tailwind CSS & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script rel="favicon" href="favicon.ico"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -91,7 +92,7 @@
             transform: translateY(0);
         }
         
-        /* 3D Carousel (Height Adjusted) */
+        /* 3D Carousel (Height Adjusted) - For Desktop */
         .carousel-container {
             perspective: 1000px;
             width: 300px;
@@ -161,7 +162,6 @@
     <div class="hidden lg:flex fixed bottom-0 left-10 z-10 flex-col items-center space-y-6">
         <a href="https://github.com/fakubwoy/" target="_blank" class="text-2xl text-slate-400 hover:text-accent hover:scale-110 transition-all duration-300"><i class="fab fa-github"></i></a>
         <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/" target="_blank" class="text-2xl text-slate-400 hover:text-accent hover:scale-110 transition-all duration-300"><i class="fab fa-linkedin-in"></i></a>
-        <!-- Reverted to Twitter bird logo -->
         <a href="https://x.com/fk8586" target="_blank" class="text-2xl text-slate-400 hover:text-accent hover:scale-110 transition-all duration-300"><i class="fab fa-twitter"></i></a>
         <div class="w-px h-24 bg-slate-600"></div>
     </div>
@@ -201,7 +201,7 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-6 lg:px-24 xl:px-48">
+    <main class="container mx-auto px-6 md:px-16 lg:px-24 xl:px-48">
         <!-- Hero Section -->
         <section id="hero" class="min-h-screen flex flex-col justify-center items-start">
             <div class="max-w-3xl">
@@ -239,21 +239,31 @@
         </section>
 
         <!-- About Me -->
-        <section id="about" class="py-24 flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2 scroll-animate">
-                <h2 class="text-3xl font-extrabold mb-6">About Me</h2>
-                <div class="space-y-4 text-slate-200 text-base leading-relaxed">
-                    <p>I'm a Full Stack Developer with a sharp focus on backend and system design. My journey in tech has led me to build scalable tools for both academic and enterprise environments.</p>
-                    <p>With strong skills in Python, TypeScript, Docker, and AWS, I enjoy tackling complex problems and architecting robust solutions. I'm particularly passionate about blockchain systems and how they can be leveraged to create more secure and transparent applications.</p>
-                    <p>When I'm not coding, you can find me exploring the latest in AI, contributing to open-source projects, or trying to find the next hidden bug... I mean, feature!</p>
+        <section id="about" class="py-24">
+            <div class="flex flex-wrap md:flex-nowrap items-center gap-12">
+                <!-- Text content wrapper -->
+                <div class="w-full md:w-1/2 scroll-animate">
+                    <h2 class="text-3xl font-extrabold mb-6">About Me</h2>
+                    <!-- Mobile Image -->
+                    <div class="md:hidden flex justify-center my-8">
+                        <div class="w-64 h-64 rounded-full bg-accent/20 relative group">
+                            <img src="ME.jpg" alt="Farhaan Khan" class="rounded-full w-full h-full object-cover p-2">
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-slate-200 text-base leading-relaxed">
+                        <p>I'm a Full Stack Developer with a sharp focus on backend and system design. My journey in tech has led me to build scalable tools for both academic and enterprise environments.</p>
+                        <p>With strong skills in Python, TypeScript, Docker, and AWS, I enjoy tackling complex problems and architecting robust solutions. I'm particularly passionate about blockchain systems and how they can be leveraged to create more secure and transparent applications.</p>
+                        <p>When I'm not coding, you can find me exploring the latest in AI, contributing to open-source projects, or trying to find the next hidden bug... I mean, feature!</p>
+                    </div>
+                     <a href="Farhaan_Khan_RESUME_August_2025.pdf" download class="mt-6 inline-block bg-accent text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-green-400 transition-colors">
+                        Download Resume
+                    </a>
                 </div>
-                 <a href="Farhaan_Khan_RESUME_August_2025.pdf" download class="mt-6 inline-block bg-accent text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-green-400 transition-colors">
-                    Download Resume
-                </a>
-            </div>
-            <div class="md:w-1/2 flex justify-center scroll-animate" style="transition-delay: 200ms;">
-                <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-accent/20 relative group">
-                    <img src="ME.jpg" alt="Farhaan Khan" class="rounded-full w-full h-full object-cover p-2 transition-transform duration-300 group-hover:scale-105">
+                <!-- Desktop Image Wrapper -->
+                <div class="hidden md:flex w-full md:w-1/2 justify-center scroll-animate">
+                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-accent/20 relative group">
+                        <img src="ME.jpg" alt="Farhaan Khan" class="rounded-full w-full h-full object-cover p-2 transition-transform duration-300 group-hover:scale-105">
+                    </div>
                 </div>
             </div>
         </section>
@@ -262,11 +272,12 @@
         <section id="experience" class="py-24">
             <h2 class="text-3xl font-extrabold text-center mb-12 scroll-animate">Where I've Worked</h2>
             <div class="relative max-w-3xl mx-auto">
-                <div class="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-slate-700"></div>
+                <!-- The timeline line -->
+                <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-0.5 h-full bg-slate-700"></div>
                 <!-- Alfaleus Tech -->
                 <div class="relative mb-8 scroll-animate">
-                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
-                    <div class="ml-auto md:ml-0 md:w-1/2 md:pl-8 md:text-right md:pr-8">
+                    <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
+                    <div class="pl-10 md:pl-0 md:w-1/2 md:pr-8 md:text-right">
                         <div class="glassmorphism p-6 rounded-lg transition-transform duration-300 hover:-translate-y-2">
                             <p class="text-accent font-spacemono text-sm">June 2025 - August 2025</p>
                             <h3 class="text-xl font-bold mt-1">Backend Developer Intern</h3>
@@ -277,8 +288,8 @@
                 </div>
                 <!-- Elektromag -->
                 <div class="relative mb-8 scroll-animate">
-                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
-                    <div class="md:w-1/2 md:ml-auto md:pl-8">
+                    <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
+                    <div class="pl-10 md:w-1/2 md:ml-auto md:pl-8">
                         <div class="glassmorphism p-6 rounded-lg transition-transform duration-300 hover:-translate-y-2">
                             <p class="text-accent font-spacemono text-sm">January 2025 - April 2025</p>
                             <h3 class="text-xl font-bold mt-1">Software Developer</h3>
@@ -289,8 +300,8 @@
                 </div>
                 <!-- Imaginate XR -->
                 <div class="relative mb-8 scroll-animate">
-                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
-                    <div class="ml-auto md:ml-0 md:w-1/2 md:pl-8 md:text-right md:pr-8">
+                    <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
+                    <div class="pl-10 md:pl-0 md:w-1/2 md:pr-8 md:text-right">
                         <div class="glassmorphism p-6 rounded-lg transition-transform duration-300 hover:-translate-y-2">
                             <p class="text-accent font-spacemono text-sm">June 2024 - July 2024</p>
                             <h3 class="text-xl font-bold mt-1">Computer Vision Research Intern</h3>
@@ -324,16 +335,22 @@
         <!-- Projects Section -->
         <section id="projects" class="py-24 text-center">
             <h2 class="text-3xl font-extrabold mb-4 scroll-animate">Some Things I've Built</h2>
-            <p class="text-slate-300 mb-12 max-w-2xl mx-auto scroll-animate">Here are a few projects I've worked on. Hover to pause the rotation and click the arrows to navigate.</p>
+            <p class="text-slate-300 mb-12 max-w-2xl mx-auto scroll-animate">Here are a few projects I've worked on. On desktop, hover to pause and use the arrows to navigate.</p>
             
-            <div class="relative scroll-animate mt-48">
+            <!-- Desktop Carousel (Hidden on Mobile) -->
+            <div class="hidden lg:block relative scroll-animate mt-48">
                 <div class="carousel-container">
                     <div class="carousel">
-                        <!-- Project Cards will be injected here by JavaScript -->
+                        <!-- Desktop Project Cards will be injected here -->
                     </div>
                 </div>
-                <button class="carousel-arrow absolute top-1/2 -translate-y-1/2 left-0 md:-left-16 text-4xl text-accent/50 hover:text-accent transition-colors" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-arrow absolute top-1/2 -translate-y-1/2 right-0 md:-right-16 text-4xl text-accent/50 hover:text-accent transition-colors" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+                <button class="carousel-arrow absolute top-1/2 -translate-y-1/2 -left-16 text-4xl text-accent/50 hover:text-accent transition-colors" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow absolute top-1/2 -translate-y-1/2 -right-16 text-4xl text-accent/50 hover:text-accent transition-colors" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <!-- Mobile Project List (Hidden on Desktop) -->
+            <div id="mobile-projects-container" class="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 scroll-animate">
+                <!-- Mobile Project Cards will be injected here -->
             </div>
         </section>
 
@@ -354,7 +371,6 @@
         <div class="flex lg:hidden justify-center space-x-6 mb-4">
             <a href="https://github.com/fakubwoy/" target="_blank" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-github"></i></a>
             <a href="https://www.linkedin.com/in/farhaan-khan-1629202b8/" target="_blank" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-linkedin-in"></i></a>
-            <!-- Reverted to Twitter bird logo -->
             <a href="https://x.com/fk8586" target="_blank" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-twitter"></i></a>
         </div>
         <p class="font-spacemono text-sm">Designed & Built by Farhaan Khan</p>
@@ -463,11 +479,7 @@
 
             scrollElements.forEach(el => observer.observe(el));
             
-            // --- 3D Project Carousel ---
-            const carousel = document.querySelector('.carousel');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-
+            // --- Project Data ---
             const projects = [
                 {
                     title: "C Compiler Visualiser",
@@ -507,34 +519,25 @@
                 }
             ];
 
+            // --- 3D Project Carousel (Desktop) ---
+            const carousel = document.querySelector('.carousel');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
             let angle = 0;
-            const radius = 400;
+            const radius = 400; // This radius works for the desktop view
             let autoRotateInterval;
             let isHovering = false;
 
             function setupCarousel() {
+                if (!carousel) return; // Don't run if carousel element doesn't exist (on mobile)
                 const numProjects = projects.length;
                 const angleStep = 360 / numProjects;
 
                 projects.forEach((project, i) => {
                     const card = document.createElement('div');
-                    card.className = 'carousel-card glassmorphism rounded-lg p-6 text-left flex flex-col justify-between transition-transform duration-300 hover:-translate-y-2';
-                    card.innerHTML = `
-                        <div>
-                            <div class="flex justify-between items-center mb-6">
-                                <i class="fas fa-folder text-4xl text-accent"></i>
-                                <a href="${project.link}" target="_blank" class="text-2xl text-slate-300 hover:text-accent transition-colors"><i class="fab fa-github"></i></a>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">${project.title}</h3>
-                            <p class="text-slate-200 text-sm">${project.description}</p>
-                        </div>
-                        <div class="mt-4">
-                            <ul class="flex flex-wrap gap-2 text-xs font-spacemono">
-                                <!-- Updated tech tag style -->
-                                ${project.tech.map(t => `<li class="my-1"><span class="bg-slate-800 text-accent px-3 py-1 rounded-full">${t}</span></li>`).join('')}
-                            </ul>
-                        </div>
-                    `;
+                    card.className = 'carousel-card glassmorphism rounded-lg p-6 text-left flex flex-col justify-between';
+                    card.innerHTML = getProjectCardHTML(project);
                     const cardAngle = angleStep * i;
                     card.style.transform = `rotateY(${cardAngle}deg) translateZ(${radius}px)`;
                     carousel.appendChild(card);
@@ -575,9 +578,45 @@
                 stopAutoRotate();
                 setTimeout(startAutoRotate, 5000);
             });
+            
+            // --- Mobile Project List ---
+            const mobileProjectsContainer = document.getElementById('mobile-projects-container');
+            
+            function setupMobileProjects() {
+                if (!mobileProjectsContainer) return;
+                projects.forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'glassmorphism rounded-lg p-6 text-left flex flex-col justify-between transition-transform duration-300 hover:-translate-y-2';
+                    card.innerHTML = getProjectCardHTML(project);
+                    mobileProjectsContainer.appendChild(card);
+                });
+            }
 
+            // --- Shared function to create card HTML ---
+            function getProjectCardHTML(project) {
+                return `
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fas fa-folder text-4xl text-accent"></i>
+                            <a href="${project.link}" target="_blank" class="text-2xl text-slate-300 hover:text-accent transition-colors"><i class="fab fa-github"></i></a>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">${project.title}</h3>
+                        <p class="text-slate-200 text-sm">${project.description}</p>
+                    </div>
+                    <div class="mt-4">
+                        <ul class="flex flex-wrap gap-2 text-xs font-spacemono">
+                            ${project.tech.map(t => `<li class="my-1"><span class="bg-slate-800 text-accent px-3 py-1 rounded-full">${t}</span></li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // --- Initialize Views ---
             setupCarousel();
-            startAutoRotate();
+            if (carousel) {
+                startAutoRotate();
+            }
+            setupMobileProjects();
             
             // --- Konami Code Easter Egg ---
             const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
