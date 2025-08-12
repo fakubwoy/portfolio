@@ -16,10 +16,16 @@
 
     <style>
         /* Custom Styles */
+        html {
+            background-color: #0a0a0a;
+        }
+        
         body {
             background-color: #0a0a0a;
             color: #e2e8f0;
             font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh; /* Use dynamic viewport height for better mobile support */
             /* Custom arrow cursor */
             cursor: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 16.5L4.5 4.5L15.5 9.5L9 11L5.5 16.5Z' fill='%23e2e8f0' stroke='%230a0a0a' stroke-width='1'/%3E%3C/svg%3E"), auto;
         }
@@ -60,6 +66,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            height: 100dvh; /* Use dynamic viewport height */
             z-index: -2;
             background: linear-gradient(45deg, #166534, #1e3a8a, #1e40af, #166534);
             background-size: 400% 400%;
@@ -77,6 +84,7 @@
             position: fixed;
             width: 100%;
             height: 100%;
+            height: 100dvh; /* Use dynamic viewport height */
             z-index: -1;
         }
 
@@ -140,8 +148,7 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            /* FIX: Changed background to transparent to prevent black bar on mobile overscroll */
-            background: transparent;
+            background: #0a0a0a; /* Match body background */
         }
         ::-webkit-scrollbar-thumb {
             background: #4ade80;
@@ -149,6 +156,26 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #36a164;
+        }
+
+        /* Prevent overscroll bounce on iOS */
+        body {
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Fix for mobile viewport issues */
+        @supports (height: 100dvh) {
+            .min-h-screen {
+                min-height: 100dvh;
+            }
+        }
+
+        /* Ensure full coverage on mobile */
+        .animated-gradient,
+        #particles-js {
+            min-height: 100vh;
+            min-height: 100dvh;
         }
     </style>
 </head>
