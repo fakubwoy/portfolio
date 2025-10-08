@@ -4,27 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farhaan Khan | Full Stack Developer</title>
+    <title>Farhaan Khan | SRE & Backend Engineer</title>
 
     <!-- Tailwind CSS & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script rel="favicon" href="favicon.ico"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Custom Styles */
         body {
             background-color: #0a0a0a;
             color: #e2e8f0;
             font-family: 'Inter', sans-serif;
-            /* Custom arrow cursor */
             cursor: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 16.5L4.5 4.5L15.5 9.5L9 11L5.5 16.5Z' fill='%23e2e8f0' stroke='%230a0a0a' stroke-width='1'/%3E%3C/svg%3E"), auto;
         }
 
-        /* Custom pointer cursor for interactive elements */
         a, button, .carousel-arrow {
             cursor: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.36364 21V9.54545L15.2727 15.2727L16.5 12.5L11.8182 11.1818L18 5H4V21H8.36364Z' fill='%23e2e8f0' stroke='%230a0a0a' stroke-width='1'/%3E%3C/svg%3E"), pointer;
         }
@@ -33,19 +31,11 @@
             font-family: 'Space Mono', monospace;
         }
 
-        .text-accent {
-            color: #4ade80;
-        }
+        .text-accent { color: #3b82f6; }
+        .bg-accent { background-color: #3b82f6; }
+        .border-accent { border-color: #3b82f6; }
+        .text-accent-secondary { color: #10b981; }
 
-        .bg-accent {
-            background-color: #4ade80;
-        }
-
-        .border-accent {
-            border-color: #4ade80;
-        }
-
-        /* Glassmorphism Effect */
         .glassmorphism {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
@@ -53,7 +43,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Animated Background Gradient (Darker Palette) */
         .animated-gradient {
             position: fixed;
             top: 0;
@@ -61,7 +50,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: linear-gradient(45deg, #166534, #1e3a8a, #1e40af, #166534);
+            background: linear-gradient(45deg, #1e3a8a, #0f172a, #1e293b, #1e3a8a);
             background-size: 400% 400%;
             animation: gradient-animation 25s ease infinite;
         }
@@ -72,7 +61,6 @@
             100% { background-position: 0% 50%; }
         }
         
-        /* Particle Background */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -80,7 +68,6 @@
             z-index: -1;
         }
 
-        /* On-Scroll Animations */
         .scroll-animate {
             opacity: 0;
             transform: translateY(30px);
@@ -92,11 +79,10 @@
             transform: translateY(0);
         }
         
-        /* 3D Carousel (Height Adjusted) - For Desktop */
         .carousel-container {
             perspective: 1000px;
             width: 300px;
-            height: 400px; 
+            height: 420px; 
             margin: auto;
         }
         .carousel {
@@ -109,15 +95,14 @@
         .carousel-card {
             position: absolute;
             width: 300px;
-            height: 380px; 
+            height: 400px; 
             backface-visibility: hidden;
             transition: opacity 0.8s, transform 0.8s, box-shadow 0.3s;
         }
         .carousel-card:hover {
-             box-shadow: 0 0 25px rgba(74, 222, 128, 0.3);
+             box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
         }
 
-        /* Konami Code Game Modal */
         #konami-modal {
             font-family: 'Press Start 2P', cursive;
         }
@@ -135,20 +120,39 @@
             border-bottom-width: 2px;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            /* FIX: Changed background to transparent to prevent black bar on mobile overscroll */
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: #4ade80;
+            background: #3b82f6;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #36a164;
+            background: #2563eb;
+        }
+
+        .metric-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
     </style>
 </head>
@@ -184,20 +188,19 @@
                 <a href="#experience" class="hover:text-accent transition-colors">Experience</a>
                 <a href="#projects" class="hover:text-accent transition-colors">Projects</a>
                 <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
-                <a href="Farhaan_Khan_RESUME_August_2025.pdf" download class="bg-accent text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-green-400 transition-colors">Resume</a>
+                <a href="Farhaan_Khan_Luganodes_October2025.pdf" download class="bg-accent text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">Resume</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden text-2xl">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden">
             <nav class="flex flex-col items-center space-y-4 py-4">
                 <a href="#about" class="hover:text-accent transition-colors">About</a>
                 <a href="#experience" class="hover:text-accent transition-colors">Experience</a>
                 <a href="#projects" class="hover:text-accent transition-colors">Projects</a>
                 <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
-                <a href="Farhaan_Khan_RESUME_August_2025.pdf" download class="bg-accent text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-green-400 transition-colors">Resume</a>
+                <a href="Farhaan_Khan_Luganodes_October2025.pdf" download class="bg-accent text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">Resume</a>
             </nav>
         </div>
     </header>
@@ -208,33 +211,34 @@
             <div class="max-w-3xl">
                 <p class="text-accent font-spacemono text-lg">Hi, my name is</p>
                 <h1 class="text-5xl md:text-7xl font-extrabold text-slate-100 mt-4">Farhaan Khan.</h1>
-                <h2 class="text-4xl md:text-6xl font-bold text-slate-300 mt-2">I build things for the web.</h2>
+                <h2 class="text-4xl md:text-6xl font-bold text-slate-300 mt-2">I build reliable systems.</h2>
                 <div class="h-12 mt-4">
                      <p class="text-lg md:text-xl text-slate-300">I'm a <span id="typing-animation" class="text-accent font-spacemono"></span></p>
                 </div>
-                <a href="#contact" class="mt-8 inline-block bg-transparent border-2 border-accent text-accent font-bold py-3 px-6 rounded-lg hover:bg-accent hover:text-gray-900 transition-all duration-300">
+                <p class="text-lg text-slate-300 mt-6 max-w-2xl">
+                    Systems-focused Software Engineer specializing in backend development, cloud infrastructure, and automation. Passionate about building scalable, resilient systems with expertise in Blockchain Technology, Python, Docker, and AWS.
+                </p>
+                <a href="#contact" class="mt-8 inline-block bg-transparent border-2 border-accent text-accent font-bold py-3 px-6 rounded-lg hover:bg-accent hover:text-white transition-all duration-300">
                     Get In Touch
                 </a>
             </div>
         </section>
 
-        <!-- Key Achievements -->
+        <!-- Key Metrics -->
         <section id="achievements" class="py-24">
-            <h2 class="text-3xl font-extrabold text-center mb-12 scroll-animate">Key Achievements</h2>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="glassmorphism p-6 rounded-lg scroll-animate transition-transform duration-300 hover:-translate-y-2">
-                    <h3 class="text-xl font-bold text-accent mb-2">Significant Projects</h3>
-                    <ul class="list-disc list-inside space-y-2 text-slate-200">
-                        <li>Built a C Compiler Visualiser adopted by 200+ students to understand code-to-assembly translation.</li>
-                        <li>Developed an Amazon Price Tracker leveraging GenAI to notify users of price drops in real-time.</li>
-                    </ul>
+            <h2 class="text-3xl font-extrabold text-center mb-12 scroll-animate">Impact & Achievements</h2>
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="metric-card glassmorphism p-6 rounded-lg scroll-animate transition-transform duration-300 hover:-translate-y-2 text-center">
+                    <div class="text-4xl font-bold text-accent mb-2">4×</div>
+                    <p class="text-slate-200">Reduction in operational workload through automation</p>
                 </div>
-                <div class="glassmorphism p-6 rounded-lg scroll-animate transition-transform duration-300 hover:-translate-y-2" style="transition-delay: 200ms;">
-                    <h3 class="text-xl font-bold text-accent mb-2">Academic Excellence</h3>
-                    <ul class="list-disc list-inside space-y-2 text-slate-200">
-                        <li>Top 10 in stream with a CGPA of 9.09/10.</li>
-                        <li>3x Merit Scholarship recipient for academic excellence.</li>
-                    </ul>
+                <div class="metric-card glassmorphism p-6 rounded-lg scroll-animate transition-transform duration-300 hover:-translate-y-2 text-center" style="transition-delay: 100ms;">
+                    <div class="text-4xl font-bold text-accent mb-2">30%</div>
+                    <p class="text-slate-200">Reduction in rendering latency via pipeline optimization</p>
+                </div>
+                <div class="metric-card glassmorphism p-6 rounded-lg scroll-animate transition-transform duration-300 hover:-translate-y-2 text-center" style="transition-delay: 200ms;">
+                    <div class="text-4xl font-bold text-accent mb-2">500+</div>
+                    <p class="text-slate-200">Users & 60+ forks for Visor extension</p>
                 </div>
             </div>
         </section>
@@ -242,25 +246,29 @@
         <!-- About Me -->
         <section id="about" class="py-24">
             <div class="flex flex-wrap md:flex-nowrap items-center gap-12">
-                <!-- Text content wrapper -->
                 <div class="w-full md:w-1/2 scroll-animate">
                     <h2 class="text-3xl font-extrabold mb-6">About Me</h2>
-                    <!-- Mobile Image -->
                     <div class="md:hidden flex justify-center my-8">
                         <div class="w-64 h-64 rounded-full bg-accent/20 relative group">
                             <img src="ME.jpg" alt="Farhaan Khan" class="rounded-full w-full h-full object-cover p-2">
                         </div>
                     </div>
                     <div class="space-y-4 text-slate-200 text-base leading-relaxed">
-                        <p>I'm a Full Stack Developer with a sharp focus on backend and system design. My journey in tech has led me to build scalable tools for both academic and enterprise environments.</p>
-                        <p>With strong skills in Python, TypeScript, Docker, and AWS, I enjoy tackling complex problems and architecting robust solutions. I'm particularly passionate about blockchain systems and how they can be leveraged to create more secure and transparent applications.</p>
-                        <p>When I'm not coding, you can find me exploring the latest in AI, contributing to open-source projects, or trying to find the next hidden bug... I mean, feature!</p>
+                        <p>I'm a Site Reliability Engineer and Backend Developer with a passion for building systems that don't just work—they scale, adapt, and stay resilient under pressure.</p>
+                        <p>My expertise spans <span class="text-accent-secondary font-semibold">Python, AWS, Docker, Kubernetes</span>, and <span class="text-accent-secondary font-semibold">Blockchain</span>. I thrive on solving complex infrastructure challenges, optimizing CI/CD pipelines, and ensuring high availability across distributed systems.</p>
+                        <p>Currently pursuing B.Tech in Computer Science with specialization in Blockchain Technology. I've worked with med-tech startups, industrial electronics firms, and AR/VR simulation companies—each teaching me the importance of reliability, monitoring, and automation.</p>
+                        <p>When I'm not debugging production incidents or writing infrastructure-as-code, you'll find me exploring distributed systems architecture, contributing to open-source DevOps tools, or experimenting with observability platforms.</p>
                     </div>
-                     <a href="Farhaan_Khan_RESUME_August_2025.pdf" download class="mt-6 inline-block bg-accent text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-green-400 transition-colors">
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <span class="bg-slate-800 text-accent px-4 py-2 rounded-full text-sm font-spacemono">SRE</span>
+                        <span class="bg-slate-800 text-accent px-4 py-2 rounded-full text-sm font-spacemono">Backend</span>
+                        <span class="bg-slate-800 text-accent px-4 py-2 rounded-full text-sm font-spacemono">DevOps</span>
+                        <span class="bg-slate-800 text-accent px-4 py-2 rounded-full text-sm font-spacemono">Cloud</span>
+                    </div>
+                    <a href="Farhaan_Khan_Luganodes_October2025.pdf" download class="mt-6 inline-block bg-accent text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors">
                         Download Resume
                     </a>
                 </div>
-                <!-- Desktop Image Wrapper -->
                 <div class="hidden md:flex w-full md:w-1/2 justify-center scroll-animate">
                     <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-accent/20 relative group">
                         <img src="ME.jpg" alt="Farhaan Khan" class="rounded-full w-full h-full object-cover p-2 transition-transform duration-300 group-hover:scale-105">
@@ -273,20 +281,21 @@
         <section id="experience" class="py-24">
             <h2 class="text-3xl font-extrabold text-center mb-12 scroll-animate">Where I've Worked</h2>
             <div class="relative max-w-3xl mx-auto">
-                <!-- The timeline line -->
                 <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-0.5 h-full bg-slate-700"></div>
+                
                 <!-- Alfaleus Tech -->
                 <div class="relative mb-8 scroll-animate">
                     <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
                     <div class="pl-10 md:pl-0 md:w-1/2 md:pr-8 md:text-right">
                         <div class="glassmorphism p-6 rounded-lg transition-transform duration-300 hover:-translate-y-2">
                             <p class="text-accent font-spacemono text-sm">June 2025 - August 2025</p>
-                            <h3 class="text-xl font-bold mt-1">Backend Developer Intern</h3>
-                            <p class="text-slate-300">Alfaleus Tech</p>
-                            <p class="mt-2 text-slate-200">Led backend development for an internal platform (Flask, PostgreSQL) supporting 3+ tools; partnered with 4 teams to drive integration.</p>
+                            <h3 class="text-xl font-bold mt-1">Software Developer Intern</h3>
+                            <p class="text-slate-300">Alfaleus Tech (Med-tech startup)</p>
+                            <p class="mt-2 text-slate-200">Engineered and maintained a reliable backend platform (Flask, PostgreSQL), ensuring high availability for 3+ critical internal tools serving multiple teams.</p>
                         </div>
                     </div>
                 </div>
+                
                 <!-- Elektromag -->
                 <div class="relative mb-8 scroll-animate">
                     <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
@@ -294,11 +303,12 @@
                         <div class="glassmorphism p-6 rounded-lg transition-transform duration-300 hover:-translate-y-2">
                             <p class="text-accent font-spacemono text-sm">January 2025 - April 2025</p>
                             <h3 class="text-xl font-bold mt-1">Software Developer</h3>
-                            <p class="text-slate-300">Elektromag</p>
-                            <p class="mt-2 text-slate-200">Achieved a 4x reduction in operational workload by automating reporting and streamlining data processing.</p>
+                            <p class="text-slate-300">Elektromag (Industrial electronics)</p>
+                            <p class="mt-2 text-slate-200">Automated manual reporting workflows and streamlined data processing pipelines, achieving a 4× reduction in operational workload.</p>
                         </div>
                     </div>
                 </div>
+                
                 <!-- Imaginate XR -->
                 <div class="relative mb-8 scroll-animate">
                     <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full mt-1.5 border-4 border-gray-800"></div>
@@ -306,8 +316,8 @@
                         <div class="glassmorphism p-6 rounded-lg transition-transform duration-300 hover:-translate-y-2">
                             <p class="text-accent font-spacemono text-sm">June 2024 - July 2024</p>
                             <h3 class="text-xl font-bold mt-1">Computer Vision Research Intern</h3>
-                            <p class="text-slate-300">Imaginate XR</p>
-                            <p class="mt-2 text-slate-200">Optimised a 3D reconstruction pipeline using OpenCV and PyTorch, cutting rendering latency by 30%.</p>
+                            <p class="text-slate-300">Imaginate XR (AR/VR simulations)</p>
+                            <p class="mt-2 text-slate-200">Optimized a 3D reconstruction data pipeline using OpenCV and PyTorch, achieving a 30% reduction in rendering latency.</p>
                         </div>
                     </div>
                 </div>
@@ -322,36 +332,38 @@
                     <h3 class="text-xl font-bold text-accent mb-2">B.Tech in Computer Science</h3>
                     <p class="font-semibold text-slate-200">Vellore Institute of Technology</p>
                     <p class="text-slate-300 text-sm">Sep 2022 - May 2026</p>
-                    <p class="mt-2 text-slate-200">Specialization in Blockchain Technology.</p>
+                    <p class="mt-2 text-slate-200">Specialization in Blockchain Technology</p>
+                    <p class="mt-1 text-slate-200">CGPA: <span class="text-accent-secondary font-bold">9.09/10</span> (Top 10%)</p>
+                    <p class="mt-1 text-sm text-accent-secondary">🏆 3× Merit Scholarship Recipient</p>
                 </div>
                 <div class="glassmorphism p-6 rounded-lg scroll-animate transition-transform duration-300 hover:-translate-y-2" style="transition-delay: 200ms;">
                     <h3 class="text-xl font-bold text-accent mb-2">AWS Certified Cloud Practitioner</h3>
-                     <p class="font-semibold text-slate-200">Amazon Web Services</p>
-                    <p class="text-slate-300 text-sm">Issued 2025</p>
-                    <p class="mt-2 text-slate-200">Validated foundational, high-level understanding of AWS Cloud, services, and terminology.</p>
+                    <p class="font-semibold text-slate-200">Amazon Web Services</p>
+                    <p class="text-slate-300 text-sm">Issued May 2025</p>
+                    <p class="mt-2 text-slate-200">Validated foundational understanding of AWS Cloud, services, and terminology for building scalable infrastructure.</p>
                 </div>
             </div>
         </section>
 
         <!-- Projects Section -->
         <section id="projects" class="py-24 text-center">
-            <h2 class="text-3xl font-extrabold mb-4 scroll-animate">Some Things I've Built</h2>
-            <p class="text-slate-300 mb-12 max-w-2xl mx-auto scroll-animate">Here are a few projects I've worked on. On desktop, hover to pause and use the arrows to navigate.</p>
+            <h2 class="text-3xl font-extrabold mb-4 scroll-animate">Featured Projects</h2>
+            <p class="text-slate-300 mb-12 max-w-2xl mx-auto scroll-animate">Infrastructure, systems, and tools I've built. On desktop, hover to pause and use arrows to navigate.</p>
             
-            <!-- Desktop Carousel (Hidden on Mobile) -->
+            <!-- Desktop Carousel -->
             <div class="hidden lg:block relative scroll-animate mt-48">
                 <div class="carousel-container">
                     <div class="carousel">
-                        <!-- Desktop Project Cards will be injected here -->
+                        <!-- Desktop Project Cards injected via JS -->
                     </div>
                 </div>
                 <button class="carousel-arrow absolute top-1/2 -translate-y-1/2 -left-16 text-4xl text-accent/50 hover:text-accent transition-colors" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
                 <button class="carousel-arrow absolute top-1/2 -translate-y-1/2 -right-16 text-4xl text-accent/50 hover:text-accent transition-colors" id="next-btn"><i class="fas fa-chevron-right"></i></button>
             </div>
 
-            <!-- Mobile Project List (Hidden on Desktop) -->
+            <!-- Mobile Project List -->
             <div id="mobile-projects-container" class="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 scroll-animate">
-                <!-- Mobile Project Cards will be injected here -->
+                <!-- Mobile Project Cards injected via JS -->
             </div>
         </section>
 
@@ -359,9 +371,9 @@
         <section id="contact" class="py-24 text-center">
             <h2 class="text-3xl font-extrabold mb-4 scroll-animate">Get In Touch</h2>
             <p class="text-slate-300 mb-8 max-w-xl mx-auto scroll-animate">
-                I'm currently open to new opportunities. Whether you have a question or just want to say hi, my inbox is always open. I'll get back to you!
+                I'm currently open to SRE and Backend Engineering opportunities. Whether you want to discuss infrastructure challenges, system design, or just want to connect—my inbox is always open.
             </p>
-            <a href="mailto:farhaan.8586@outlook.com" class="inline-block bg-accent text-gray-900 font-bold py-4 px-8 rounded-lg hover:bg-green-400 transition-colors scroll-animate">
+            <a href="mailto:farhaan.8586@outlook.com" class="inline-block bg-accent text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-600 transition-colors scroll-animate">
                 Say Hello
             </a>
         </section>
@@ -386,28 +398,25 @@
                 <div id="victory-text" class="hidden text-xl text-center"></div>
             </div>
             <div id="game-controls" class="grid grid-cols-2 gap-3">
-                <!-- Buttons will be injected here -->
+                <!-- Buttons injected via JS -->
             </div>
         </div>
     </div>
 
-
-    <!-- Particle.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- Particle.js Background ---
             particlesJS("particles-js", {
                 "particles": {
-                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                    "color": { "value": "#4ade80" },
+                    "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#3b82f6" },
                     "shape": { "type": "circle" },
-                    "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                    "opacity": { "value": 0.4, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
                     "size": { "value": 3, "random": true, "anim": { "enable": false } },
-                    "line_linked": { "enable": true, "distance": 150, "color": "#4ade80", "opacity": 0.4, "width": 1 },
-                    "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+                    "line_linked": { "enable": true, "distance": 150, "color": "#3b82f6", "opacity": 0.3, "width": 1 },
+                    "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
                 },
                 "interactivity": {
                     "detect_on": "canvas",
@@ -417,14 +426,12 @@
                 "retina_detect": true
             });
 
-            // --- Mobile Menu ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
             
-            // --- Header Scroll Effect ---
             const header = document.getElementById('header');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -436,9 +443,8 @@
                 }
             });
 
-            // --- Typing Animation ---
             const typingElement = document.getElementById('typing-animation');
-            const phrases = ["Full Stack Developer.", "Backend & System Designer.", "Python & AWS Specialist."];
+            const phrases = ["SRE Engineer.", "Backend Developer.", "Infrastructure Specialist.", "Cloud Architect."];
             let phraseIndex = 0;
             let charIndex = 0;
             let isDeleting = false;
@@ -456,19 +462,18 @@
                 let typeSpeed = isDeleting ? 75 : 150;
 
                 if (!isDeleting && charIndex === currentPhrase.length) {
-                    typeSpeed = 2000; // Pause at end of phrase
+                    typeSpeed = 2000;
                     isDeleting = true;
                 } else if (isDeleting && charIndex === 0) {
                     isDeleting = false;
                     phraseIndex = (phraseIndex + 1) % phrases.length;
-                    typeSpeed = 500; // Pause before new phrase
+                    typeSpeed = 500;
                 }
 
                 setTimeout(type, typeSpeed);
             }
             type();
 
-            // --- On-Scroll Animations ---
             const scrollElements = document.querySelectorAll('.scroll-animate');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -480,58 +485,56 @@
 
             scrollElements.forEach(el => observer.observe(el));
             
-            // --- Project Data ---
             const projects = [
                 {
+                    title: "Decentralized Real Estate Platform",
+                    description: "Designed and deployed ERC-721 smart contracts on Ethereum for tokenizing real estate assets with IPFS integration for decentralized metadata storage.",
+                    tech: ["Solidity", "Hardhat", "Ethers.js", "IPFS"],
+                    link: "https://github.com/fakubwoy/DecentraEstate"
+                },
+                {
+                    title: "Visor: Code Visualization Extension",
+                    description: "Co-created a VS Code extension with 500+ users and 60+ forks to generate interactive flowcharts from code with cyclomatic complexity analysis.",
+                    tech: ["TypeScript", "Tree-sitter", "Mermaid.js"],
+                    link: "https://github.com/sidhant-sriv/visor"
+                },
+                {
                     title: "C Compiler Visualiser",
-                    description: "Engineered a tool used by 200+ students to demonstrate code-to-x86 translation, with a chatbot for query support.",
-                    tech: ["TypeScript", "C++", "Assembly", "NLP"],
+                    description: "Systems-level educational tool adopted by 200+ students to visualize the C compilation pipeline with integrated chatbot support.",
+                    tech: ["C++", "React", "NLP", "Assembly"],
                     link: "https://github.com/fakubwoy/C-Compiler"
                 },
                 {
-                    title: "Amazon Price Tracker",
-                    description: "A GenAI-powered price-drop alert system that compares listings across major e-commerce sites.",
-                    tech: ["React", "Flask", "GenAI", "BeautifulSoup"],
-                    link: "https://github.com/fakubwoy/pricepulse"
-                },
-                {
-                    title: "TrackFlow CRM",
-                    description: "Architected a Kanban-style CRM with reminders, secure uploads, and real-time order tracking with role-based access.",
-                    tech: ["React", "Node.js", "PostgreSQL"],
-                    link: "https://github.com/fakubwoy/TrackFlow"
-                },
-                {
                     title: "Go File Share",
-                    description: "A secure file-sharing platform built with Go, featuring JWT authentication, PostgreSQL storage, and Redis caching for high-performance access.",
+                    description: "Secure file-sharing platform with JWT authentication, PostgreSQL storage, and Redis caching for high-performance distributed access.",
                     tech: ["Go", "PostgreSQL", "Redis", "Docker"],
                     link: "https://github.com/fakubwoy/22BKT0054_Backend"
                 },
                 {
-                    title: "ChatBox",
-                    description: "A real-time, full-stack chat application featuring an AI-powered chatbot for automated responses, built with a React frontend and a WebSocket backend.",
-                    tech: ["React", "WebSockets", "AI", "Node.js"],
-                    link: "https://github.com/fakubwoy/ChatBox"
-                },
-                {
                     title: "Production Order System",
-                    description: "A comprehensive system for managing industrial production orders, tracking inventory levels, and generating purchase orders for electromagnet-related products.",
+                    description: "Enterprise system for managing industrial production orders, inventory tracking, and automated purchase order generation.",
                     tech: ["TypeScript", "React", "Node.js"],
                     link: "https://github.com/fakubwoy/SEProject"
+                },
+                {
+                    title: "Amazon Price Tracker",
+                    description: "GenAI-powered price-drop alert system that compares listings across major e-commerce platforms with real-time notifications.",
+                    tech: ["React", "Flask", "GenAI", "BeautifulSoup"],
+                    link: "https://github.com/fakubwoy/pricepulse"
                 }
             ];
 
-            // --- 3D Project Carousel (Desktop) ---
             const carousel = document.querySelector('.carousel');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
             
             let angle = 0;
-            const radius = 400; // This radius works for the desktop view
+            const radius = 400;
             let autoRotateInterval;
             let isHovering = false;
 
             function setupCarousel() {
-                if (!carousel) return; // Don't run if carousel element doesn't exist (on mobile)
+                if (!carousel) return;
                 const numProjects = projects.length;
                 const angleStep = 360 / numProjects;
 
@@ -566,21 +569,24 @@
                 clearInterval(autoRotateInterval);
             }
 
-            nextBtn.addEventListener('click', () => {
-                angle -= 360 / projects.length;
-                rotateCarousel();
-                stopAutoRotate();
-                setTimeout(startAutoRotate, 5000);
-            });
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    angle -= 360 / projects.length;
+                    rotateCarousel();
+                    stopAutoRotate();
+                    setTimeout(startAutoRotate, 5000);
+                });
+            }
 
-            prevBtn.addEventListener('click', () => {
-                angle += 360 / projects.length;
-                rotateCarousel();
-                stopAutoRotate();
-                setTimeout(startAutoRotate, 5000);
-            });
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    angle += 360 / projects.length;
+                    rotateCarousel();
+                    stopAutoRotate();
+                    setTimeout(startAutoRotate, 5000);
+                });
+            }
             
-            // --- Mobile Project List ---
             const mobileProjectsContainer = document.getElementById('mobile-projects-container');
             
             function setupMobileProjects() {
@@ -593,7 +599,6 @@
                 });
             }
 
-            // --- Shared function to create card HTML ---
             function getProjectCardHTML(project) {
                 return `
                     <div>
@@ -612,14 +617,12 @@
                 `;
             }
 
-            // --- Initialize Views ---
             setupCarousel();
             if (carousel) {
                 startAutoRotate();
             }
             setupMobileProjects();
             
-            // --- Konami Code Easter Egg ---
             const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
             let konamiIndex = 0;
             const modal = document.getElementById('konami-modal');
@@ -628,10 +631,10 @@
             const victoryText = document.getElementById('victory-text');
             
             const moves = [
-                { name: "Debug", action: () => "Developer Farhaan used Debug. It's super effective!" },
-                { name: "Refactor", action: () => "Code quality improved! The BUG is confused." },
-                { name: "Push to Prod", action: () => Math.random() > 0.5 ? "It worked! The bug was deployed... to the void." : "Oh no! The build failed! The BUG seems stronger." },
-                { name: "Run Away", action: "close" }
+                { name: "kubectl rollback", action: () => "Rollback successful! Pod chaos subsided." },
+                { name: "Terraform apply", action: () => "Infrastructure provisioned! The outage retreats." },
+                { name: "Increase replicas", action: () => Math.random() > 0.5 ? "Traffic distributed! Load balancer happy." : "OOMKilled! The incident persists." },
+                { name: "Call On-Call", action: "close" }
             ];
             
             function showModal() {
@@ -646,7 +649,7 @@
             }
             
             function startGame() {
-                gameText.textContent = "A wild BUG appeared!";
+                gameText.textContent = "A wild Production Incident appeared!";
                 victoryText.classList.add('hidden');
                 gameControls.classList.remove('hidden');
                 gameControls.innerHTML = '';
@@ -677,7 +680,7 @@
 
             function endGame() {
                 gameText.textContent = "";
-                victoryText.textContent = "The wild BUG was squashed! You gained 100 EXP.";
+                victoryText.textContent = "Incident resolved! System stability restored. +100 SRE XP.";
                 victoryText.classList.remove('hidden');
                 gameControls.classList.add('hidden');
                 setTimeout(hideModal, 3000);
