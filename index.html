@@ -419,6 +419,47 @@
         .footer-links a:hover { color: var(--accent); }
         .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); }
 
+        /* ── Who's That Pokémon game ── */
+        .poke-intro { font-size: 1rem; line-height: 1.75; color: var(--text); max-width: 620px; margin-bottom: 2.5rem; }
+        .poke-intro strong { color: #e6edf3; font-weight: 700; }
+        .poke-game {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 10px; padding: 2.5rem; max-width: 480px; margin: 0 auto;
+            position: relative; overflow: hidden;
+        }
+        .poke-game::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); }
+        .poke-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+        .poke-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+        .poke-score { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+        .poke-stage { position: relative; width: 210px; height: 210px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; }
+        .poke-sprite {
+            width: 210px; height: 210px; image-rendering: pixelated;
+            filter: brightness(0); transition: filter 0.5s ease, transform 0.5s ease;
+        }
+        .poke-sprite.revealed { filter: brightness(1); transform: scale(1.04); }
+        .poke-spinner { position: absolute; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+        .poke-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+        .poke-btn {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; text-transform: capitalize;
+            padding: 0.7rem 0.5rem; background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border); border-radius: 5px; color: var(--text);
+            cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
+        }
+        .poke-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+        .poke-btn:disabled { cursor: default; }
+        .poke-btn.correct { border-color: var(--accent2); color: var(--accent2); background: rgba(63,185,80,0.08); }
+        .poke-btn.wrong { border-color: #f85149; color: #f85149; background: rgba(248,81,73,0.08); }
+        .poke-reveal { display: none; text-align: center; margin-top: 1.25rem; }
+        .poke-reveal-name { font-size: 1.3rem; font-weight: 800; color: #e6edf3; text-transform: capitalize; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+        .poke-reveal-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-bottom: 1.25rem; }
+        .poke-next {
+            width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+            padding: 0.75rem; background: var(--accent); color: var(--bg); font-weight: 500;
+            border: none; border-radius: 5px; cursor: pointer; transition: opacity 0.2s;
+        }
+        .poke-next:hover { opacity: 0.85; }
+        @media (max-width: 520px) { .poke-game { padding: 1.75rem; } }
+
         /* SVG icons inline */
         .icon { display: inline-block; vertical-align: middle; width: 1em; height: 1em; fill: currentColor; }
     </style>
@@ -452,8 +493,9 @@
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#pokemon">Pokémon</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="Farhaan_Khan_RESUME_March2026.pdf" download class="nav-resume">Resume</a></li>
+        <li><a href="Farhaan_Khan_May_2026.pdf" download class="nav-resume">Resume</a></li>
     </ul>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -466,8 +508,9 @@
     <a href="#about"      onclick="closeMobile()">About</a>
     <a href="#experience" onclick="closeMobile()">Experience</a>
     <a href="#projects"   onclick="closeMobile()">Projects</a>
+    <a href="#pokemon"    onclick="closeMobile()">Pokémon</a>
     <a href="#contact"    onclick="closeMobile()">Contact</a>
-    <a href="Farhaan_Khan_RESUME_March2026.pdf" download>Resume</a>
+    <a href="Farhaan_Khan_May_2026.pdf" download>Resume</a>
 </div>
 
 <main>
@@ -484,7 +527,7 @@
         </p>
         <div class="hero-cta reveal" style="transition-delay:0.4s">
             <a href="#contact" class="btn-primary">Get In Touch</a>
-            <a href="Farhaan_Khan_RESUME_March2026.pdf" download class="btn-outline">Download Resume</a>
+            <a href="Farhaan_Khan_May_2026.pdf" download class="btn-outline">Download Resume</a>
         </div>
 
         <div class="stats-bar reveal" style="transition-delay:0.5s">
@@ -493,8 +536,8 @@
                 <div class="stat-label">Reduction in model calibration error (deepfake detection)</div>
             </div>
             <div class="stat">
-                <div class="stat-num">500+</div>
-                <div class="stat-label">Users on Visor VS Code extension</div>
+                <div class="stat-num">1k+</div>
+                <div class="stat-label">Downloads on Visor VS Code extension</div>
             </div>
             <div class="stat">
                 <div class="stat-num">9.09</div>
@@ -510,22 +553,27 @@
         <div class="about-grid reveal">
             <div>
                 <div class="about-body">
-                    <p>I'm a CS student at VIT Vellore with a research background in quantum-hybrid machine learning and a production background in full-stack and backend engineering. My work spans med-tech, industrial electronics, and AR/VR — each role reinforcing the importance of solid engineering in applying cutting-edge research.</p>
+                    <p>I'm a CS student at VIT Vellore with a research background in quantum-hybrid machine learning and a production background in full-stack and backend engineering. My work spans med-tech and AR/VR — each role reinforcing the importance of solid engineering in applying cutting-edge research.</p>
                     <p>I'm drawn to problems that sit at the edge of what's computationally feasible — whether that's squeezing performance out of a deepfake detector using quantum feature selection, or building an AI career tool that thousands of students actually use.</p>
                     <p>Outside of code, I'm usually reading about quantum algorithms, contributing to open-source tooling, or trying to beat my LeetCode rating.</p>
                 </div>
                 <div class="skills-row">
                     <span class="skill-pill">Python</span>
-                    <span class="skill-pill">Go</span>
                     <span class="skill-pill">C++</span>
-                    <span class="skill-pill">Java</span>
+                    <span class="skill-pill">TypeScript</span>
+                    <span class="skill-pill">Go</span>
+                    <span class="skill-pill">Solidity</span>
                     <span class="skill-pill">PyTorch</span>
-                    <span class="skill-pill">FAISS</span>
+                    <span class="skill-pill">TensorFlow</span>
+                    <span class="skill-pill">OpenCV</span>
                     <span class="skill-pill">Qiskit</span>
+                    <span class="skill-pill">FAISS</span>
+                    <span class="skill-pill">Pandas</span>
                     <span class="skill-pill">FastAPI</span>
                     <span class="skill-pill">Flask</span>
                     <span class="skill-pill">React</span>
                     <span class="skill-pill">PostgreSQL</span>
+                    <span class="skill-pill">MongoDB</span>
                     <span class="skill-pill">Redis</span>
                     <span class="skill-pill">Docker</span>
                     <span class="skill-pill">AWS</span>
@@ -552,7 +600,7 @@
                 <a href="https://doi.org/10.1109/ACCESS.2026.3659021" target="_blank">DOI: 10.1109/ACCESS.2026.3659021 ↗</a>
             </div>
             <p class="pub-body">
-                Designed and validated a hybrid quantum-classical architecture for video deepfake detection. The framework combines <strong>QAOA-based feature selection</strong> with <strong>quantum-inspired attention mechanisms</strong>, achieving a 45% reduction in model calibration error and outperforming classical baselines on FaceForensics++ and DFDC benchmarks.
+                Designed and validated a hybrid quantum-classical architecture for video deepfake detection. The framework combines <strong>QAOA-based feature selection</strong> with <strong>quantum-inspired attention mechanisms</strong>, improving detection accuracy by <strong>2.5 percentage points</strong> over classical baselines on FaceForensics++ while cutting model calibration error by <strong>45%</strong>, and outperforming baselines across FaceForensics++ and DFDC benchmarks.
             </p>
             <div class="tags">
                 <span class="tag">deepfake detection</span>
@@ -575,13 +623,7 @@
                 <div class="tl-date">Jun 2025 – Aug 2025</div>
                 <div class="tl-role">Software Developer Intern</div>
                 <div class="tl-company">Alfaleus Tech · Med-tech startup</div>
-                <div class="tl-body">Engineered and maintained a reliable backend platform (Flask, PostgreSQL), ensuring high availability for 3+ critical internal tools serving multiple teams.</div>
-            </div>
-            <div class="tl-item reveal">
-                <div class="tl-date">Jan 2025 – Apr 2025</div>
-                <div class="tl-role">Software Developer</div>
-                <div class="tl-company">Elektromag · Industrial electronics</div>
-                <div class="tl-body">Automated manual reporting workflows and streamlined data processing pipelines, achieving a 4× reduction in operational workload.</div>
+                <div class="tl-body">Led backend development for an internal platform (Flask, PostgreSQL) supporting 3+ production tools, collaborating cross-functionally with 4 teams to drive system integration and architectural decisions.</div>
             </div>
             <div class="tl-item reveal">
                 <div class="tl-date">Jun 2024 – Jul 2024</div>
@@ -636,7 +678,7 @@
                         <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
                     </div>
                     <div class="project-name">Visor</div>
-                    <div class="project-desc">VS Code extension that generates live, interactive flowcharts as you navigate code. Bidirectional line-jumping, cyclomatic complexity overlays, SVG/PNG export. 500+ users, 60+ forks. Supports Python, TS, Java, C++, C, Rust.</div>
+                    <div class="project-desc">VS Code extension that generates live, interactive flowcharts as you navigate code. Bidirectional line-jumping, cyclomatic complexity overlays, SVG/PNG export. 1k+ downloads, 60+ forks. Supports Python, TS, Java, C++, C, Rust.</div>
                 </div>
                 <div class="project-footer">
                     <div class="project-tech">
@@ -723,9 +765,34 @@
         </div>
     </section>
 
+    <!-- ── OFF THE CLOCK / POKÉMON ── -->
+    <section id="pokemon">
+        <p class="section-label reveal">06 / Off the Clock</p>
+        <h2 class="section-title reveal">Who's That Pokémon?</h2>
+        <p class="poke-intro reveal">
+            I've been hooked on <strong>Pokémon</strong> since long before I wrote my first line of code, chasing shinies and min-maxing competitive teams turned out to be the same instinct that now pulls me toward squeezing every last point out of a model. So here's a small game I built against the live <strong>PokéAPI</strong>: guess the silhouette, any Pokémon across every generation. See how long a streak you can hold.
+        </p>
+        <div class="poke-game reveal">
+            <div class="poke-head">
+                <span class="poke-label">Identify the silhouette</span>
+                <span class="poke-score" id="pokeScore">streak 0 · best 0</span>
+            </div>
+            <div class="poke-stage">
+                <img class="poke-sprite" id="pokeSprite" alt="" />
+                <div class="poke-spinner" id="pokeSpinner">loading…</div>
+            </div>
+            <div class="poke-choices" id="pokeChoices"></div>
+            <div class="poke-reveal" id="pokeReveal">
+                <div class="poke-reveal-name" id="pokeName"></div>
+                <div class="poke-reveal-meta" id="pokeMeta"></div>
+                <button class="poke-next" id="pokeNext">Next Pokémon →</button>
+            </div>
+        </div>
+    </section>
+
     <!-- ── CONTACT ── -->
     <section id="contact">
-        <p class="section-label reveal">06 / Contact</p>
+        <p class="section-label reveal">07 / Contact</p>
         <h2 class="contact-heading reveal">Let's Talk.</h2>
         <p class="contact-sub reveal">
             I'm actively looking for ML and AI Engineering opportunities. Whether it's research, a challenging engineering problem, or just a conversation — my inbox is open.
@@ -801,6 +868,85 @@
     reveals.forEach(el => io.observe(el));
     // Hero items visible immediately
     document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
+
+    // ── Who's That Pokémon (PokéAPI) ──
+    (function(){
+        const MAX_ID = 1025;
+        const sprite  = document.getElementById('pokeSprite');
+        const spinner = document.getElementById('pokeSpinner');
+        const choices = document.getElementById('pokeChoices');
+        const reveal  = document.getElementById('pokeReveal');
+        const nameEl  = document.getElementById('pokeName');
+        const metaEl  = document.getElementById('pokeMeta');
+        const nextBtn = document.getElementById('pokeNext');
+        const scoreEl = document.getElementById('pokeScore');
+        if (!sprite) return;
+        let streak = 0, best = 0, answer = null, locked = false;
+        const rid = () => Math.floor(Math.random() * MAX_ID) + 1;
+        const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+        async function fetchMon(id){
+            const d = await (await fetch('https://pokeapi.co/api/v2/pokemon/' + id)).json();
+            return {
+                name: d.name, id: d.id,
+                sprite: d.sprites.other['official-artwork'].front_default || d.sprites.front_default,
+                types: d.types.map(t => t.type.name)
+            };
+        }
+
+        async function round(){
+            locked = false;
+            reveal.style.display = 'none';
+            choices.style.display = 'grid';
+            choices.innerHTML = '';
+            spinner.style.display = 'block';
+            spinner.textContent = 'loading…';
+            sprite.classList.remove('revealed');
+            sprite.src = '';
+            try {
+                const ids = new Set([rid()]);
+                while (ids.size < 4) ids.add(rid());
+                const mons = await Promise.all([...ids].map(fetchMon));
+                answer = mons[Math.floor(Math.random() * mons.length)];
+                sprite.src = answer.sprite;
+                sprite.onload = () => { spinner.style.display = 'none'; };
+                mons.sort(() => Math.random() - 0.5).forEach(m => {
+                    const b = document.createElement('button');
+                    b.className = 'poke-btn';
+                    b.textContent = cap(m.name);
+                    b.onclick = () => guess(m, b);
+                    choices.appendChild(b);
+                });
+            } catch(e) {
+                spinner.textContent = 'PokéAPI unreachable — tap to retry';
+                spinner.style.cursor = 'pointer';
+                spinner.onclick = round;
+            }
+        }
+
+        function guess(picked, btn){
+            if (locked) return;
+            locked = true;
+            sprite.classList.add('revealed');
+            const correct = picked.name === answer.name;
+            [...choices.children].forEach(b => {
+                if (b.textContent.toLowerCase() === answer.name) b.classList.add('correct');
+                else if (b === btn) b.classList.add('wrong');
+                b.disabled = true;
+            });
+            if (correct) { streak++; best = Math.max(best, streak); } else { streak = 0; }
+            scoreEl.textContent = 'streak ' + streak + ' · best ' + best;
+            setTimeout(() => {
+                choices.style.display = 'none';
+                nameEl.textContent = answer.name;
+                metaEl.textContent = '#' + String(answer.id).padStart(3,'0') + ' · ' + answer.types.join(' / ');
+                reveal.style.display = 'block';
+            }, 700);
+        }
+
+        nextBtn.onclick = round;
+        round();
+    })();
 </script>
 
 </body>
