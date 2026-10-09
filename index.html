@@ -1,953 +1,2083 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farhaan Khan — ML Engineer & Researcher</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farhaan Khan</title>
+<meta name="description" content="Farhaan Khan. ML engineer and researcher working on computer vision, quantum-hybrid learning, and production backends. Published in IEEE Access.">
+<link rel="icon" href="favicon.ico">
 
-        :root {
-            --bg:       #080c10;
-            --surface:  #0d1117;
-            --border:   rgba(255,255,255,0.07);
-            --text:     #c9d1d9;
-            --muted:    #6e7681;
-            --accent:   #58a6ff;
-            --accent2:  #3fb950;
-            --glow:     rgba(88,166,255,0.15);
-        }
+<meta property="og:title" content="Farhaan Khan">
+<meta property="og:description" content="ML engineer and researcher. Computer vision, quantum-hybrid learning, and backends that hold up in production.">
+<meta property="og:type" content="website">
 
-        html { scroll-behavior: smooth; }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..900&family=Geist+Mono:wght@300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Syne', sans-serif;
-            overflow-x: hidden;
-            cursor: none;
-        }
+<style>
+/* ===========================================================================
+   Farhaan Khan - portfolio
+   Design language: technical instrument / Swiss editorial.
+   Shape system: RADIUS 0 EVERYWHERE. No rounded corners, no pills. Sharp is
+   the whole point of the language, so it is applied without exception.
+   Accent: one single vermilion, locked across every section.
+   =========================================================================== */
 
-        /* ── Custom cursor ── */
-        #cursor {
-            position: fixed;
-            width: 10px; height: 10px;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease, opacity 0.2s;
-            transform: translate(-50%, -50%);
-        }
-        #cursor-ring {
-            position: fixed;
-            width: 36px; height: 36px;
-            border: 1px solid rgba(88,166,255,0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.18s ease, width 0.2s, height 0.2s, opacity 0.2s;
-            transform: translate(-50%, -50%);
-        }
-        body:has(a:hover) #cursor-ring,
-        body:has(button:hover) #cursor-ring { width: 56px; height: 56px; opacity: 0.6; }
+:root {
+  --paper:      #EDEDEA;
+  --paper-2:    #E4E4E0;
+  --ink:        #111113;
+  --ink-soft:   #55555C;
+  --ink-faint:  #626269;  /* 4.75:1 on --paper-2, AA for the small mono labels */
+  --rule:       rgba(17, 17, 19, 0.14);
+  --rule-soft:  rgba(17, 17, 19, 0.07);
+  --accent:     #1E46C8;  /* cobalt, 5.96:1 on --paper-2 */
+  /* Pokeball illustration palette. Not the UI accent: the ball is artwork.
+     "White" has to be a grey here or it vanishes against the paper. */
+  --ball-top:    #1F4FD1;   /* Great Ball blue, tuned to the cobalt accent */
+  --ball-stripe: #D8241A;
+  --ball-bottom: #EFEFEB;
+  --ball-band:   #15151A;
+  --ball-btn:    #F7F7F4;
+  --ball-line:   #B6B6B1;
+  --ball-shadow: 0.26;
+  --accent-ink: #FFFFFF;
 
-        /* ── Noise overlay ── */
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.4;
-        }
+  --shell: clamp(1.25rem, 5vw, 7rem);
+  --maxw: 1500px;
+  /* left inset that matches .shell's content edge, for full-bleed rails */
+  --gutter: max(var(--shell), calc((100vw - var(--maxw)) / 2 + var(--shell)));
 
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+  /* the only easing used on the page */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-        /* ── Typography ── */
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .text-accent  { color: var(--accent); }
-        .text-accent2 { color: var(--accent2); }
-        .text-muted   { color: var(--muted); }
+:root[data-theme="dark"] {
+  --paper:      #0E0E10;
+  --paper-2:    #16161A;
+  --ink:        #EDEDEA;
+  --ink-soft:   #9A9AA2;
+  --ink-faint:  #80808A;  /* 4.62:1 on --paper-2, AA for the small mono labels */
+  --rule:       rgba(237, 237, 234, 0.16);
+  --rule-soft:  rgba(237, 237, 234, 0.08);
+  --accent:     #6A93FF;  /* cobalt, 6.21:1 on --paper-2 */
+  --ball-top:    #2B5DE6;
+  --ball-stripe: #E0301E;
+  --ball-bottom: #E6E6E2;
+  --ball-band:   #0E0E11;
+  --ball-btn:    #F4F4F1;
+  --ball-line:   #A8A8A3;
+  --ball-shadow: 0.6;
+  --accent-ink: #06101F;
+}
 
-        /* ── Nav ── */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0;
-            z-index: 100;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1.25rem 3rem;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s, background 0.3s, padding 0.3s;
-        }
-        nav.scrolled {
-            border-color: var(--border);
-            background: rgba(8,12,16,0.85);
-            backdrop-filter: blur(16px);
-            padding: 0.85rem 3rem;
-        }
-        .nav-logo {
-            font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em;
-            color: #fff; text-decoration: none;
-        }
-        .nav-logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 2.5rem; align-items: center; list-style: none; }
-        .nav-links a {
-            color: var(--muted); text-decoration: none; font-size: 0.85rem;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--accent); }
-        .nav-resume {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem; padding: 0.5rem 1.1rem;
-            border: 1px solid var(--accent); color: var(--accent);
-            border-radius: 4px; text-decoration: none;
-            transition: background 0.2s, color 0.2s;
-        }
-        .nav-resume:hover { background: var(--accent); color: var(--bg) !important; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Mobile nav */
-        .nav-hamburger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
-        .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text); transition: all 0.3s; }
-        .mobile-menu {
-            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg); z-index: 99;
-            flex-direction: column; justify-content: center; align-items: center; gap: 2rem;
-        }
-        .mobile-menu.open { display: flex; }
-        .mobile-menu a { font-size: 1.8rem; color: var(--text); text-decoration: none; font-weight: 700; }
-        .mobile-menu a:hover { color: var(--accent); }
-        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; background: none; border: none; color: var(--text); cursor: pointer; }
+html { -webkit-text-size-adjust: 100%; }
 
-        @media (max-width: 768px) {
-            nav { padding: 1.25rem 1.5rem; }
-            nav.scrolled { padding: 0.85rem 1.5rem; }
-            .nav-links { display: none; }
-            .nav-hamburger { display: flex; }
-        }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Geist', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease);
+}
 
-        /* ── Side strips ── */
-        .side-strip {
-            position: fixed; bottom: 0;
-            display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
-            padding-bottom: 0;
-            z-index: 50;
-        }
-        .side-strip::after {
-            content: ''; display: block;
-            width: 1px; height: 80px;
-            background: linear-gradient(to bottom, var(--muted), transparent);
-        }
-        .side-strip.left  { left: 2rem; }
-        .side-strip.right { right: 2rem; }
-        .side-strip a { color: var(--muted); font-size: 1.1rem; transition: color 0.2s, transform 0.2s; text-decoration: none; }
-        .side-strip a:hover { color: var(--accent); transform: translateY(-3px); }
-        .side-email {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem; letter-spacing: 0.12em;
-            writing-mode: vertical-rl; color: var(--muted);
-            text-decoration: none; transition: color 0.2s;
-        }
-        .side-email:hover { color: var(--accent); }
-        @media (max-width: 1024px) { .side-strip { display: none; } }
+::selection { background: var(--accent); color: var(--accent-ink); }
 
-        /* ── Sections ── */
-        main { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+a { color: inherit; text-decoration: none; }
 
-        section { padding: 6rem 0; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
 
-        .section-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem; letter-spacing: 0.2em;
-            text-transform: uppercase; color: var(--accent);
-            margin-bottom: 0.75rem;
-        }
-        .section-title {
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
-            font-weight: 800; color: #e6edf3;
-            letter-spacing: -0.02em; margin-bottom: 3rem;
-            display: flex; align-items: center; gap: 1rem;
-        }
-        .section-title::after {
-            content: ''; flex: 1;
-            height: 1px; background: var(--border);
-        }
+.mono {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
 
-        /* ── Reveal animations ── */
-        .reveal {
-            opacity: 0; transform: translateY(24px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .reveal.visible { opacity: 1; transform: none; }
+/* ---------- shared layout ---------- */
 
-        /* ── Hero ── */
-        #hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center;
-            padding-top: 5rem;
-        }
-        .hero-greeting {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem; color: var(--accent);
-            letter-spacing: 0.1em; margin-bottom: 1.25rem;
-        }
-        .hero-greeting::before { content: '> '; opacity: 0.5; }
-        .hero-name {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 800; letter-spacing: -0.03em;
-            line-height: 1; color: #e6edf3; margin-bottom: 0.5rem;
-        }
-        .hero-tagline {
-            font-size: clamp(1.8rem, 5vw, 3.2rem);
-            font-weight: 700; letter-spacing: -0.02em;
-            color: var(--muted); margin-bottom: 2rem;
-        }
-        .hero-tagline .typed { color: var(--accent); }
-        .cursor-blink { animation: blink 1s step-end infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-        .hero-bio {
-            max-width: 560px; font-size: 1.05rem; line-height: 1.75;
-            color: var(--text); margin-bottom: 2.5rem;
-        }
-        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-primary {
-            display: inline-block; padding: 0.85rem 2rem;
-            background: var(--accent); color: var(--bg);
-            font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;
-            border-radius: 4px; text-decoration: none;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-        .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
-        .btn-outline {
-            display: inline-block; padding: 0.85rem 2rem;
-            border: 1px solid var(--border); color: var(--text);
-            font-weight: 600; font-size: 0.9rem; letter-spacing: 0.04em;
-            border-radius: 4px; text-decoration: none;
-            transition: border-color 0.2s, color 0.2s, transform 0.2s;
-        }
-        .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.shell {
+  /* width:100% is required, not cosmetic: #hero is a flex column, and the auto
+     side margins cancel flex stretch, so .shell was shrinking to fit-content
+     and centring itself instead of filling the row. */
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--shell);
+}
 
-        /* ── Stats bar ── */
-        .stats-bar {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 1px; background: var(--border);
-            border: 1px solid var(--border); border-radius: 8px;
-            overflow: hidden; margin-top: 5rem;
-        }
-        .stat {
-            background: var(--surface); padding: 1.75rem 2rem;
-            text-align: center; position: relative; overflow: hidden;
-        }
-        .stat::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-        .stat:nth-child(2)::before { animation-delay: 1s; }
-        .stat:nth-child(3)::before { animation-delay: 2s; }
-        @keyframes shimmer { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
-        .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
-        .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.4; }
-        @media (max-width: 600px) { .stats-bar { grid-template-columns: 1fr; } }
+section { position: relative; }
 
-        /* ── Publication ── */
-        .pub-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 10px; padding: 2.5rem;
-            position: relative; overflow: hidden;
-            transition: border-color 0.3s;
-        }
-        .pub-card:hover { border-color: rgba(88,166,255,0.35); }
-        .pub-card::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-            width: 3px; background: var(--accent);
-        }
-        .pub-badge {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--accent); background: rgba(88,166,255,0.08);
-            border: 1px solid rgba(88,166,255,0.2);
-            padding: 0.3rem 0.8rem; border-radius: 3px;
-            margin-bottom: 1.25rem;
-        }
-        .pub-title {
-            font-size: 1.2rem; font-weight: 700; color: #e6edf3;
-            line-height: 1.45; margin-bottom: 0.5rem;
-        }
-        .pub-subtitle { font-style: italic; color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem; }
-        .pub-meta {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
-            color: var(--muted); margin-bottom: 1.25rem;
-        }
-        .pub-meta a { color: var(--accent); text-decoration: none; }
-        .pub-meta a:hover { text-decoration: underline; }
-        .pub-body { font-size: 0.95rem; line-height: 1.7; color: var(--text); margin-bottom: 1.5rem; }
-        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tag {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-            color: var(--muted); padding: 0.25rem 0.65rem; border-radius: 3px;
-        }
+.band { padding: clamp(5.5rem, 13vh, 11rem) 0; }
 
-        /* ── Experience timeline ── */
-        .timeline { position: relative; padding-left: 2rem; }
-        .timeline::before {
-            content: ''; position: absolute; left: 0; top: 0.4rem; bottom: 0;
-            width: 1px; background: var(--border);
-        }
-        .tl-item { position: relative; margin-bottom: 3rem; }
-        .tl-item::before {
-            content: ''; position: absolute;
-            left: -2.35rem; top: 0.4rem;
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--bg); border: 2px solid var(--accent);
-            transition: background 0.2s;
-        }
-        .tl-item:hover::before { background: var(--accent); }
-        .tl-date {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-            color: var(--accent); letter-spacing: 0.08em; margin-bottom: 0.3rem;
-        }
-        .tl-role { font-size: 1.05rem; font-weight: 700; color: #e6edf3; }
-        .tl-company { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.6rem; }
-        .tl-body { font-size: 0.92rem; line-height: 1.65; color: var(--text); }
+.rule-top { border-top: 1px solid var(--rule); }
 
-        /* ── Projects ── */
-        .projects-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1px; background: var(--border);
-            border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
-        }
-        .project-card {
-            background: var(--surface); padding: 2rem;
-            display: flex; flex-direction: column; justify-content: space-between;
-            transition: background 0.25s;
-            text-decoration: none; color: inherit;
-        }
-        .project-card:hover { background: #111820; }
-        .project-card-top { margin-bottom: 1.5rem; }
-        .project-icon {
-            font-size: 1.3rem; color: var(--accent);
-            margin-bottom: 1rem; opacity: 0.8;
-        }
-        .project-name {
-            font-size: 1rem; font-weight: 700; color: #e6edf3;
-            margin-bottom: 0.6rem; letter-spacing: -0.01em;
-        }
-        .project-desc { font-size: 0.875rem; line-height: 1.65; color: var(--muted); }
-        .project-footer {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-top: 1.5rem;
-        }
-        .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-        .project-tech span {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            color: var(--muted); background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            padding: 0.2rem 0.5rem; border-radius: 2px;
-        }
-        .project-link {
-            color: var(--muted); transition: color 0.2s; font-size: 1rem;
-            text-decoration: none; flex-shrink: 0;
-        }
-        .project-link:hover { color: var(--accent); }
+/* Section headline. No eyebrows, no section numbers: the position on the page
+   is the label. Headline rises out of a clip mask on enter. */
+.sec-h {
+  font-size: clamp(2.1rem, 5.4vw, 4.1rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
 
-        /* ── Education & Certs ── */
-        .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
-        .edu-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.75rem;
-            transition: border-color 0.25s;
-        }
-        .edu-card:hover { border-color: rgba(88,166,255,0.3); }
-        .edu-card-label {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
-            text-transform: uppercase; letter-spacing: 0.15em;
-            color: var(--accent); margin-bottom: 0.75rem;
-        }
-        .edu-title { font-size: 1rem; font-weight: 700; color: #e6edf3; margin-bottom: 0.3rem; }
-        .edu-org { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.25rem; }
-        .edu-date { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-bottom: 0.75rem; }
-        .edu-note { font-size: 0.875rem; color: var(--text); line-height: 1.6; }
-        .highlight { color: var(--accent2); font-weight: 600; }
+.mask { overflow: hidden; display: block; }
+.mask > * {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1s var(--ease);
+}
+.mask.in > * { transform: translateY(0); }
 
-        /* ── About ── */
-        .about-grid { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: start; }
-        .about-body { font-size: 1rem; line-height: 1.8; color: var(--text); }
-        .about-body p + p { margin-top: 1.1rem; }
-        .about-photo {
-            width: 200px; height: 200px; border-radius: 8px;
-            object-fit: cover; border: 1px solid var(--border);
-            filter: grayscale(20%);
-            transition: filter 0.3s;
-        }
-        .about-photo:hover { filter: grayscale(0%); }
-        .skills-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
-        .skill-pill {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-            padding: 0.35rem 0.9rem;
-            border: 1px solid var(--border); border-radius: 20px;
-            color: var(--muted); transition: border-color 0.2s, color 0.2s;
-        }
-        .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
-        @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } .about-photo { display: none; } }
+.fade {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.fade.in { opacity: 1; transform: none; }
 
-        /* ── Contact ── */
-        #contact { text-align: center; }
-        .contact-heading {
-            font-size: clamp(2rem, 5vw, 3rem); font-weight: 800;
-            color: #e6edf3; letter-spacing: -0.03em; margin-bottom: 1.25rem;
-        }
-        .contact-sub { max-width: 480px; margin: 0 auto 2.5rem; font-size: 1rem; line-height: 1.75; color: var(--muted); }
+/* ---------- nav ---------- */
 
-        /* ── Footer ── */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 2rem; text-align: center;
-        }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
-        .footer-links a { color: var(--muted); font-size: 1.1rem; transition: color 0.2s; text-decoration: none; }
-        .footer-links a:hover { color: var(--accent); }
-        .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+#nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+#nav.stuck {
+  background: var(--paper); /* fallback where color-mix is unsupported */
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border-bottom-color: var(--rule);
+}
+.nav-in {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--shell);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.brand {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+.brand i { color: var(--accent); font-style: normal; }
 
-        /* ── Who's That Pokémon game ── */
-        .poke-intro { font-size: 1rem; line-height: 1.75; color: var(--text); max-width: 620px; margin-bottom: 2.5rem; }
-        .poke-intro strong { color: #e6edf3; font-weight: 700; }
-        .poke-game {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 10px; padding: 2.5rem; max-width: 480px; margin: 0 auto;
-            position: relative; overflow: hidden;
-        }
-        .poke-game::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); }
-        .poke-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
-        .poke-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
-        .poke-score { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); }
-        .poke-stage { position: relative; width: 210px; height: 210px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; }
-        .poke-sprite {
-            width: 210px; height: 210px; image-rendering: pixelated;
-            filter: brightness(0); transition: filter 0.5s ease, transform 0.5s ease;
-        }
-        .poke-sprite.revealed { filter: brightness(1); transform: scale(1.04); }
-        .poke-spinner { position: absolute; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); }
-        .poke-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
-        .poke-btn {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; text-transform: capitalize;
-            padding: 0.7rem 0.5rem; background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border); border-radius: 5px; color: var(--text);
-            cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
-        }
-        .poke-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-        .poke-btn:disabled { cursor: default; }
-        .poke-btn.correct { border-color: var(--accent2); color: var(--accent2); background: rgba(63,185,80,0.08); }
-        .poke-btn.wrong { border-color: #f85149; color: #f85149; background: rgba(248,81,73,0.08); }
-        .poke-reveal { display: none; text-align: center; margin-top: 1.25rem; }
-        .poke-reveal-name { font-size: 1.3rem; font-weight: 800; color: #e6edf3; text-transform: capitalize; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
-        .poke-reveal-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-bottom: 1.25rem; }
-        .poke-next {
-            width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
-            padding: 0.75rem; background: var(--accent); color: var(--bg); font-weight: 500;
-            border: none; border-radius: 5px; cursor: pointer; transition: opacity 0.2s;
-        }
-        .poke-next:hover { opacity: 0.85; }
-        @media (max-width: 520px) { .poke-game { padding: 1.75rem; } }
+.nav-links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1.9rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+  position: relative;
+  white-space: nowrap;
+  transition: color 0.3s var(--ease);
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -5px;
+  width: 100%; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { transform: scaleX(1); }
 
-        /* SVG icons inline */
-        .icon { display: inline-block; vertical-align: middle; width: 1em; height: 1em; fill: currentColor; }
-    </style>
+.nav-cv {
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.9rem;
+  color: var(--ink) !important;
+}
+.nav-cv::after { display: none; }
+.nav-cv:hover { background: var(--ink); color: var(--paper) !important; }
+
+.theme-btn {
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  width: 34px; height: 34px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.theme-btn:hover { border-color: var(--ink); }
+.theme-btn .ph-sun { display: none; }
+:root[data-theme="dark"] .theme-btn .ph-sun  { display: block; }
+:root[data-theme="dark"] .theme-btn .ph-moon { display: none; }
+
+.burger {
+  display: none;
+  background: none; border: 0; cursor: pointer;
+  color: var(--ink); font-size: 1.5rem; line-height: 1;
+}
+
+/* mobile sheet */
+#sheet {
+  position: fixed; inset: 0;
+  z-index: 60;
+  background: var(--paper);
+  display: flex; flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: var(--shell);
+  transform: translateY(-100%);
+  transition: transform 0.65s var(--ease);
+  /* short viewports: the links overflowed the closed sheet and the bottom of
+     the list showed through at the top of the page */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#sheet.open { transform: none; }
+#sheet a {
+  font-size: clamp(1.15rem, min(9vw, 6.5vh), 3rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  border-bottom: 1px solid var(--rule-soft);
+  padding: 0.5rem 0;
+}
+#sheet-x {
+  position: absolute; top: 1.4rem; right: var(--shell);
+  background: none; border: 0; color: var(--ink);
+  font-size: 1.8rem; cursor: pointer; line-height: 1;
+}
+
+/* ---------- hero ---------- */
+
+#field {
+  position: fixed;
+  inset: 0;
+  /* Explicit size is required. A canvas is a replaced element, so inset:0
+     does NOT stretch it; it falls back to its intrinsic size, which is the
+     drawing buffer (viewport x devicePixelRatio). On any DPR 2 screen the
+     canvas was twice the viewport and the ball rendered off-screen. */
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 6rem;   /* within the pt-24 cap */
+  padding-bottom: clamp(3rem, 9vh, 6rem);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 2.5rem;
+}
+
+.hero-name {
+  font-size: clamp(3.4rem, 15.5vw, 15rem);
+  font-weight: 500;
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+}
+.hero-name .ln { overflow: hidden; display: block; }
+.hero-name .ln > span {
+  display: block;
+  transform: translateY(103%);
+  transition: transform 1.25s var(--ease);
+}
+.hero-name.in .ln > span { transform: none; }
+.hero-name .ln:nth-child(2) > span { transition-delay: 0.1s; }
+
+.hero-sub {
+  max-width: 34ch;
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.6rem;
+  text-align: right;
+}
+
+.hero-cta { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: flex-end; }
+
+/* Buttons. Sharp, 1px, directional fill on hover (fill enters from the left). */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--ink);
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  color: var(--ink);
+  font-family: inherit;
+  transition: color 0.4s var(--ease);
+}
+.btn > * { position: relative; z-index: 1; }
+.btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.btn:hover { color: var(--paper); }
+.btn:hover::before { transform: scaleX(1); }
+.btn:active { transform: translateY(1px); }
+
+.btn-fill {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.btn-fill::before { background: var(--ink); }
+.btn-fill:hover { color: var(--paper); }
+
+/* ---------- background / about ---------- */
+
+.about {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+  margin-top: 3.5rem;
+}
+.about-prose p {
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  color: var(--ink-soft);
+  max-width: 62ch;
+  margin-bottom: 1.3rem;
+}
+.about-prose strong { color: var(--ink); font-weight: 500; }
+
+.photo-wrap { position: relative; overflow: hidden; max-width: 21rem; margin-left: auto; }
+.photo-wrap img {
+  width: 100%;
+  /* without this the height="750" attribute wins and aspect-ratio is ignored */
+  height: auto;
+  display: block;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 22%;
+  filter: grayscale(1) contrast(1.06);
+  transition: filter 0.7s var(--ease);
+  will-change: transform;
+}
+.photo-wrap:hover img { filter: grayscale(0) contrast(1); }
+
+/* stack marquee - the ONE marquee on the page. 19 technologies that need
+   breadth, not individual attention. */
+.marquee {
+  margin-top: 4.5rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 1.15rem 0;
+  overflow: hidden;
+  display: flex;
+  gap: 0;
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.mq-track {
+  display: flex;
+  gap: 2.4rem;
+  padding-right: 2.4rem;
+  flex-shrink: 0;
+  animation: mq 34s linear infinite;
+}
+.marquee:hover .mq-track { animation-play-state: paused; }
+@keyframes mq { to { transform: translateX(-100%); } }
+.mq-track span {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+/* ---------- research ---------- */
+
+#research { background: var(--paper-2); }
+
+.paper {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.paper-cite {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.paper-t {
+  font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.16;
+  margin-bottom: 0.8rem;
+}
+.paper-st {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--ink-soft);
+  line-height: 1.4;
+  margin-bottom: 1.6rem;
+}
+.paper-authors {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  line-height: 1.7;
+  margin-bottom: 0.4rem;
+}
+.paper-authors b { color: var(--ink); font-weight: 500; }
+.doi {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.doi:hover { color: var(--accent); border-color: var(--accent); }
+
+.paper-body {
+  font-size: clamp(0.98rem, 1.1vw, 1.05rem);
+  color: var(--ink-soft);
+  margin-bottom: 2.4rem;
+}
+.paper-body strong { color: var(--ink); font-weight: 500; }
+
+/* Two real published metrics, as display numerals. Counted up on enter to put
+   the eye on the result. */
+.metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); }
+.metric { background: var(--paper-2); padding: 1.6rem 1.4rem 1.4rem; }
+.metric-n {
+  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: var(--accent);
+}
+.metric-n sub {
+  font-size: 0.3em;
+  vertical-align: super;
+  letter-spacing: 0;
+  margin-left: 0.1em;
+}
+.metric-l {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-top: 0.7rem;
+  max-width: 24ch;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 2rem; }
+.tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--rule);
+  color: var(--ink-faint);
+}
+
+/* ---------- experience ledger ---------- */
+
+.ledger { margin-top: 3.5rem; }
+.row {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: 2.2rem 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+  position: relative;
+}
+.row:last-child { border-bottom: 1px solid var(--rule); }
+.row::after {
+  content: '';
+  position: absolute;
+  left: 0; top: -1px;
+  width: 100%; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+}
+.row:hover::after { transform: scaleX(1); }
+.row-when { font-size: 0.78rem; color: var(--ink-faint); letter-spacing: 0.02em; padding-top: 0.35rem; }
+.row-role {
+  font-size: clamp(1.2rem, 2.1vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+.row-org { font-size: 0.86rem; color: var(--accent); margin-top: 0.3rem; }
+.row-body { font-size: 0.97rem; color: var(--ink-soft); margin-top: 0.9rem; max-width: 64ch; }
+
+/* ---------- work: horizontal pan ---------- */
+
+#work { padding: 0; }
+.pan-wrap { position: relative; }
+/* keep .shell's horizontal inset: the shorthand was zeroing it out */
+.pan-head { padding: clamp(5.5rem, 13vh, 11rem) var(--shell) 2.5rem; }
+.pan-count { font-size: 0.78rem; color: var(--ink-faint); margin-top: 1rem; }
+
+/* Default is a real horizontal scroller, so all six cards stay reachable with
+   no JS, with GSAP blocked, or under reduced motion. JS switches this to
+   hidden only once it has actually taken over the pan. */
+.pan-view {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: clamp(5.5rem, 13vh, 11rem);
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+.pan-view::-webkit-scrollbar { height: 3px; }
+.pan-view::-webkit-scrollbar-thumb { background: var(--rule); }
+.pan-view::-webkit-scrollbar-track { background: transparent; }
+.pan-view .card { scroll-snap-align: start; }
+.pan-track { display: flex; padding-left: var(--gutter); }
+.card {
+  flex: 0 0 min(30rem, 84vw);
+  background: var(--paper);
+  border-right: 1px solid var(--rule);
+  padding: 2.2rem 2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 25rem;
+  position: relative;
+  transition: background 0.5s var(--ease);
+}
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.card:hover::before { transform: scaleX(1); }
+.card:hover { background: var(--paper-2); }
+
+.card-i { font-size: 1.5rem; color: var(--accent); margin-bottom: 1.4rem; }
+.card-n {
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.1rem;
+}
+.card-n em { font-style: normal; color: var(--ink-faint); font-size: 0.72em; font-weight: 400; }
+.card-d { font-size: 0.93rem; color: var(--ink-soft); margin-top: 0.8rem; }
+.card-f {
+  margin-top: auto;
+  padding-top: 1.8rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.card-tech { display: flex; flex-wrap: wrap; gap: 0.3rem 0.5rem; }
+.card-tech span { font-size: 0.68rem; letter-spacing: 0.03em; color: var(--ink-faint); text-transform: uppercase; }
+.card-go {
+  font-size: 1.2rem;
+  color: var(--ink);
+  flex-shrink: 0;
+  transition: transform 0.45s var(--ease), color 0.45s var(--ease);
+}
+.card:hover .card-go { transform: translate(3px, -3px); color: var(--accent); }
+
+/* ---------- education bento (2 items, exactly 2 cells) ---------- */
+
+.bento {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+}
+.cell { background: var(--paper); padding: 2.2rem 2rem; }
+.cell:first-child {
+  background: var(--paper); /* fallback where color-mix is unsupported */
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 62%),
+    var(--paper);
+}
+.cell-t { font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 500; letter-spacing: -0.025em; line-height: 1.15; }
+.cell-o { font-size: 0.9rem; color: var(--accent); margin-top: 0.4rem; }
+.cell-w { font-size: 0.76rem; color: var(--ink-faint); margin-top: 0.15rem; }
+.cell-b { font-size: 0.93rem; color: var(--ink-soft); margin-top: 1.4rem; }
+.cell-b b { color: var(--ink); font-weight: 500; }
+
+/* ---------- pokemon ---------- */
+
+/* ---------- contact ---------- */
+
+.say {
+  font-size: clamp(2.8rem, 11vw, 9rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+.say a { position: relative; display: inline-block; padding-bottom: 0.1em; }
+.say a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 0.045em;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+}
+.say a:hover::after { transform: scaleX(1); }
+.contact-sub {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--ink-soft);
+  max-width: 48ch;
+  margin-top: 2rem;
+}
+.contact-cta { margin-top: 2.5rem; }
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 2.2rem 0;
+}
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.foot-s { display: flex; gap: 0.4rem; }
+.foot-s a {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border: 1px solid var(--rule);
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.foot-s a:hover { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.foot-c { font-size: 0.78rem; color: var(--ink-faint); }
+.foot-c a { border-bottom: 1px solid var(--rule); }
+.foot-c a:hover { color: var(--accent); }
+
+
+/* ---------- CSS Pokeball fallback ----------
+   Shown only when the WebGL ball has not come up within 2.5s: Brave's
+   fingerprinting protection and some locked-down setups kill WebGL outright,
+   and the page used to just hide the canvas and show nothing at all. */
+
+#ball2d {
+  position: fixed;
+  top: clamp(88px, 11vh, 190px);
+  right: clamp(14px, 3.5vw, 96px);
+  width: clamp(180px, 30vw, 52vh);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+  /* Great Ball: the stripe layer is sized to the top 46.4% only, so the red
+     bands stop at the seam. Front view puts |x| 0.30R..0.68R at 16-35% / 65-84%. */
+  background:
+    radial-gradient(circle at 33% 26%, rgba(255,255,255,0.42), transparent 44%),
+    linear-gradient(to right,
+      transparent 16%, var(--ball-stripe) 16% 35%, transparent 35% 65%,
+      var(--ball-stripe) 65% 84%, transparent 84%) top / 100% 46.4% no-repeat,
+    linear-gradient(to bottom,
+      var(--ball-top) 0 46.4%,
+      var(--ball-band) 46.4% 53.6%,
+      var(--ball-bottom) 53.6% 100%);
+  box-shadow:
+    inset -16px -20px 46px rgba(0,0,0,0.26),
+    inset 10px 12px 30px rgba(255,255,255,0.10),
+    0 26px 60px rgba(0,0,0,0.20);
+}
+#ball2d.show { opacity: 1; transform: none; }
+#ball2d::before, #ball2d::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+#ball2d::before {                      /* dark collar */
+  width: 27%; aspect-ratio: 1;
+  background: var(--ball-band);
+  box-shadow: inset 0 3px 8px rgba(0,0,0,0.5);
+}
+#ball2d::after {                       /* light face */
+  width: 17%; aspect-ratio: 1;
+  background: var(--ball-btn);
+  box-shadow: inset 0 -2px 6px rgba(0,0,0,0.22);
+}
+@media (prefers-reduced-motion: reduce) {
+  #ball2d { transition: none; }
+}
+
+/* ---------- safari: wandering pokemon you can catch ---------- */
+
+#safari {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 170px;   /* sprite (76) + max bottom offset (36) + label headroom */
+  z-index: 40;
+  pointer-events: none;   /* only the sprites themselves are clickable */
+  overflow: hidden;
+}
+.mon {
+  position: absolute;
+  bottom: 14px;
+  width: 76px; height: 76px;
+  padding: 0; border: 0; background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  display: grid;
+  place-items: end center;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.22));
+}
+.mon img { max-width: 100%; max-height: 100%; display: block; }
+.mon.flip img { transform: scaleX(-1); }
+/* rare aura: a soft radial bloom under the sprite, no hard box */
+.mon.rare::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--accent) 55%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 22%, transparent) 38%,
+    transparent 68%);
+  animation: aura 2.6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+@keyframes aura {
+  0%, 100% { transform: scale(0.92); opacity: 0.55; }
+  50%      { transform: scale(1.1);  opacity: 0.95; }
+}
+/* shiny: gold bloom plus orbiting sparkles */
+.mon.shiny::before {
+  content: '';
+  position: absolute;
+  inset: -38%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,214,102,0.6) 0%, rgba(255,196,0,0.22) 40%, transparent 68%);
+  animation: aura 2.2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+.spark {
+  position: absolute;
+  width: 7px; height: 7px;
+  pointer-events: none;
+  color: #FFC53D;
+  z-index: 1;
+}
+.spark::before, .spark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+}
+.spark::before { clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%); }
+.spark::after  { opacity: 0.5; transform: scale(0.5) rotate(45deg); clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%); }
+.spark.s1 { top: 2px;  left: -4px;  animation: twk 1.5s ease-in-out infinite; }
+.spark.s2 { top: 28px; right: -6px; animation: twk 1.5s ease-in-out 0.5s infinite; }
+.spark.s3 { bottom: 4px; left: 22px; animation: twk 1.5s ease-in-out 1s infinite; }
+@keyframes twk {
+  0%, 100% { transform: scale(0.3) rotate(0deg);    opacity: 0; }
+  50%      { transform: scale(1.15) rotate(110deg); opacity: 1; }
+}
+.mon.bob img { animation: bob 0.55s steps(2, end) infinite; }
+.mon.flee img { animation-duration: 0.24s; }   /* legs speed up on the sprint */
+@keyframes bob { 50% { transform: translateY(-3px); } }
+.mon.flip.bob img { animation: bob-f 0.55s steps(2, end) infinite; }
+.mon.flip.flee img { animation-duration: 0.24s; }
+@keyframes bob-f {
+  0%, 100% { transform: scaleX(-1) translateY(0); }
+  50%      { transform: scaleX(-1) translateY(-3px); }
+}
+.mon.gone img { opacity: 0; animation: none; transition: opacity 0.2s linear; }
+.mon:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.ball {
+  position: absolute;
+  width: 34px; height: 34px;
+  pointer-events: none;
+  image-rendering: pixelated;
+  z-index: 2;
+}
+.ball img { width: 100%; height: 100%; display: block; }
+.ball.throw { animation: throw-in 0.42s var(--ease) forwards; }
+@keyframes throw-in {
+  from { transform: translate(-46px, 92px) rotate(-220deg); opacity: 0; }
+  to   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+}
+.ball.shake { animation: shake 0.5s ease-in-out; }
+@keyframes shake {
+  0%,100% { transform: rotate(0); }
+  25%     { transform: rotate(-19deg) translateX(-4px); }
+  75%     { transform: rotate(19deg)  translateX(4px); }
+}
+.ball.pop { animation: pop 0.3s var(--ease) forwards; }
+@keyframes pop { to { transform: scale(1.5); opacity: 0; } }
+
+.mon-say {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -6px);
+  margin-bottom: 4px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.65rem;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.26);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease), transform 0.3s var(--ease);
+}
+.mon-say.on { opacity: 1; transform: translate(-50%, 0); }
+/* exit: drift up while fading, slower than the entrance so it reads as a fade */
+.mon-say.on.out {
+  opacity: 0;
+  transform: translate(-50%, -12px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.mon-say.good { background: var(--accent); color: var(--accent-ink); }
+
+#dex {
+  position: fixed;
+  right: var(--shell); bottom: 18px;
+  z-index: 46;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+  display: none;
+  align-items: center; gap: 0.45rem;
+  transition: border-color 0.3s var(--ease);
+}
+#dex.on { display: flex; }
+#dex:hover { border-color: var(--ink); }
+#dex b { color: var(--accent); font-weight: 500; }
+#dex img { width: 15px; height: 15px; image-rendering: pixelated; }
+
+#dexpanel {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: none;
+  flex-direction: column;
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+#dexpanel.on { display: flex; }
+.dex-head {
+  display: flex; align-items: baseline; gap: 1rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+.dex-head h3 { font-size: clamp(1.4rem, 3.5vw, 2.2rem); font-weight: 500; letter-spacing: -0.03em; }
+.dex-head span { font-size: 0.76rem; color: var(--ink-faint); }
+#dexclose {
+  margin-left: auto;
+  background: none; border: 1px solid var(--rule);
+  color: var(--ink); cursor: pointer;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  font-size: 1.1rem; font-family: inherit;
+}
+#dexclose:hover { border-color: var(--ink); }
+/* Fixed-width tiles centred in the panel. A stretched 1fr grid turns a small
+   collection into one long thin strip, so the tiles keep their size and the
+   row simply centres instead. */
+.dex-grid {
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 136px);
+  justify-content: center;
+  align-content: start;
+  gap: 10px;
+  padding: 4px;
+}
+.dex-cell {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 1rem 0.6rem 0.85rem;
+  text-align: center;
+  position: relative;
+  min-height: 136px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.dex-cell:hover { border-color: var(--ink); transform: translateY(-2px); }
+.dex-cell img { width: 62px; height: 62px; object-fit: contain; image-rendering: pixelated; }
+.dex-cell .nm { font-size: 0.76rem; text-transform: capitalize; margin-top: 0.3rem; }
+.dex-cell .id { font-size: 0.64rem; color: var(--ink-faint); }
+.dex-cell .xn {
+  position: absolute; top: 5px; right: 7px;
+  font-size: 0.62rem; color: var(--ink-faint);
+}
+.dex-cell .bdg {
+  position: absolute; top: 5px; left: 7px;
+  font-size: 0.56rem; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 4px;
+}
+.bdg.r { background: var(--accent); color: var(--accent-ink); }
+.bdg.s { background: #FFC53D; color: #2A1D00; }
+.dex-empty {
+  grid-column: 1 / -1;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  max-width: 34ch;
+  margin: 0 auto;
+}
+
+@media (max-width: 620px) {
+  #safari { height: 150px; }
+  .mon { width: 58px; height: 58px; bottom: 10px; }
+  .mon-say { font-size: 0.7rem; }
+  #dex { right: 1rem; }
+}
+
+/* Under reduced motion the safari stays, but calm: no aura pulse, no sparkle
+   twinkle, no sprinting. The sprites are small, slow and bottom-anchored, so
+   they are not a vestibular trigger the way scroll-pinning or parallax is. */
+@media (prefers-reduced-motion: reduce) {
+  .mon.rare::before, .mon.shiny::before, .spark { animation: none; }
+  .spark { opacity: 0.9; }
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1000px) {
+  .paper, .bento { grid-template-columns: 1fr; }
+  .bento { gap: 1px; }
+  /* Keep the portrait BESIDE the prose down to 760px. Collapsing to one
+     column here left a big right-floated photo dangling under the text. */
+  .about { grid-template-columns: 1fr 0.5fr; gap: 2.25rem; }
+  .photo-wrap { max-width: 13rem; }
+}
+
+@media (max-width: 760px) {
+  .about { grid-template-columns: 1fr; gap: 2rem; }
+  /* stacked: lead with the portrait, aligned to the text, not floated right */
+  .photo-wrap { order: -1; max-width: 15rem; margin-left: 0; }
+}
+
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .burger { display: block; }
+  .hero-grid { grid-template-columns: 1fr; align-items: start; }
+  .hero-side { align-items: flex-start; text-align: left; }
+  .hero-cta { justify-content: flex-start; }
+  .row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .row-when { padding-top: 0; }
+  .metrics { grid-template-columns: 1fr; }
+  .card { flex: 0 0 min(26rem, 86vw); }
+}
+
+@media (max-width: 620px) {
+  :root { --shell: 1.25rem; }
+  /* horizontal pan is disabled under 768px in JS: track becomes a vertical stack */
+  .pan-track { flex-direction: column; padding-bottom: 4rem; }
+  .card { flex: 1 1 auto; min-height: 0; }
+  .pan-view { overflow: visible; }
+}
+
+@media (max-width: 768px) {
+  .pan-track { flex-direction: column; }
+  .card { flex: 1 1 auto; min-height: 0; width: 100%; }
+  .pan-view { overflow: visible; }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  .mask > *, .hero-name .ln > span { transform: none !important; }
+  .fade { opacity: 1 !important; transform: none !important; }
+  .mq-track { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  #nav.stuck { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+</style>
 </head>
 <body>
 
-<!-- Custom cursor -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+<!-- Three.js feature field. Concept: most points are muted, a small subset is
+     accent. The cloud starts as noise and resolves into an ordered manifold,
+     which is what QAOA feature selection does in the paper below. -->
+<canvas id="field" aria-hidden="true"></canvas>
+<div id="ball2d" aria-hidden="true"></div>
 
-<!-- Side strips -->
-<div class="side-strip left">
-    <a href="https://github.com/fakubwoy" target="_blank" title="GitHub">
-        <svg class="icon" style="width:20px;height:20px" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
-    </a>
-    <a href="https://linkedin.com/in/farhaan-khan-1629202b8" target="_blank" title="LinkedIn">
-        <svg class="icon" style="width:20px;height:20px" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-    </a>
-    <a href="https://x.com/fk8586" target="_blank" title="X / Twitter">
-        <svg class="icon" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-    </a>
-</div>
-<div class="side-strip right">
-    <a href="mailto:farhaan.8586@outlook.com" class="side-email">farhaan.8586@outlook.com</a>
-</div>
-
-<!-- Nav -->
 <nav id="nav">
-    <a href="#" class="nav-logo">F<span>K</span></a>
+  <div class="nav-in">
+    <a href="#top" class="brand">F<i>K</i></a>
     <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#pokemon">Pokémon</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="Farhaan_Khan_May_2026.pdf" download class="nav-resume">Resume</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Get in touch</a></li>
+      <li><a href="Farhaan_Khan_May_2026.pdf" download class="nav-cv">Resume</a></li>
     </ul>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
+    <button class="theme-btn" id="theme" aria-label="Switch colour theme">
+      <i class="ph ph-moon" aria-hidden="true"></i><i class="ph ph-sun" aria-hidden="true"></i>
     </button>
+    <button class="burger" id="burger" aria-label="Open menu"><i class="ph ph-list" aria-hidden="true"></i></button>
+  </div>
 </nav>
 
-<!-- Mobile menu -->
-<div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-close" id="mobile-close">✕</button>
-    <a href="#about"      onclick="closeMobile()">About</a>
-    <a href="#experience" onclick="closeMobile()">Experience</a>
-    <a href="#projects"   onclick="closeMobile()">Projects</a>
-    <a href="#pokemon"    onclick="closeMobile()">Pokémon</a>
-    <a href="#contact"    onclick="closeMobile()">Contact</a>
-    <a href="Farhaan_Khan_May_2026.pdf" download>Resume</a>
+<div id="sheet">
+  <button id="sheet-x" aria-label="Close menu"><i class="ph ph-x" aria-hidden="true"></i></button>
+  <a href="#background">Background</a>
+  <a href="#research">Research</a>
+  <a href="#work">Work</a>
+  <a href="#contact">Get in touch</a>
+  <a href="Farhaan_Khan_May_2026.pdf" download>Resume</a>
 </div>
 
-<main>
+<main id="top">
 
-    <!-- ── HERO ── -->
-    <section id="hero">
-        <p class="hero-greeting reveal">hello, world</p>
-        <h1 class="hero-name reveal" style="transition-delay:0.1s">Farhaan Khan.</h1>
-        <h2 class="hero-tagline reveal" style="transition-delay:0.2s">
-            I build <span class="typed" id="typed"></span><span class="cursor-blink" style="color:var(--accent)">_</span>
-        </h2>
-        <p class="hero-bio reveal" style="transition-delay:0.3s">
-            ML Engineer and researcher at the intersection of computer vision, quantum computing, and full-stack development. Published in IEEE Access. Currently finishing my B.Tech at VIT Vellore.
-        </p>
-        <div class="hero-cta reveal" style="transition-delay:0.4s">
-            <a href="#contact" class="btn-primary">Get In Touch</a>
-            <a href="Farhaan_Khan_May_2026.pdf" download class="btn-outline">Download Resume</a>
+  <!-- HERO: asymmetric split, name left, action right -->
+  <section id="hero">
+    <div class="shell">
+      <div class="hero-grid">
+        <h1 class="hero-name" id="heroName">
+          <span class="ln"><span>Farhaan</span></span>
+          <span class="ln"><span>Khan</span></span>
+        </h1>
+        <div class="hero-side">
+          <p class="hero-sub fade">ML engineer and researcher. Computer vision, quantum-hybrid learning, and backends that hold up in production.</p>
+          <div class="hero-cta fade">
+            <a href="#contact" class="btn btn-fill"><span>Get in touch</span></a>
+            <a href="Farhaan_Khan_May_2026.pdf" download class="btn"><span>Resume</span><i class="ph ph-arrow-down" aria-hidden="true"></i></a>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="stats-bar reveal" style="transition-delay:0.5s">
-            <div class="stat">
-                <div class="stat-num">45%</div>
-                <div class="stat-label">Reduction in model calibration error (deepfake detection)</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">1k+</div>
-                <div class="stat-label">Downloads on Visor VS Code extension</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">9.09</div>
-                <div class="stat-label">CGPA — Top 10%, VIT Vellore</div>
-            </div>
+  <!-- BACKGROUND: editorial split + the page's one marquee -->
+  <section id="background" class="band rule-top">
+    <div class="shell">
+      <h2 class="sec-h mask"><span>Background</span></h2>
+      <div class="about">
+        <div class="about-prose">
+          <p class="fade">I'm a software developer at <strong>Alfaleus Tech</strong> and a final-year computer science student at <strong>VIT Vellore</strong>, with a research background in quantum-hybrid machine learning and a production background in backend and full-stack engineering. My work so far spans med-tech and AR/VR, and both taught the same lesson: research only matters if the engineering around it holds.</p>
+          <p class="fade">I'm drawn to problems sitting at the edge of what is computationally feasible. Sometimes that means squeezing accuracy out of a deepfake detector using quantum feature selection. Sometimes it means building a career tool that thousands of students actually use.</p>
+          <p class="fade">Away from code I'm reading about quantum algorithms, contributing to open-source tooling, or grinding my LeetCode rating.</p>
         </div>
-    </section>
-
-    <!-- ── ABOUT ── -->
-    <section id="about">
-        <p class="section-label reveal">01 / About</p>
-        <h2 class="section-title reveal">About Me</h2>
-        <div class="about-grid reveal">
-            <div>
-                <div class="about-body">
-                    <p>I'm a CS student at VIT Vellore with a research background in quantum-hybrid machine learning and a production background in full-stack and backend engineering. My work spans med-tech and AR/VR — each role reinforcing the importance of solid engineering in applying cutting-edge research.</p>
-                    <p>I'm drawn to problems that sit at the edge of what's computationally feasible — whether that's squeezing performance out of a deepfake detector using quantum feature selection, or building an AI career tool that thousands of students actually use.</p>
-                    <p>Outside of code, I'm usually reading about quantum algorithms, contributing to open-source tooling, or trying to beat my LeetCode rating.</p>
-                </div>
-                <div class="skills-row">
-                    <span class="skill-pill">Python</span>
-                    <span class="skill-pill">C++</span>
-                    <span class="skill-pill">TypeScript</span>
-                    <span class="skill-pill">Go</span>
-                    <span class="skill-pill">Solidity</span>
-                    <span class="skill-pill">PyTorch</span>
-                    <span class="skill-pill">TensorFlow</span>
-                    <span class="skill-pill">OpenCV</span>
-                    <span class="skill-pill">Qiskit</span>
-                    <span class="skill-pill">FAISS</span>
-                    <span class="skill-pill">Pandas</span>
-                    <span class="skill-pill">FastAPI</span>
-                    <span class="skill-pill">Flask</span>
-                    <span class="skill-pill">React</span>
-                    <span class="skill-pill">PostgreSQL</span>
-                    <span class="skill-pill">MongoDB</span>
-                    <span class="skill-pill">Redis</span>
-                    <span class="skill-pill">Docker</span>
-                    <span class="skill-pill">AWS</span>
-                </div>
-            </div>
-            <img src="ME.jpg" alt="Farhaan Khan" class="about-photo">
+        <div class="photo-wrap fade">
+          <img src="ME.jpg" alt="Farhaan Khan" id="photo" width="600" height="750">
         </div>
-    </section>
+      </div>
+    </div>
+    <div class="marquee" aria-label="Technologies">
+      <div class="mq-track" id="mq1"></div>
+      <div class="mq-track" id="mq2" aria-hidden="true"></div>
+    </div>
+  </section>
 
-    <!-- ── PUBLICATION ── -->
-    <section id="research">
-        <p class="section-label reveal">02 / Research</p>
-        <h2 class="section-title reveal">Publication</h2>
-        <div class="pub-card reveal">
-            <div class="pub-badge">
-                <svg style="width:12px;height:12px;fill:currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
-                IEEE Access · Vol. 14 · 2026
-            </div>
-            <div class="pub-title">A Quantum-Hybrid Framework for Enhanced Deepfake Detection</div>
-            <div class="pub-subtitle">Integrating QAOA-Based Feature Selection with Quantum-Inspired Attention Mechanisms</div>
-            <div class="pub-meta">
-                F. Khan, A. Sareen, A. Suresh Kumar, M. Bhuvaneswari &nbsp;·&nbsp;
-                pp. 17853–17873 &nbsp;·&nbsp;
-                <a href="https://doi.org/10.1109/ACCESS.2026.3659021" target="_blank">DOI: 10.1109/ACCESS.2026.3659021 ↗</a>
-            </div>
-            <p class="pub-body">
-                Designed and validated a hybrid quantum-classical architecture for video deepfake detection. The framework combines <strong>QAOA-based feature selection</strong> with <strong>quantum-inspired attention mechanisms</strong>, improving detection accuracy by <strong>2.5 percentage points</strong> over classical baselines on FaceForensics++ while cutting model calibration error by <strong>45%</strong>, and outperforming baselines across FaceForensics++ and DFDC benchmarks.
-            </p>
-            <div class="tags">
-                <span class="tag">deepfake detection</span>
-                <span class="tag">quantum computing</span>
-                <span class="tag">QAOA</span>
-                <span class="tag">attention mechanisms</span>
-                <span class="tag">feature selection</span>
-                <span class="tag">multimedia forensics</span>
-                <span class="tag">hybrid quantum-classical</span>
-            </div>
+  <!-- RESEARCH: full-width paper feature + real published metrics -->
+  <section id="research" class="band">
+    <div class="shell">
+      <h2 class="sec-h mask"><span>Published research</span></h2>
+      <div class="paper">
+        <div>
+          <p class="paper-cite mono fade">IEEE Access / Volume 14 / 2026</p>
+          <h3 class="paper-t fade">A Quantum-Hybrid Framework for Enhanced Deepfake Detection</h3>
+          <p class="paper-st fade">Integrating QAOA-Based Feature Selection with Quantum-Inspired Attention Mechanisms</p>
+          <p class="paper-authors fade"><b>F. Khan</b>, A. Sareen, A. Suresh Kumar, M. Bhuvaneswari<br>Pages 17853-17873</p>
+          <p class="fade"><a href="https://doi.org/10.1109/ACCESS.2026.3659021" target="_blank" rel="noopener" class="doi mono">10.1109/ACCESS.2026.3659021 <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></p>
         </div>
-    </section>
-
-    <!-- ── EXPERIENCE ── -->
-    <section id="experience">
-        <p class="section-label reveal">03 / Experience</p>
-        <h2 class="section-title reveal">Where I've Worked</h2>
-        <div class="timeline">
-            <div class="tl-item reveal">
-                <div class="tl-date">Jun 2025 – Aug 2025</div>
-                <div class="tl-role">Software Developer Intern</div>
-                <div class="tl-company">Alfaleus Tech · Med-tech startup</div>
-                <div class="tl-body">Led backend development for an internal platform (Flask, PostgreSQL) supporting 3+ production tools, collaborating cross-functionally with 4 teams to drive system integration and architectural decisions.</div>
+        <div>
+          <p class="paper-body fade">A hybrid quantum-classical architecture for video deepfake detection. <strong>QAOA-based feature selection</strong> combined with <strong>quantum-inspired attention</strong> raised detection accuracy by 2.5 percentage points over classical baselines on FaceForensics++, and cut model calibration error by 45%. The framework outperformed baselines across both FaceForensics++ and DFDC.</p>
+          <div class="metrics fade">
+            <div class="metric">
+              <div class="metric-n mono" data-to="45" data-suffix="%">0%</div>
+              <div class="metric-l">Lower model calibration error</div>
             </div>
-            <div class="tl-item reveal">
-                <div class="tl-date">Jun 2024 – Jul 2024</div>
-                <div class="tl-role">Computer Vision Research Intern</div>
-                <div class="tl-company">Imaginate XR · AR/VR simulations</div>
-                <div class="tl-body">Optimized a 3D reconstruction data pipeline using OpenCV and PyTorch, achieving a 30% reduction in rendering latency.</div>
+            <div class="metric">
+              <div class="metric-n mono" data-to="2.5" data-dec="1" data-suffix="pp">0pp</div>
+              <div class="metric-l">Accuracy gain over classical baselines on FaceForensics++</div>
             </div>
+          </div>
+          <div class="tags fade">
+            <span class="tag mono">deepfake detection</span>
+            <span class="tag mono">QAOA</span>
+            <span class="tag mono">attention</span>
+            <span class="tag mono">feature selection</span>
+            <span class="tag mono">multimedia forensics</span>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- ── PROJECTS ── -->
-    <section id="projects">
-        <p class="section-label reveal">04 / Projects</p>
-        <h2 class="section-title reveal">Selected Work</h2>
-        <div class="projects-grid reveal">
+  <!-- EXPERIENCE: ledger with a left date rail -->
+  <section id="experience" class="band">
+    <div class="shell">
+      <h2 class="sec-h mask"><span>Experience</span></h2>
+      <div class="ledger">
+        <div class="row fade">
+          <div class="row-when mono">Mar 2026 - Present</div>
+          <div>
+            <h3 class="row-role">Software Developer</h3>
+            <p class="row-org">Alfaleus Tech, med-tech</p>
+            <p class="row-body">Designing and shipping production full-stack web and mobile applications used across the healthcare domain. I build the internal tooling engineering and product run on, drive architecture decisions across the product lifecycle, and mentor a team of interns through code review, task allocation and onboarding.</p>
+          </div>
+        </div>
+        <div class="row fade">
+          <div class="row-when mono">Jun 2025 - Aug 2025</div>
+          <div>
+            <h3 class="row-role">Software Developer Intern</h3>
+            <p class="row-org">Alfaleus Tech, med-tech</p>
+            <p class="row-body">Led backend development for an internal platform in Flask and PostgreSQL supporting three production tools, working across four teams on system integration and architecture decisions.</p>
+          </div>
+        </div>
+        <div class="row fade">
+          <div class="row-when mono">Jun 2024 - Jul 2024</div>
+          <div>
+            <h3 class="row-role">Computer Vision Research Intern</h3>
+            <p class="row-org">Imaginate XR, AR and VR simulation</p>
+            <p class="row-body">Optimized a 3D reconstruction data pipeline with OpenCV and PyTorch, cutting rendering latency by 30%.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <a class="project-card" href="https://github.com/fakubwoy/kairo" target="_blank">
-                <div class="project-card-top">
-                    <div class="project-icon">
-                        <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-                    </div>
-                    <div class="project-name">Kairo <span style="color:var(--muted);font-weight:400;font-size:0.85em">+ Chrome Extension</span></div>
-                    <div class="project-desc">LLM-powered career co-pilot for students — structured profile interviews, JD-tailored ATS resumes, scored mock interviews, and LinkedIn/GitHub presence audit. Chrome extension auto-extracts JDs from 9 job portals and generates resumes in one click.</div>
-                </div>
-                <div class="project-footer">
-                    <div class="project-tech">
-                        <span>Flask</span><span>Llama 3.3</span><span>Groq</span><span>Whisper</span><span>PostgreSQL</span>
-                    </div>
-                    <span class="project-link">↗</span>
-                </div>
-            </a>
+  <!-- WORK: pinned horizontal pan (vertical stack under 768px) -->
+  <section id="work" class="rule-top">
+    <div class="pan-wrap" id="panWrap">
+      <div class="shell pan-head">
+        <h2 class="sec-h mask"><span>Selected work</span></h2>
+        <p class="pan-count mono fade">Six projects</p>
+      </div>
+      <div class="pan-view">
+        <div class="pan-track" id="panTrack">
 
-            <a class="project-card" href="https://github.com/fakubwoy/facefind" target="_blank">
-                <div class="project-card-top">
-                    <div class="project-icon">
-                        <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M9.5 6.5c0 .83-.67 1.5-1.5 1.5S6.5 7.33 6.5 6.5 7.17 5 8 5s1.5.67 1.5 1.5zM16 5c-.83 0-1.5.67-1.5 1.5S15.17 8 16 8s1.5-.67 1.5-1.5S16.83 5 16 5zm2.46 10.48C17.51 13.98 15.56 13 12 13c-3.56 0-5.51.98-6.46 2.48C4.59 16.87 4 18.38 4 20h16c0-1.62-.59-3.13-1.54-4.52zM12 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>
-                    </div>
-                    <div class="project-name">FaceFind</div>
-                    <div class="project-desc">Self-hosted face recognition search for large photo collections. Upload a ZIP, generate ArcFace embeddings, share a link — anyone finds every photo they appear in with a selfie. &lt;5ms search on 16k faces, runs fully on CPU.</div>
-                </div>
-                <div class="project-footer">
-                    <div class="project-tech">
-                        <span>InsightFace</span><span>FAISS</span><span>FastAPI</span>
-                    </div>
-                    <span class="project-link">↗</span>
-                </div>
-            </a>
+          <a class="card" href="https://github.com/fakubwoy/kairo" target="_blank" rel="noopener">
+            <i class="ph ph-compass card-i" aria-hidden="true"></i>
+            <h3 class="card-n">Kairo <em>+ Chrome extension</em></h3>
+            <p class="card-d">An LLM career co-pilot for students: structured profile interviews, job-tailored ATS resumes, scored mock interviews, and a LinkedIn and GitHub presence audit. The extension pulls job descriptions from nine portals and writes a resume in one click.</p>
+            <div class="card-f">
+              <div class="card-tech mono"><span>Flask</span><span>Llama 3.3</span><span>Groq</span><span>Whisper</span><span>PostgreSQL</span></div>
+              <i class="ph ph-arrow-up-right card-go" aria-hidden="true"></i>
+            </div>
+          </a>
 
-            <a class="project-card" href="https://github.com/sidhant-sriv/visor" target="_blank">
-                <div class="project-card-top">
-                    <div class="project-icon">
-                        <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-                    </div>
-                    <div class="project-name">Visor</div>
-                    <div class="project-desc">VS Code extension that generates live, interactive flowcharts as you navigate code. Bidirectional line-jumping, cyclomatic complexity overlays, SVG/PNG export. 1k+ downloads, 60+ forks. Supports Python, TS, Java, C++, C, Rust.</div>
-                </div>
-                <div class="project-footer">
-                    <div class="project-tech">
-                        <span>Tree-sitter</span><span>Mermaid.js</span><span>VS Code API</span>
-                    </div>
-                    <span class="project-link">↗</span>
-                </div>
-            </a>
+          <a class="card" href="https://github.com/fakubwoy/facefind" target="_blank" rel="noopener">
+            <i class="ph ph-scan card-i" aria-hidden="true"></i>
+            <h3 class="card-n">FaceFind</h3>
+            <p class="card-d">Self-hosted face recognition search for large photo collections. Upload a ZIP, generate ArcFace embeddings, share a link, and anyone finds every photo they appear in from one selfie. Under 5ms search across 16k faces, entirely on CPU.</p>
+            <div class="card-f">
+              <div class="card-tech mono"><span>InsightFace</span><span>FAISS</span><span>FastAPI</span></div>
+              <i class="ph ph-arrow-up-right card-go" aria-hidden="true"></i>
+            </div>
+          </a>
 
-            <a class="project-card" href="https://github.com/fakubwoy/c-compiler" target="_blank">
-                <div class="project-card-top">
-                    <div class="project-icon">
-                        <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h2v2H6v-2zm0 4h8v2H6v-2zm10 0h2v2h-2v-2zm-6-4h8v2h-8v-2z"/></svg>
-                    </div>
-                    <div class="project-name">C Compiler Visualizer</div>
-                    <div class="project-desc">Step-by-step visualization of the entire C compilation pipeline in the browser — lexing, parse tree, symbol table, three-address code, optimized TAC, and x86 assembly. Integrated AI assistant for compiler theory questions.</div>
-                </div>
-                <div class="project-footer">
-                    <div class="project-tech">
-                        <span>React</span><span>Node.js</span><span>LLM</span>
-                    </div>
-                    <span class="project-link">↗</span>
-                </div>
-            </a>
+          <a class="card" href="https://github.com/sidhant-sriv/visor" target="_blank" rel="noopener">
+            <i class="ph ph-git-branch card-i" aria-hidden="true"></i>
+            <h3 class="card-n">Visor</h3>
+            <p class="card-d">A VS Code extension that draws live, interactive flowcharts as you move through code. Bidirectional line jumping, cyclomatic complexity overlays, SVG and PNG export. Past 1,000 downloads and 60 forks, covering Python, TypeScript, Java, C++, C and Rust.</p>
+            <div class="card-f">
+              <div class="card-tech mono"><span>Tree-sitter</span><span>Mermaid.js</span><span>VS Code API</span></div>
+              <i class="ph ph-arrow-up-right card-go" aria-hidden="true"></i>
+            </div>
+          </a>
 
-            <a class="project-card" href="https://github.com/fakubwoy/22BKT0054_Backend" target="_blank">
-                <div class="project-card-top">
-                    <div class="project-icon">
-                        <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                    </div>
-                    <div class="project-name">Go File Share</div>
-                    <div class="project-desc">Secure, high-performance file-sharing platform. JWT auth, Redis caching, AWS S3 integration, fully containerized with Docker Compose.</div>
-                </div>
-                <div class="project-footer">
-                    <div class="project-tech">
-                        <span>Go</span><span>Redis</span><span>AWS S3</span><span>Docker</span>
-                    </div>
-                    <span class="project-link">↗</span>
-                </div>
-            </a>
+          <a class="card" href="https://github.com/fakubwoy/c-compiler" target="_blank" rel="noopener">
+            <i class="ph ph-brackets-curly card-i" aria-hidden="true"></i>
+            <h3 class="card-n">C Compiler Visualizer</h3>
+            <p class="card-d">The whole C compilation pipeline, stepped through in the browser: lexing, parse tree, symbol table, three-address code, optimized TAC, and x86 assembly. An AI assistant answers compiler theory questions alongside it.</p>
+            <div class="card-f">
+              <div class="card-tech mono"><span>React</span><span>Node.js</span><span>LLM</span></div>
+              <i class="ph ph-arrow-up-right card-go" aria-hidden="true"></i>
+            </div>
+          </a>
 
-            <a class="project-card" href="https://github.com/fakubwoy/pricepulse" target="_blank">
-                <div class="project-card-top">
-                    <div class="project-icon">
-                        <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
-                    </div>
-                    <div class="project-name">PricePulse</div>
-                    <div class="project-desc">GenAI-powered price-drop alert system that compares listings across major e-commerce platforms and sends real-time notifications when prices drop.</div>
-                </div>
-                <div class="project-footer">
-                    <div class="project-tech">
-                        <span>Python</span><span>Flask</span><span>BeautifulSoup</span><span>GenAI</span>
-                    </div>
-                    <span class="project-link">↗</span>
-                </div>
-            </a>
+          <a class="card" href="https://github.com/fakubwoy/22BKT0054_Backend" target="_blank" rel="noopener">
+            <i class="ph ph-lock-key card-i" aria-hidden="true"></i>
+            <h3 class="card-n">Go File Share</h3>
+            <p class="card-d">A secure, high-throughput file sharing service with JWT auth, Redis caching and AWS S3 storage, fully containerized with Docker Compose.</p>
+            <div class="card-f">
+              <div class="card-tech mono"><span>Go</span><span>Redis</span><span>AWS S3</span><span>Docker</span></div>
+              <i class="ph ph-arrow-up-right card-go" aria-hidden="true"></i>
+            </div>
+          </a>
+
+          <a class="card" href="https://github.com/fakubwoy/pricepulse" target="_blank" rel="noopener">
+            <i class="ph ph-trend-down card-i" aria-hidden="true"></i>
+            <h3 class="card-n">PricePulse</h3>
+            <p class="card-d">A price-drop watcher that compares listings across the major e-commerce platforms and pushes a notification the moment something falls.</p>
+            <div class="card-f">
+              <div class="card-tech mono"><span>Python</span><span>Flask</span><span>BeautifulSoup</span><span>GenAI</span></div>
+              <i class="ph ph-arrow-up-right card-go" aria-hidden="true"></i>
+            </div>
+          </a>
 
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- ── EDUCATION ── -->
-    <section id="education">
-        <p class="section-label reveal">05 / Education</p>
-        <h2 class="section-title reveal">Education & Certifications</h2>
-        <div class="edu-grid">
-            <div class="edu-card reveal">
-                <div class="edu-card-label">Degree</div>
-                <div class="edu-title">B.Tech in Computer Science</div>
-                <div class="edu-org">Vellore Institute of Technology</div>
-                <div class="edu-date">Sep 2022 – May 2026</div>
-                <div class="edu-note">
-                    Specialization in Blockchain Technology<br>
-                    CGPA: <span class="highlight">9.09 / 10</span> · Top 10%<br>
-                    3× Merit Scholarship Recipient
-                </div>
-            </div>
-            <div class="edu-card reveal" style="transition-delay:0.1s">
-                <div class="edu-card-label">Certification</div>
-                <div class="edu-title">AWS Certified Cloud Practitioner</div>
-                <div class="edu-org">Amazon Web Services</div>
-                <div class="edu-date">Issued May 2025</div>
-                <div class="edu-note">Validated foundational knowledge of AWS Cloud architecture, services, and best practices for building scalable infrastructure.</div>
-            </div>
+  <!-- EDUCATION: 2 items, exactly 2 cells -->
+  <section id="education" class="band rule-top">
+    <div class="shell">
+      <h2 class="sec-h mask"><span>Education</span></h2>
+      <div class="bento">
+        <div class="cell fade">
+          <h3 class="cell-t">B.Tech, Computer Science</h3>
+          <p class="cell-o">Vellore Institute of Technology</p>
+          <p class="cell-w mono">Sep 2022 - May 2026</p>
+          <p class="cell-b">Specialization in blockchain technology. CGPA <b>9.09 / 10</b>, top 10% of the cohort, and a merit scholarship in three separate years.</p>
         </div>
-    </section>
+        <div class="cell fade">
+          <h3 class="cell-t">AWS Certified Cloud Practitioner</h3>
+          <p class="cell-o">Amazon Web Services</p>
+          <p class="cell-w mono">Issued May 2025</p>
+          <p class="cell-b">Foundational AWS architecture, core services, and the practices behind scalable infrastructure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- ── OFF THE CLOCK / POKÉMON ── -->
-    <section id="pokemon">
-        <p class="section-label reveal">06 / Off the Clock</p>
-        <h2 class="section-title reveal">Who's That Pokémon?</h2>
-        <p class="poke-intro reveal">
-            I've been hooked on <strong>Pokémon</strong> since long before I wrote my first line of code, chasing shinies and min-maxing competitive teams turned out to be the same instinct that now pulls me toward squeezing every last point out of a model. So here's a small game I built against the live <strong>PokéAPI</strong>: guess the silhouette, any Pokémon across every generation. See how long a streak you can hold.
-        </p>
-        <div class="poke-game reveal">
-            <div class="poke-head">
-                <span class="poke-label">Identify the silhouette</span>
-                <span class="poke-score" id="pokeScore">streak 0 · best 0</span>
-            </div>
-            <div class="poke-stage">
-                <img class="poke-sprite" id="pokeSprite" alt="" />
-                <div class="poke-spinner" id="pokeSpinner">loading…</div>
-            </div>
-            <div class="poke-choices" id="pokeChoices"></div>
-            <div class="poke-reveal" id="pokeReveal">
-                <div class="poke-reveal-name" id="pokeName"></div>
-                <div class="poke-reveal-meta" id="pokeMeta"></div>
-                <button class="poke-next" id="pokeNext">Next Pokémon →</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── CONTACT ── -->
-    <section id="contact">
-        <p class="section-label reveal">07 / Contact</p>
-        <h2 class="contact-heading reveal">Let's Talk.</h2>
-        <p class="contact-sub reveal">
-            I'm actively looking for ML and AI Engineering opportunities. Whether it's research, a challenging engineering problem, or just a conversation — my inbox is open.
-        </p>
-        <div class="reveal">
-            <a href="mailto:farhaan.8586@outlook.com" class="btn-primary">Say Hello →</a>
-        </div>
-    </section>
+  <!-- CONTACT: manifesto type -->
+  <section id="contact" class="band rule-top">
+    <div class="shell">
+      <h2 class="say mask"><span><a href="mailto:farhaan.8586@outlook.com">Let's talk.</a></span></h2>
+      <p class="contact-sub fade">I'm looking for ML and AI engineering roles from mid-2026. Research, a hard engineering problem, or just a conversation, the inbox is open.</p>
+      <div class="contact-cta fade">
+        <a href="mailto:farhaan.8586@outlook.com" class="btn btn-fill"><span>Get in touch</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </section>
 
 </main>
 
 <footer>
-    <div class="footer-links">
-        <a href="https://github.com/fakubwoy" target="_blank">
-            <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
-        </a>
-        <a href="https://linkedin.com/in/farhaan-khan-1629202b8" target="_blank">
-            <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </a>
-        <a href="https://x.com/fk8586" target="_blank">
-            <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
+  <div class="shell foot">
+    <p class="foot-c mono">Built by Farhaan Khan. <a href="mailto:farhaan.8586@outlook.com">farhaan.8586@outlook.com</a></p>
+    <div class="foot-s">
+      <a href="https://github.com/fakubwoy" target="_blank" rel="noopener" aria-label="GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+      <a href="https://linkedin.com/in/farhaan-khan-1629202b8" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></a>
+      <a href="https://x.com/fk8586" target="_blank" rel="noopener" aria-label="X"><i class="ph ph-x-logo" aria-hidden="true"></i></a>
     </div>
-    <p class="footer-copy">Designed & built by Farhaan Khan</p>
+  </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
 <script>
-    // Cursor
-    const cursor = document.getElementById('cursor');
-    const ring   = document.getElementById('cursor-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animateCursor() {
-        rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-        cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-        ring.style.left   = rx + 'px'; ring.style.top   = ry + 'px';
-        requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Nav scroll
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-        nav.classList.toggle('scrolled', window.scrollY > 40);
+/* If the WebGL Pokeball has not reported in by now, show the CSS one. Covers
+   Brave/Firefox fingerprint blocking, blocked CDNs, and absent WebGL. */
+window.__ballFallback = setTimeout(function () {
+  var el = document.getElementById('ball2d');
+  if (el) el.classList.add('show');
+  var c = document.getElementById('field');
+  if (c) c.style.display = 'none';
+  console.warn('[portfolio] WebGL Pokeball did not initialise; using the CSS fallback.',
+               window.__ballError || '(no error captured)');
+}, 2500);
+
+/* ---------- theme ---------- */
+(function () {
+  const root = document.documentElement;
+  let saved = null;
+  try { saved = localStorage.getItem('fk-theme'); } catch (e) { /* private mode */ }
+  if (!saved) saved = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  root.dataset.theme = saved;
+
+  document.getElementById('theme').addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('fk-theme', next); } catch (e) { /* ignore */ }
+    window.dispatchEvent(new CustomEvent('themechange'));
+  });
+})();
+
+/* ---------- nav ---------- */
+(function () {
+  const nav = document.getElementById('nav');
+  const sheet = document.getElementById('sheet');
+  // IntersectionObserver instead of a scroll listener
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;top:0;height:60px;width:1px;';
+  document.body.appendChild(probe);
+  new IntersectionObserver(([e]) => nav.classList.toggle('stuck', !e.isIntersecting))
+    .observe(probe);
+
+  const close = () => sheet.classList.remove('open');
+  document.getElementById('burger').onclick = () => sheet.classList.add('open');
+  document.getElementById('sheet-x').onclick = close;
+  sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+
+/* ---------- stack marquee ---------- */
+(function () {
+  const stack = ['Python','C++','TypeScript','Go','Solidity','PyTorch','TensorFlow','OpenCV',
+                 'Qiskit','FAISS','Pandas','FastAPI','Flask','React','PostgreSQL','MongoDB',
+                 'Redis','Docker','AWS'];
+  const html = stack.map(s => `<span>${s}</span>`).join('');
+  document.getElementById('mq1').innerHTML = html;
+  document.getElementById('mq2').innerHTML = html;
+})();
+
+/* ---------- reveals ---------- */
+(function () {
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  document.querySelectorAll('.mask, .fade').forEach(el => io.observe(el));
+
+  // hero reveals immediately, staggered
+  const hero = document.getElementById('heroName');
+  requestAnimationFrame(() => {
+    hero.classList.add('in');
+    document.querySelectorAll('#hero .fade').forEach((el, i) => {
+      el.style.transitionDelay = (0.45 + i * 0.12) + 's';
+      el.classList.add('in');
     });
+  });
+})();
 
-    // Mobile menu
-    document.getElementById('hamburger').addEventListener('click', () => {
-        document.getElementById('mobile-menu').classList.add('open');
+/* ---------- metric count-up ---------- */
+(function () {
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const el = e.target;
+      const to = parseFloat(el.dataset.to);
+      const dec = parseInt(el.dataset.dec || '0', 10);
+      const sfx = el.dataset.suffix || '';
+      if (REDUCED) { el.textContent = to.toFixed(dec) + sfx; return; }
+      const o = { v: 0 };
+      gsap.to(o, {
+        v: to, duration: 1.5, ease: 'power2.out',
+        onUpdate: () => { el.textContent = o.v.toFixed(dec) + sfx; }
+      });
     });
-    document.getElementById('mobile-close').addEventListener('click', closeMobile);
-    function closeMobile() { document.getElementById('mobile-menu').classList.remove('open'); }
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.metric-n').forEach(el => io.observe(el));
+})();
 
-    // Typing animation
-    const phrases = ['intelligent systems.', 'at the edge of what\'s possible.', 'AI that ships.', 'things that matter.'];
-    let pi = 0, ci = 0, deleting = false;
-    const el = document.getElementById('typed');
-    function type() {
-        const phrase = phrases[pi];
-        el.textContent = deleting ? phrase.slice(0, --ci) : phrase.slice(0, ++ci);
-        let delay = deleting ? 50 : 95;
-        if (!deleting && ci === phrase.length) { delay = 2200; deleting = true; }
-        else if (deleting && ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; delay = 400; }
-        setTimeout(type, delay);
+/* ---------- GSAP: photo parallax + pinned horizontal pan ---------- */
+// Registered unconditionally: the Three.js module below also builds a
+// ScrollTrigger, and must not depend on this block having run.
+gsap.registerPlugin(ScrollTrigger);
+
+(function () {
+  if (REDUCED) return;
+
+  gsap.to('#photo', {
+    yPercent: -9, ease: 'none',
+    scrollTrigger: { trigger: '.photo-wrap', start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+
+  // Pan the six project cards horizontally while the section is pinned.
+  // Desktop only: under 768px the track is a vertical stack (see CSS).
+  ScrollTrigger.matchMedia({
+    '(min-width: 769px)': function () {
+      const track = document.getElementById('panTrack');
+      const wrap = document.getElementById('panWrap');
+      const view = wrap.querySelector('.pan-view');
+      // GSAP drives the pan from here, so hand the native scroller off to it
+      view.style.overflowX = 'hidden';
+      view.style.scrollSnapType = 'none';
+      const dist = () => Math.max(0, track.scrollWidth - window.innerWidth + 80);
+      gsap.to(track, {
+        x: () => -dist(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top top',
+          end: () => '+=' + dist(),
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1
+        }
+      });
+
+      // on unmatch (resize down to mobile) give the native scroller back
+      return () => {
+        view.style.overflowX = '';
+        view.style.scrollSnapType = '';
+        gsap.set(track, { clearProps: 'x' });
+      };
     }
-    type();
+  });
+})();
 
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => io.observe(el));
-    // Hero items visible immediately
-    document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
-
-    // ── Who's That Pokémon (PokéAPI) ──
-    (function(){
-        const MAX_ID = 1025;
-        const sprite  = document.getElementById('pokeSprite');
-        const spinner = document.getElementById('pokeSpinner');
-        const choices = document.getElementById('pokeChoices');
-        const reveal  = document.getElementById('pokeReveal');
-        const nameEl  = document.getElementById('pokeName');
-        const metaEl  = document.getElementById('pokeMeta');
-        const nextBtn = document.getElementById('pokeNext');
-        const scoreEl = document.getElementById('pokeScore');
-        if (!sprite) return;
-        let streak = 0, best = 0, answer = null, locked = false;
-        const rid = () => Math.floor(Math.random() * MAX_ID) + 1;
-        const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-
-        async function fetchMon(id){
-            const d = await (await fetch('https://pokeapi.co/api/v2/pokemon/' + id)).json();
-            return {
-                name: d.name, id: d.id,
-                sprite: d.sprites.other['official-artwork'].front_default || d.sprites.front_default,
-                types: d.types.map(t => t.type.name)
-            };
-        }
-
-        async function round(){
-            locked = false;
-            reveal.style.display = 'none';
-            choices.style.display = 'grid';
-            choices.innerHTML = '';
-            spinner.style.display = 'block';
-            spinner.textContent = 'loading…';
-            sprite.classList.remove('revealed');
-            sprite.src = '';
-            try {
-                const ids = new Set([rid()]);
-                while (ids.size < 4) ids.add(rid());
-                const mons = await Promise.all([...ids].map(fetchMon));
-                answer = mons[Math.floor(Math.random() * mons.length)];
-                sprite.src = answer.sprite;
-                sprite.onload = () => { spinner.style.display = 'none'; };
-                mons.sort(() => Math.random() - 0.5).forEach(m => {
-                    const b = document.createElement('button');
-                    b.className = 'poke-btn';
-                    b.textContent = cap(m.name);
-                    b.onclick = () => guess(m, b);
-                    choices.appendChild(b);
-                });
-            } catch(e) {
-                spinner.textContent = 'PokéAPI unreachable — tap to retry';
-                spinner.style.cursor = 'pointer';
-                spinner.onclick = round;
-            }
-        }
-
-        function guess(picked, btn){
-            if (locked) return;
-            locked = true;
-            sprite.classList.add('revealed');
-            const correct = picked.name === answer.name;
-            [...choices.children].forEach(b => {
-                if (b.textContent.toLowerCase() === answer.name) b.classList.add('correct');
-                else if (b === btn) b.classList.add('wrong');
-                b.disabled = true;
-            });
-            if (correct) { streak++; best = Math.max(best, streak); } else { streak = 0; }
-            scoreEl.textContent = 'streak ' + streak + ' · best ' + best;
-            setTimeout(() => {
-                choices.style.display = 'none';
-                nameEl.textContent = answer.name;
-                metaEl.textContent = '#' + String(answer.id).padStart(3,'0') + ' · ' + answer.types.join(' / ');
-                reveal.style.display = 'block';
-            }, 700);
-        }
-
-        nextBtn.onclick = round;
-        round();
-    })();
+/* ---------- Three.js feature field ---------- */
 </script>
 
+<script type="module">
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canvas = document.getElementById('field');
+
+try {
+  const THREE = await import('https://cdnjs.cloudflare.com/ajax/libs/three.js/0.169.0/three.module.min.js');
+
+  const R = 1;                      // unit ball, scaled to the viewport later
+  const BAND = 0.075;               // half-height of the equator band, in radians of theta
+
+  const scene = new THREE.Scene();
+  const ball = new THREE.Group();   // spin, wobble, float
+  const rig  = new THREE.Group();   // viewport placement (+ the shadow, which must not spin)
+  rig.add(ball);
+  scene.add(rig);
+
+  // Product-render look: clear-coated physical materials lit by a studio
+  // environment, so the shell picks up real reflections instead of reading as
+  // flat plastic under a single lamp.
+  const phys = o => new THREE.MeshPhysicalMaterial({ transparent: true, ...o });
+  const mTop    = phys({ roughness: 0.3,  clearcoat: 1,   clearcoatRoughness: 0.05 });
+  // polygonOffset keeps the ridges' feathered edges, which meet the shell at
+  // zero height, from z-fighting with the blue underneath
+  const mStripe = phys({ roughness: 0.28, clearcoat: 1, clearcoatRoughness: 0.05,
+                         polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 });
+  const mBot   = phys({ roughness: 0.36, clearcoat: 0.9, clearcoatRoughness: 0.08 });
+  const mBand   = phys({ roughness: 0.62 });                                   // matte rubber seam
+  const mCollar = phys({ roughness: 0.28, clearcoat: 1,   clearcoatRoughness: 0.04 });
+  const mBtn    = phys({ roughness: 0.22, clearcoat: 1,   clearcoatRoughness: 0.03 });
+  const mLine   = phys({ roughness: 0.45 });                                   // hairline on the button
+
+  const SEG = 128;
+  const mid = Math.PI / 2;
+  // shells as theta slices; the band sits slightly recessed so it reads as a groove
+  ball.add(new THREE.Mesh(new THREE.SphereGeometry(R, SEG, 64, 0, Math.PI * 2, 0, mid - BAND), mTop));
+  ball.add(new THREE.Mesh(new THREE.SphereGeometry(R * 0.986, SEG, 12, 0, Math.PI * 2, mid - BAND, BAND * 2), mBand));
+  ball.add(new THREE.Mesh(new THREE.SphereGeometry(R, SEG, 64, 0, Math.PI * 2, mid + BAND, mid - BAND), mBot));
+  // rounded lips where each shell meets the groove: they hide the step and catch a highlight
+  for (const sgn of [1, -1]) {
+    const lip = new THREE.Mesh(new THREE.TorusGeometry(R * Math.cos(BAND) * 0.99, 0.008 * R, 12, SEG), mBand);
+    lip.rotation.x = Math.PI / 2;
+    lip.position.y = sgn * R * Math.sin(BAND);
+    ball.add(lip);
+  }
+
+  // Great Ball ridges: two raised red panels moulded into the blue shell, not
+  // painted on. Each runs front-to-back over the top between |x| = 0.30R and
+  // 0.68R, stands proud by H, and has rounded shoulders and rounded ends, so
+  // its bevels catch the studio light differently from the smooth blue.
+  const ridge = sgn => {
+    // Tight fillets (7% of width, 2% of length) give a flat top with a crisp
+    // moulded edge. Wide soft shoulders read as melted wax under clear-coat.
+    const NU = 64, NV = 360, X0 = 0.30, X1 = 0.68, H = 0.026, SH = 0.07, EN = 0.02;
+    const y0 = R * Math.sin(BAND) + 0.004;              // end just above the seam lip
+    const ease = (t, e) => { t = Math.min(1, t / e); return t * t * (3 - 2 * t); };
+    const pos = [], idx = [];
+    for (let j = 0; j <= NV; j++) {
+      const v = j / NV;
+      for (let i = 0; i <= NU; i++) {
+        const u = i / NU;
+        const x = (X0 + (X1 - X0) * u) * R;
+        const rho = Math.sqrt(R * R - x * x);           // circle of constant x over the top
+        const a0 = Math.asin(Math.min(1, y0 / rho));
+        const psi = a0 + (Math.PI - 2 * a0) * v;        // front seam -> over the top -> back seam
+        const k = 1 + H * ease(u, SH) * ease(1 - u, SH) * ease(v, EN) * ease(1 - v, EN);
+        pos.push(sgn * x * k, rho * Math.sin(psi) * k, rho * Math.cos(psi) * k);
+      }
+    }
+    for (let j = 0; j < NV; j++) for (let i = 0; i < NU; i++) {
+      const a = j * (NU + 1) + i, b = a + NU + 1;
+      // mirroring x flips winding, so the left ridge takes the opposite order
+      if (sgn > 0) idx.push(a, a + 1, b, b, a + 1, b + 1);
+      else         idx.push(a, b, a + 1, b, b + 1, a + 1);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setIndex(idx);
+    g.computeVertexNormals();
+    return new THREE.Mesh(g, mStripe);
+  };
+  ball.add(ridge(1), ridge(-1));
+
+  // Button: lathed profiles so the collar and face have real bevels, plus a
+  // hairline ring on the face. Built along +Y, then turned to face +Z.
+  // LatheGeometry winds by point order: the profile must run bottom -> top or
+  // every face points inward and is culled (the button rendered as slivers).
+  const lathe = (pts, m) => new THREE.Mesh(
+    new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x * R, y * R)).reverse(), 96), m);
+  const btn = new THREE.Group();
+  btn.add(lathe([[0.18, 0.092], [0.268, 0.092], [0.29, 0.085], [0.302, 0.068],
+                 [0.306, 0.045], [0.306, -0.03]], mCollar));
+  btn.add(lathe([[0.001, 0.138], [0.08, 0.135], [0.138, 0.128], [0.17, 0.117],
+                 [0.186, 0.103], [0.191, 0.085], [0.191, 0.05]], mBtn));
+  const hair = new THREE.Mesh(new THREE.TorusGeometry(0.128 * R, 0.0042 * R, 8, 96), mLine);
+  hair.position.y = 0.129 * R;
+  hair.rotation.x = Math.PI / 2;
+  btn.add(hair);
+  btn.rotation.x = Math.PI / 2;
+  btn.position.z = R * 0.94;
+  ball.add(btn);
+
+  // soft contact shadow under the ball, so it floats rather than being a sticker
+  const shTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const x = c.getContext('2d');
+    const g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+    g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.45, 'rgba(0,0,0,0.45)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  })();
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(2.1 * R, 0.42 * R),
+    new THREE.MeshBasicMaterial({ map: shTex, transparent: true, depthWrite: false }));
+  shadow.position.set(0, -1.3 * R, -0.4);
+  rig.add(shadow);
+  let shadowBase = 0.3;
+
+  // long lens: a wide fov bulges the near face and throws it off screen
+  const cam = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
+  cam.position.z = 22;
+
+  const gl = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  gl.setClearAlpha(0);
+  // Neutral keeps the brand-accurate red; ACES would shift it toward orange
+  gl.toneMapping = THREE.NeutralToneMapping;
+  gl.toneMappingExposure = 1.0;
+
+  // Studio environment for reflections: a dim room with emissive softboxes,
+  // prefiltered once. Self-contained, so no extra addon import is needed.
+  {
+    const env = new THREE.Scene();
+    const room = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 14),
+      new THREE.MeshBasicMaterial({ color: 0x3a3a3e, side: THREE.BackSide }));
+    env.add(room);
+    const box = (w, h, x, y, z, rx, ry, k) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
+      m.material.color.setScalar(k);
+      m.position.set(x, y, z); m.rotation.set(rx, ry, 0);
+      env.add(m);
+    };
+    box(7, 4, 0, 6.5, 1.5, Math.PI / 2, 0, 5);       // big overhead key
+    box(1.2, 8, -6.5, 0.5, 2, 0, Math.PI / 2, 3.2);  // tall left strip
+    box(1.2, 8, 6.5, 0.5, -1, 0, -Math.PI / 2, 1.8); // right rim strip
+    box(5, 2.5, 0, -1, 6.5, 0, 0, 1.6);              // soft front fill
+    box(8, 5, 0, -6.5, 1, -Math.PI / 2, 0, 1.4);     // floor bounce lifts the underside
+    const pm = new THREE.PMREMGenerator(gl);
+    scene.environment = pm.fromScene(env, 0.035).texture;
+    pm.dispose();
+  }
+  const key = new THREE.DirectionalLight(0xffffff, 1.2); // a crisp specular kick on top
+  key.position.set(-3, 4, 5);
+  scene.add(key);
+  if (!gl.getContext()) throw new Error('no WebGL context');
+  // 3D is up. If the fallback timer already fired on a slow connection it has
+  // hidden the canvas and shown the CSS ball, so undo both.
+  clearTimeout(window.__ballFallback);
+  canvas.style.display = '';
+  const f2d = document.getElementById('ball2d');
+  if (f2d) f2d.classList.remove('show');
+
+  function readTheme () {
+    const cs = getComputedStyle(document.documentElement);
+    const g = (k, fb) => cs.getPropertyValue(k).trim() || fb;
+    mTop.color.set(g('--ball-top', '#1F4FD1'));
+    mStripe.color.set(g('--ball-stripe', '#D8241A'));
+    mBot.color.set(g('--ball-bottom', '#F0F0EC'));
+    mBand.color.set(g('--ball-band', '#15151A'));
+    mCollar.color.set(g('--ball-band', '#15151A'));
+    mBtn.color.set(g('--ball-btn', '#F7F7F4'));
+    mLine.color.set(g('--ball-line', '#B9B9B4'));
+    shadowBase = parseFloat(g('--ball-shadow', '0.3'));
+  }
+  readTheme();
+
+  function size () {
+    // clientWidth excludes the scrollbar and matches the canvas's CSS width
+    // (100%), so buffer, camera aspect and placement all agree
+    const vw = document.documentElement.clientWidth || innerWidth;
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    gl.setPixelRatio(dpr);
+    gl.setSize(vw, innerHeight, false);
+    cam.aspect = vw / innerHeight;
+    cam.updateProjectionMatrix();
+
+    const visH = 2 * cam.position.z * Math.tan((cam.fov * Math.PI / 180) / 2);
+    // px -> world is a single uniform factor, since visW/vw == visH/innerHeight
+    const u = px => (px / innerHeight) * visH;
+
+    // Placement is derived from where the headline ACTUALLY ends, measured from
+    // the DOM. A fixed fraction of the viewport put the ball underneath the
+    // name at every width below ~2000px, which made the text unreadable.
+    const nameEl = document.querySelector('.hero-name');
+    const nr = nameEl ? nameEl.getBoundingClientRect() : null;
+    const nameRight = nr ? nr.right : innerWidth * 0.5;
+    const nameTop   = nr ? nr.top   : innerHeight * 0.55;
+    const GAP = 28, EDGE = 20, NAV = 76;
+
+    const bandL = nameRight + GAP;
+    const bandW = Math.max(0, (vw - EDGE) - bandL);
+    const want  = innerHeight * 0.5;
+    let dia, cx, cy;
+
+    if (Math.min(want, bandW) >= innerHeight * 0.27) {
+      // room beside the headline: sit in that clear band
+      dia = Math.min(want, bandW);
+      cx  = bandL + bandW / 2;
+      cy  = innerHeight * 0.39;
+    } else {
+      // narrow: the hero stacks to the BOTTOM, so the top right is free
+      dia = Math.min(innerHeight * 0.34, vw * 0.62, Math.max(120, nameTop - NAV - 28));
+      cx  = vw - EDGE - dia / 2;
+      cy  = NAV + 16 + dia / 2;
+    }
+
+    rig.scale.setScalar(u(dia) / (2 * R));
+    rig.position.x = u(cx - vw / 2);
+    rig.position.y = u(innerHeight / 2 - cy);
+  }
+  size();
+  addEventListener('resize', size);
+  // the headline measurement is wrong until Geist has actually loaded
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(size);
+  setTimeout(size, 1200);
+
+  const ptr = { x: 0, y: 0 };
+  addEventListener('pointermove', e => {
+    ptr.x = (e.clientX / innerWidth) * 2 - 1;
+    ptr.y = -(e.clientY / innerHeight) * 2 + 1;
+  }, { passive: true });
+
+  // Hero visibility drives rendering, measured directly rather than inferred
+  // from a scrub tween's progress. A ScrollTrigger that initialises at the
+  // wrong progress used to leave the ball permanently invisible with no error.
+  let heroOn = true;
+  const hero = document.getElementById('hero');
+  if (hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { heroOn = e.isIntersecting; }, { threshold: 0 }).observe(hero);
+  }
+  const mats = [mTop, mStripe, mBot, mBand, mCollar, mBtn, mLine];
+
+  window.addEventListener('themechange', () => {
+    readTheme();
+    if (REDUCE) gl.render(scene, cam);
+  });
+
+  ball.rotation.set(-0.16, REDUCE ? -0.5 : -1.5, 0.05);
+
+  if (!REDUCE) {
+    ball.scale.setScalar(0.82);
+    gsap.to(ball.rotation, { y: -0.35, duration: 2.2, ease: 'power3.out' });
+    gsap.to(ball.scale, { x: 1, y: 1, z: 1, duration: 2.2, ease: 'power3.out' });
+
+  }
+
+  // The loop ALWAYS runs, in both motion modes. Rendering a single frame was
+  // fragile: any later size() call runs gl.setSize(), which clears the drawing
+  // buffer, and with nothing re-rendering the ball silently vanished. That is
+  // precisely what happened on machines with "reduce motion" switched on.
+  // Catch wobble: every few seconds the ball rocks three times, the way it
+  // does on screen while a Pokemon is deciding whether to break out.
+  const WOBBLE_EVERY = 9, WOBBLE_LEN = 1.5;
+  const wobble = t => {
+    const p = (t % WOBBLE_EVERY) / WOBBLE_LEN;
+    if (p >= 1) return 0;
+    return Math.sin(p * Math.PI * 6) * 0.26 * Math.sin(p * Math.PI);   // 3 rocks, eased in and out
+  };
+
+  // The loop ALWAYS runs, in both motion modes. Rendering a single frame was
+  // fragile: any later size() call runs gl.setSize(), which clears the drawing
+  // buffer, and with nothing re-rendering the ball silently vanished.
+  const clock = new THREE.Clock();
+  let rx = 0, ry = 0;
+  gl.setAnimationLoop(() => {
+    if (!heroOn) return;                                       // hero off screen
+
+    // fade/push-back computed straight from scroll position, no scrub tween
+    const prog = REDUCE ? 0 : Math.min(1, Math.max(0, scrollY / Math.max(1, innerHeight)));
+    const op = 1 - prog;
+    if (op <= 0.01) return;
+    for (let i = 0; i < mats.length; i++) mats[i].opacity = op;
+    ball.position.z = -13 * prog;
+
+    const t = clock.getElapsedTime();
+    let lift = 0, rock = 0;
+    if (!REDUCE) {
+      rx += (ptr.y * 0.17 - rx) * 0.05;
+      ry += (ptr.x * 0.3  - ry) * 0.05;
+      lift = Math.sin(t * 1.1) * 0.05;                         // slow hover
+      rock = wobble(t + 4);                                    // first wobble ~5s in
+    }
+    ball.position.y = lift;
+    ball.rotation.x = -0.16 + rx;
+    ball.rotation.z = 0.05 + ry * 0.12 + rock;
+    // A slow spin is kept under reduced motion: it is small-area, low-velocity
+    // and not coupled to scrolling, so it is not a vestibular trigger. The
+    // scroll-driven parallax, pinning and marquee all still switch off.
+    ball.rotation.y += REDUCE ? 0.0016 : (rock ? 0 : 0.004);  // hold still while it rocks
+
+    // shadow tightens and darkens as the ball dips toward it
+    shadow.scale.set(1 - lift * 1.6, 1 - lift * 1.6, 1);
+    shadow.material.opacity = shadowBase * op * (1 - lift * 2.4);
+
+    gl.render(scene, cam);
+  });
+} catch (err) {
+  // WebGL unavailable, blocked by a shield, or the CDN failed. Surface it and
+  // let the CSS fallback above take over rather than silently showing nothing.
+  window.__ballError = (err && err.message) || String(err);
+  console.error('[portfolio] 3D Pokeball failed:', err);
+  canvas.style.display = 'none';
+  const f = document.getElementById('ball2d');
+  if (f) f.classList.add('show');
+  clearTimeout(window.__ballFallback);
+}
+</script>
+
+<div id="safari" aria-hidden="true"></div>
+<button id="dex" title="Open your Pokedex" aria-label="Open your Pokedex">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">
+  <span>caught</span> <b id="dexN">0</b>
+</button>
+<div id="dexpanel" role="dialog" aria-modal="true" aria-label="Pokemon you have caught">
+  <div class="dex-head">
+    <h3>Your Pokedex</h3>
+    <span id="dexSum"></span>
+    <button id="dexclose" aria-label="Close Pokedex">&#215;</button>
+  </div>
+  <div class="dex-grid" id="dexGrid"></div>
+</div>
+
+<script>
+/* ---------- safari: gen 5 animated sprites wander the bottom of the page ----
+   Click one to throw a ball. Ball tier is random and weighted, better balls
+   multiply the catch rate, and there are rare legendary/mythical spawns plus a
+   shiny roll. Gen 5 (ids 1-649) is the pool because that is exactly the range
+   PokeAPI ships animated black/white sprites for. Everything caught is stored
+   locally and listed in the Pokedex panel.                                   */
+(function () {
+  // Calm mode rather than no mode: disabling the safari under reduced motion
+  // meant anyone with that OS setting on (including the site's owner) never
+  // saw the feature at all.
+  const CALM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const stage = document.getElementById('safari');
+  const dexBtn = document.getElementById('dex');
+  const dexN = document.getElementById('dexN');
+  const panel = document.getElementById('dexpanel');
+  const grid = document.getElementById('dexGrid');
+  const sum = document.getElementById('dexSum');
+  if (!stage) return;
+
+  const GEN5_MAX = 649;
+  const SHINY_ODDS = 1 / 40;          // generous on purpose, it is an easter egg
+  const ani = (id, sh) => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/' + (sh ? 'shiny/' : '') + id + '.gif';
+  const item = n => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' + n + '.png';
+
+  const LEGEND = [144,145,146,150,243,244,245,249,250,377,378,379,380,381,382,383,384,
+                  480,481,482,483,484,485,486,487,488,638,639,640,641,642,643,644,645,646];
+  const MYTH   = [151,251,385,386,489,490,491,492,493,494,647,648,649];
+  const RARE   = new Set([...LEGEND, ...MYTH]);
+
+  const BALLS = [
+    { id: 'poke-ball',   name: 'Poke Ball',   weight: 58, mult: 1.0 },
+    { id: 'great-ball',  name: 'Great Ball',  weight: 26, mult: 1.6 },
+    { id: 'ultra-ball',  name: 'Ultra Ball',  weight: 14, mult: 2.2 },
+    { id: 'master-ball', name: 'Master Ball', weight: 2,  mult: Infinity }
+  ];
+  const BALL_TOTAL = BALLS.reduce((a, b) => a + b.weight, 0);
+  function rollBall () {
+    let r = Math.random() * BALL_TOTAL;
+    for (const b of BALLS) if ((r -= b.weight) < 0) return b;
+    return BALLS[0];
+  }
+
+  /* ---- stored dex ---- */
+  let dexData = [];
+  try { dexData = JSON.parse(localStorage.getItem('fk-dex') || '[]'); } catch (e) { dexData = []; }
+  if (!Array.isArray(dexData)) dexData = [];
+
+  function save () {
+    try { localStorage.setItem('fk-dex', JSON.stringify(dexData)); } catch (e) {}
+  }
+  function paint () {
+    dexN.textContent = dexData.reduce((a, e) => a + e.n, 0);
+    dexBtn.classList.toggle('on', dexData.length > 0);
+  }
+  function record (mon) {
+    const hit = dexData.find(e => e.id === mon.id && !!e.sh === !!mon.shiny);
+    if (hit) hit.n++;
+    else dexData.push({ id: mon.id, nm: mon.name, sh: mon.shiny ? 1 : 0, r: mon.isRare ? 1 : 0, n: 1 });
+    save(); paint();
+  }
+  paint();
+
+  function openDex () {
+    grid.innerHTML = '';
+    const total = dexData.reduce((a, e) => a + e.n, 0);
+    const shinies = dexData.filter(e => e.sh).length;
+    const rares = dexData.filter(e => e.r).length;
+    sum.textContent = dexData.length + ' unique / ' + total + ' caught'
+      + (rares ? ' / ' + rares + ' rare' : '') + (shinies ? ' / ' + shinies + ' shiny' : '');
+    if (!dexData.length) {
+      grid.innerHTML = '<p class="dex-empty">Nothing caught yet. Wait for one to wander past the bottom of the page, then click it.</p>';
+    }
+    dexData.slice().sort((a, b) => a.id - b.id).forEach(e => {
+      const c = document.createElement('div');
+      c.className = 'dex-cell';
+      c.innerHTML =
+        (e.sh ? '<span class="bdg s">shiny</span>' : e.r ? '<span class="bdg r">rare</span>' : '') +
+        (e.n > 1 ? '<span class="xn">x' + e.n + '</span>' : '') +
+        '<img src="' + ani(e.id, e.sh) + '" alt="' + e.nm + '" loading="lazy">' +
+        '<div class="nm">' + e.nm + '</div><div class="id mono">#' + String(e.id).padStart(3, '0') + '</div>';
+      grid.appendChild(c);
+    });
+    panel.classList.add('on');
+  }
+  const closeDex = () => panel.classList.remove('on');
+  dexBtn.addEventListener('click', openDex);
+  document.getElementById('dexclose').addEventListener('click', closeDex);
+  panel.addEventListener('click', e => { if (e.target === panel) closeDex(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDex(); });
+
+  /* ---- spawning ---- */
+  let live = 0;
+  const MAX_LIVE = 2;
+
+  function label (el, text, good) {
+    let l = el.querySelector('.mon-say');
+    if (!l) { l = document.createElement('span'); l.className = 'mon-say'; el.appendChild(l); }
+    l.textContent = text;
+    l.classList.toggle('good', !!good);
+    l.classList.remove('out');
+    requestAnimationFrame(() => l.classList.add('on'));
+    return l;
+  }
+  // result labels hold briefly, then fade out
+  const RESULT_HOLD = 1100;
+  const fadeLabel = el => { const l = el.querySelector('.mon-say'); if (l) l.classList.add('out'); };
+
+  async function spawn () {
+    if (live >= MAX_LIVE || document.hidden) return;
+
+    const isRare = Math.random() < 0.045;
+    let id;
+    if (isRare) {
+      const pool = Math.random() < 0.6 ? LEGEND : MYTH;
+      id = pool[Math.floor(Math.random() * pool.length)];
+    } else {
+      do { id = Math.floor(Math.random() * GEN5_MAX) + 1; } while (RARE.has(id));
+    }
+    const shiny = Math.random() < SHINY_ODDS;
+
+    let name = '#' + id;
+    try {
+      const r = await fetch('https://pokeapi.co/api/v2/pokemon/' + id);
+      if (r.ok) name = (await r.json()).name.replace(/-/g, ' ');
+    } catch (e) {}
+
+    live++;
+    const el = document.createElement('button');
+    el.className = 'mon bob' + (isRare ? ' rare' : '') + (shiny ? ' shiny' : '');
+    el.type = 'button';
+    el.setAttribute('aria-label', 'Throw a ball at ' + (shiny ? 'shiny ' : '') + name);
+
+    const img = document.createElement('img');
+    img.src = ani(id, shiny);
+    img.alt = '';
+    // a shiny that has no shiny sprite falls back to the normal one
+    img.onerror = () => { img.onerror = null; img.src = ani(id, false); };
+    el.appendChild(img);
+
+    if (shiny) ['s1', 's2', 's3'].forEach(c => {
+      const sp = document.createElement('i');
+      sp.className = 'spark ' + c;
+      el.appendChild(sp);
+    });
+
+    const toRight = Math.random() < 0.5;
+    const w = innerWidth;
+    const from = toRight ? -90 : w + 20;
+    const to   = toRight ? w + 20 : -90;
+    const secs = Math.abs(to - from) / (CALM ? 34 : 55 + Math.random() * 42);
+
+    if (toRight) el.classList.add('flip');
+    el.style.left = '0px';
+    el.style.bottom = (10 + Math.random() * 26) + 'px';
+    el.style.transform = 'translateX(' + from + 'px)';
+    stage.appendChild(el);
+    // Commit the start transform before changing it. Without this flush the
+    // browser coalesces both values into one style resolution, no transition
+    // runs, and the sprite teleports straight to the far edge.
+    void el.offsetWidth;
+    el.style.transition = 'transform ' + secs + 's linear';
+    el.style.transform = 'translateX(' + to + 'px)';
+
+    if (shiny || isRare) label(el, shiny ? 'shiny!' : 'rare!', true);
+
+    let done = false;
+    const cleanup = () => { if (done) return; done = true; el.remove(); live--; };
+    // e.target guard is essential: the .mon-say label transitions transform
+    // too, and that event BUBBLES to this listener and despawned the sprite
+    // mid-escape, which is why the run was never visible.
+    el.addEventListener('transitionend', e => {
+      if (e.target === el && e.propertyName === 'transform') cleanup();
+    });
+    el.addEventListener('click', () => {
+      if (el.dataset.busy) return;
+      el.dataset.busy = '1';
+      throwAt(el, { id, name, isRare, shiny }, cleanup);
+    });
+  }
+
+  const curX = el => new DOMMatrixReadOnly(getComputedStyle(el).transform).m41;
+
+  function throwAt (el, mon, cleanup) {
+    const x = curX(el);
+    el.style.transition = 'none';
+    el.style.transform = 'translateX(' + x + 'px)';
+    el.classList.remove('bob');
+
+    const ball = rollBall();
+    const base = mon.isRare ? 0.06 + Math.random() * 0.06 : 0.3 + Math.random() * 0.4;
+    const odds = ball.mult === Infinity ? 1 : Math.min(0.94, base * ball.mult);
+    const win = Math.random() < odds;
+
+    const bEl = document.createElement('div');
+    bEl.className = 'ball throw';
+    const bImg = document.createElement('img');
+    bImg.src = item(ball.id); bImg.alt = '';
+    bEl.appendChild(bImg);
+    bEl.style.left = (x + el.offsetWidth / 2 - 17) + 'px';
+    bEl.style.bottom = (parseFloat(el.style.bottom) + 16) + 'px';
+    stage.appendChild(bEl);
+
+    label(el, ball.name, false);
+
+    const at = (ms, fn) => setTimeout(fn, ms);
+    at(420, () => { bEl.classList.remove('throw'); el.classList.add('gone'); });
+
+    const shakes = win ? 3 : 1 + Math.floor(Math.random() * 2);
+    for (let i = 0; i < shakes; i++) {
+      at(620 + i * 620, () => {
+        bEl.classList.remove('shake'); void bEl.offsetWidth; bEl.classList.add('shake');
+      });
+    }
+
+    at(620 + shakes * 620 + 180, () => {
+      if (win) {
+        record(mon);
+        label(el, 'gotcha! ' + mon.name, true);
+        bEl.style.transition = 'opacity 0.45s ' + RESULT_HOLD / 1000 + 's';
+        bEl.style.opacity = '0';
+        at(RESULT_HOLD, () => fadeLabel(el));
+        at(RESULT_HOLD + 550, cleanup);              // after the fade completes
+      } else {
+        bEl.classList.add('pop');
+        label(el, 'broke free', false);
+        at(300, () => bEl.remove());
+        el.classList.remove('gone');
+        el.classList.add('bob', 'flee');
+        delete el.dataset.busy;            // clickable again mid-run: second chance
+        // Bolt for the FAR edge, not the nearest one. Fleeing to the nearest
+        // edge means one that broke free near a corner is gone in half a
+        // second and the run is never actually seen.
+        const goLeft = x > innerWidth / 2;
+        const to = goLeft ? -110 : innerWidth + 40;
+        el.classList.toggle('flip', !goLeft);
+        const secs = Math.max(1.5, Math.abs(to - x) / (CALM ? 170 : 340));
+        void el.offsetWidth;
+        el.style.transition = 'transform ' + secs + 's linear';
+        el.style.transform = 'translateX(' + to + 'px)';
+        at(RESULT_HOLD, () => fadeLabel(el));    // fades while it keeps running
+      }
+    });
+  }
+
+  setTimeout(spawn, 4500);
+  setInterval(() => { if (Math.random() < 0.65) spawn(); }, 9000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && live === 0) spawn(); });
+})();
+</script>
 </body>
 </html>
