@@ -1715,7 +1715,12 @@ try {
     rig.scale.setScalar(u(dia) / (2 * R));
     rig.position.x = u(cx - vw / 2);
     rig.position.y = u(innerHeight / 2 - cy);
+    // height (in ball radii, above its resting spot) at which it is fully
+    // off the top of the viewport; the throw flies to it, the landing drops from it
+    offY = (visH / 2 - rig.position.y) / rig.scale.x + 1.45;
+    pxToBall = (visH / innerHeight) / rig.scale.x;
   }
+  let offY = 4, pxToBall = 0.004;
   size();
   addEventListener('resize', size);
   // the headline measurement is wrong until Geist has actually loaded
@@ -1728,38 +1733,72 @@ try {
     ptr.y = -(e.clientY / innerHeight) * 2 + 1;
   }, { passive: true });
 
-  // Hero visibility drives rendering, measured directly rather than inferred
-  // from a scrub tween's progress. A ScrollTrigger that initialises at the
-  // wrong progress used to leave the ball permanently invisible with no error.
-  let heroOn = true;
-  const hero = document.getElementById('hero');
-  if (hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => { heroOn = e.isIntersecting; }, { threshold: 0 }).observe(hero);
-  }
-  const mats = [mTop, mStripe, mBot, mBand, mCollar, mBtn, mLine];
+  window.addEventListener('themechange', () => { readTheme(); kick(); });
 
-  window.addEventListener('themechange', () => {
-    readTheme();
-    if (REDUCE) gl.render(scene, cam);
-  });
+  // ---- throw / land ----
+  // Scrolling away no longer leaves the ball hovering over the content: it gets
+  // THROWN up out of frame. Scrolling back to the top makes it LAND on its spot
+  // with a bounce, then do one catch wobble. Hysteresis between the two
+  // thresholds stops it flapping when you hover around the boundary.
+  const fly = { y: 0, z: 0, sx: 1, sy: 1, spin: 0, roll: 0 };   // animated offsets
+  const ent = { s: REDUCE ? 1 : 0.82 };                           // entrance scale
+  let state = 'home', anim = null, needFrame = true;
+  const kick = () => { needFrame = true; };
+  const THROW_AT = 0.16, LAND_AT = 0.07;                          // fractions of viewport height
+
+  function throwAway () {
+    state = 'away';
+    if (anim) anim.kill();
+    if (REDUCE) { ball.visible = shadow.visible = false; kick(); return; }
+    anim = gsap.timeline({ onComplete: () => { anim = null; ball.visible = false; kick(); } })
+      // Rigid throughout: a hard shell doesn't squash or stretch, so the weight
+      // has to come from timing. A short recoil, then a fast launch.
+      .to(fly, { y: -0.1, duration: 0.14, ease: 'power2.out' })
+      .to(fly, { y: offY, z: -1.4, duration: 0.55, ease: 'power3.in' })
+      .to(fly, { roll: '-=' + Math.PI * 2.4, duration: 0.62, ease: 'power1.in' }, '<-0.07');
+  }
+
+  function land () {
+    state = 'home';
+    if (anim) anim.kill();
+    ball.visible = shadow.visible = true;
+    if (REDUCE) { kick(); return; }
+    // start from wherever it is now; if it is off screen, drop it from above
+    if (fly.y > offY * 0.6) gsap.set(fly, { y: offY, z: -0.6, sx: 1, sy: 1 });
+    anim = gsap.timeline({ onComplete: () => { anim = null; wobT0 = clock.getElapsedTime(); } })
+      // fall under gravity, spinning down to rest
+      .to(fly, { y: 0, z: 0, duration: 0.5, ease: 'power2.in' })
+      .to(fly, { roll: 0, duration: 0.5, ease: 'power2.out' }, '<')
+      // impact: no deformation. A heavy solid ball lands with a dead, short
+      // rebound that dies almost instantly.
+      .to(fly, { y: 0.035, duration: 0.09, ease: 'power2.out' })
+      .to(fly, { y: 0, duration: 0.09, ease: 'power2.in' });
+  }
+
+  // scroll position decides the state; read once per frame, no scroll listener
+  function checkScroll () {
+    const f = scrollY / Math.max(1, innerHeight);
+    if (state === 'home' && f > THROW_AT) throwAway();
+    else if (state === 'away' && f < LAND_AT) land();
+  }
+  // page restored mid-scroll: start already thrown, without animating
+  if (scrollY / Math.max(1, innerHeight) > THROW_AT) {
+    state = 'away'; ball.visible = shadow.visible = false; fly.y = 4;
+  }
 
   ball.rotation.set(-0.16, REDUCE ? -0.5 : -1.5, 0.05);
-
   if (!REDUCE) {
-    ball.scale.setScalar(0.82);
     gsap.to(ball.rotation, { y: -0.35, duration: 2.2, ease: 'power3.out' });
-    gsap.to(ball.scale, { x: 1, y: 1, z: 1, duration: 2.2, ease: 'power3.out' });
-
+    gsap.to(ent, { s: 1, duration: 2.2, ease: 'power3.out' });
   }
 
-  // The loop ALWAYS runs, in both motion modes. Rendering a single frame was
-  // fragile: any later size() call runs gl.setSize(), which clears the drawing
-  // buffer, and with nothing re-rendering the ball silently vanished. That is
-  // precisely what happened on machines with "reduce motion" switched on.
   // Catch wobble: every few seconds the ball rocks three times, the way it
-  // does on screen while a Pokemon is deciding whether to break out.
+  // does on screen while a Pokemon is deciding whether to break out. Measured
+  // from wobT0, which a landing resets so it wobbles right after touching down.
   const WOBBLE_EVERY = 9, WOBBLE_LEN = 1.5;
+  let wobT0 = -4;                                                 // first wobble ~4s in
   const wobble = t => {
+    if (t < 0) return 0;
     const p = (t % WOBBLE_EVERY) / WOBBLE_LEN;
     if (p >= 1) return 0;
     return Math.sin(p * Math.PI * 6) * 0.26 * Math.sin(p * Math.PI);   // 3 rocks, eased in and out
@@ -1768,37 +1807,45 @@ try {
   // The loop ALWAYS runs, in both motion modes. Rendering a single frame was
   // fragile: any later size() call runs gl.setSize(), which clears the drawing
   // buffer, and with nothing re-rendering the ball silently vanished.
+  addEventListener('resize', kick);
   const clock = new THREE.Clock();
   let rx = 0, ry = 0;
   gl.setAnimationLoop(() => {
-    if (!heroOn) return;                                       // hero off screen
-
-    // fade/push-back computed straight from scroll position, no scrub tween
-    const prog = REDUCE ? 0 : Math.min(1, Math.max(0, scrollY / Math.max(1, innerHeight)));
-    const op = 1 - prog;
-    if (op <= 0.01) return;
-    for (let i = 0; i < mats.length; i++) mats[i].opacity = op;
-    ball.position.z = -13 * prog;
+    checkScroll();
+    // thrown and settled: draw one empty frame to clear the canvas, then idle
+    if (state === 'away' && !anim) {
+      if (needFrame) { gl.render(scene, cam); needFrame = false; }
+      return;
+    }
 
     const t = clock.getElapsedTime();
     let lift = 0, rock = 0;
     if (!REDUCE) {
       rx += (ptr.y * 0.17 - rx) * 0.05;
       ry += (ptr.x * 0.3  - ry) * 0.05;
-      lift = Math.sin(t * 1.1) * 0.05;                         // slow hover
-      rock = wobble(t + 4);                                    // first wobble ~5s in
+      if (!anim) {
+        lift = Math.sin(t * 1.1) * 0.05;                       // slow hover, only at rest
+        rock = wobble(t - wobT0);
+      }
     }
-    ball.position.y = lift;
-    ball.rotation.x = -0.16 + rx;
+    // The canvas is fixed to the screen but the hero scrolls, so ride along
+    // with the page: otherwise the tagline slides up underneath the ball.
+    const sOff = scrollY * pxToBall;
+    ball.position.set(0, lift + fly.y + sOff, fly.z);
+    shadow.position.y = -1.3 * R + sOff;
+    ball.scale.set(ent.s * fly.sx, ent.s * fly.sy, ent.s * fly.sx);
+    ball.rotation.x = -0.16 + rx + fly.roll;
     ball.rotation.z = 0.05 + ry * 0.12 + rock;
     // A slow spin is kept under reduced motion: it is small-area, low-velocity
-    // and not coupled to scrolling, so it is not a vestibular trigger. The
-    // scroll-driven parallax, pinning and marquee all still switch off.
-    ball.rotation.y += REDUCE ? 0.0016 : (rock ? 0 : 0.004);  // hold still while it rocks
+    // and not coupled to scrolling, so it is not a vestibular trigger.
+    ball.rotation.y += REDUCE ? 0.0016 : (rock || anim ? 0 : 0.004);
 
-    // shadow tightens and darkens as the ball dips toward it
-    shadow.scale.set(1 - lift * 1.6, 1 - lift * 1.6, 1);
-    shadow.material.opacity = shadowBase * op * (1 - lift * 2.4);
+    // shadow follows height: shrinks and fades as the ball rises, darkens as it nears
+    const h = Math.max(0, lift + fly.y);
+    const near = Math.max(0, 1 - h / 2.2);
+    const k = (0.45 + 0.55 * near) * (1 - lift * 1.6);
+    shadow.scale.set(k * fly.sx, k, 1);
+    shadow.material.opacity = shadowBase * near * near * (1 - lift * 2.4);
 
     gl.render(scene, cam);
   });
