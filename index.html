@@ -1268,9 +1268,9 @@ footer {
           <a class="card" href="https://github.com/fakubwoy/ledger-platform" target="_blank" rel="noopener">
             <i class="ph ph-stack card-i" aria-hidden="true"></i>
             <h3 class="card-n">Ledger Platform</h3>
-            <p class="card-d">A Spring Boot payments ledger (idempotent transfers, row locking, Kafka outbox) running on Kubernetes and deployed by Argo CD. Autoscaled 2 to 5 pods with 0 failures over 81k load-test requests, zero-downtime rolling deploys, SLO alerts with traces and logs, and six failure drills over 177k transfers that left every balance correct.</p>
+            <p class="card-d">A Spring Boot payments ledger (idempotent transfers, row locking, Kafka outbox) running on Kubernetes and deployed by Argo CD. Autoscaled 2 to 5 pods with 0 failures over 81k load-test requests, zero-downtime rolling deploys, SLO alerts with traces and logs, six failure drills over 177k transfers that left every balance correct, and a real GKE deployment with Terraform and Cloud SQL where a node power-cut drill found a lock-holding outage, now fixed.</p>
             <div class="card-f">
-              <div class="card-tech mono"><span>Java</span><span>Kubernetes</span><span>Helm</span><span>Argo CD</span><span>Kafka</span></div>
+              <div class="card-tech mono"><span>Java</span><span>Kubernetes</span><span>Argo CD</span><span>GKE</span><span>Terraform</span></div>
               <i class="ph ph-arrow-up-right card-go" aria-hidden="true"></i>
             </div>
           </a>
