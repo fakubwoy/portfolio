@@ -1986,6 +1986,13 @@ try {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDex(); });
 
   /* ---- spawning ---- */
+  // ?wild=<id>&shiny=1 is how the sprites on my GitHub README land here: that
+  // exact Pokemon shows up first, already on screen.
+  const params = new URLSearchParams(location.search);
+  const wildId = Number(params.get('wild'));
+  let wanted = Number.isInteger(wildId) && wildId >= 1 && wildId <= GEN5_MAX
+    ? { id: wildId, shiny: params.get('shiny') === '1' } : null;
+
   let live = 0;
   const MAX_LIVE = 2;
 
@@ -2005,15 +2012,19 @@ try {
   async function spawn () {
     if (live >= MAX_LIVE || document.hidden) return;
 
-    const isRare = Math.random() < 0.045;
+    const force = wanted;
+    wanted = null;
+    const isRare = force ? RARE.has(force.id) : Math.random() < 0.045;
     let id;
-    if (isRare) {
+    if (force) {
+      id = force.id;
+    } else if (isRare) {
       const pool = Math.random() < 0.6 ? LEGEND : MYTH;
       id = pool[Math.floor(Math.random() * pool.length)];
     } else {
       do { id = Math.floor(Math.random() * GEN5_MAX) + 1; } while (RARE.has(id));
     }
-    const shiny = Math.random() < SHINY_ODDS;
+    const shiny = force ? force.shiny : Math.random() < SHINY_ODDS;
 
     let name = '#' + id;
     try {
@@ -2042,7 +2053,7 @@ try {
 
     const toRight = Math.random() < 0.5;
     const w = innerWidth;
-    const from = toRight ? -90 : w + 20;
+    const from = force ? w * (toRight ? 0.08 : 0.82) : toRight ? -90 : w + 20;
     const to   = toRight ? w + 20 : -90;
     const secs = Math.abs(to - from) / (CALM ? 34 : 55 + Math.random() * 42);
 
@@ -2058,7 +2069,8 @@ try {
     el.style.transition = 'transform ' + secs + 's linear';
     el.style.transform = 'translateX(' + to + 'px)';
 
-    if (shiny || isRare) label(el, shiny ? 'shiny!' : 'rare!', true);
+    if (force) label(el, 'click to catch ' + name, true);
+    else if (shiny || isRare) label(el, shiny ? 'shiny!' : 'rare!', true);
 
     let done = false;
     const cleanup = () => { if (done) return; done = true; el.remove(); live--; };
@@ -2139,7 +2151,7 @@ try {
     });
   }
 
-  setTimeout(spawn, 4500);
+  setTimeout(spawn, wanted ? 500 : 4500);
   setInterval(() => { if (Math.random() < 0.65) spawn(); }, 9000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden && live === 0) spawn(); });
 })();

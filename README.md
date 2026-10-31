@@ -20,6 +20,7 @@ Extras:
 
 - Light and dark theme toggle, saved in `localStorage` (`fk-theme`).
 - Pokemon safari: Gen 5 Pokemon wander across the page and can be caught. Caught ones are saved in `localStorage` (`fk-dex`) and listed in the Pokedex panel. Sprites and data come from PokeAPI.
+- `?wild=<id>&shiny=1` spawns that Pokemon right away. The sprites on my GitHub profile README link here this way.
 - Respects `prefers-reduced-motion` (animations calm down instead of turning off).
 
 ```mermaid
